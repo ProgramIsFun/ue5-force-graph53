@@ -1,0 +1,286 @@
+#include "/Engine/Private/Common.ush"
+
+// Buffers
+StructuredBuffer<float> Masses;
+RWStructuredBuffer<float> alphaS;
+RWStructuredBuffer<float3> Positions;
+RWStructuredBuffer<float3> Velocities;
+
+
+//
+StructuredBuffer<int> LinkOffsets;
+StructuredBuffer<int> LinkCounts;
+StructuredBuffer<int> LinkIndices;
+StructuredBuffer<float> LinkStrengths;
+StructuredBuffer<float> LinkBiases;
+StructuredBuffer<float> Linkinout;
+
+
+
+const uint NumLinks;
+
+const uint shaderdebug;
+
+
+// Settings
+const uint NumBodies;
+const float GravityConstant;
+const float CameraAspectRatio;
+const float ViewportWidth;
+const float DeltaTime;
+const float alpha;
+
+float3 CalculateGravitationalForce(uint TargetBodyID, uint AffectingBodyID, float alpha333)
+{
+	
+	float3 dir = Positions[AffectingBodyID] - Positions[TargetBodyID];
+	
+	float d = distance(Positions[TargetBodyID], Positions[AffectingBodyID]);
+
+	float l = d * d;
+	float distancemin1 = 1;
+	if (l < distancemin1)
+	{
+		l = sqrt(distancemin1 * l);
+	}
+	
+	float ForceMagnitude= -60;
+	
+	return dir * ForceMagnitude * alpha333 /l;
+}
+
+float wasteTime() {
+	float sum = 0.0;
+	int i, j;
+
+	// Using a very large number of iterations to waste time
+	for (i = 0; i < 100000; i++) {
+		for (j = 0; j < 100000; j++) {
+			sum += 1; // Adding trigonometric computation to increase loop execution time
+		}
+	}
+    
+	return sum; // Returning sum to prevent the compiler from optimizing the loop away
+}
+
+bool value_is_close_to(float a, float b, float tolerance) {
+	return abs(a - b) < tolerance;
+}
+
+[numthreads(256, 1, 1)]
+void CalculateVelocitiesCS(uint3 ID : SV_DispatchThreadID)
+{
+	if (ID.x >= NumBodies) return;
+
+	if (shaderdebug < 10)
+	{
+
+		if(alpha>0.98)
+		{
+			return;
+		}
+		
+		float alphaUUU;
+
+		if (0)
+		{
+			alphaS[ID.x] += (0-alphaS[ID.x]) * 0.022763;
+			alphaUUU = alphaS[ID.x];
+		}
+		else
+		{
+			if (0)
+			{
+				if (ID.x==1)
+				{
+					if (abs(alpha-0.977)<0.001)
+					{
+						alphaS[ID.x] = 1;
+					}
+					else
+					{
+						alphaS[ID.x] += 1;
+					}
+				}
+				else
+				{
+					alphaS[ID.x] = alpha;
+
+				}
+			}
+
+			
+			alphaUUU = alpha;
+		}
+		
+		
+		bool calculateLinkForce;
+		bool calculateGravityForce;
+
+		if(shaderdebug==1)
+		{
+			calculateLinkForce = true;
+			calculateGravityForce = false;
+		}
+
+		if(shaderdebug==2)
+		{
+			calculateLinkForce = false;
+			calculateGravityForce = true;
+		}
+
+		if (shaderdebug==3)
+		{
+			calculateLinkForce = true;
+			calculateGravityForce = true;
+		}
+		if (calculateLinkForce)
+		{
+
+			if (ID.x==0)
+			{
+			
+
+
+				// int offset = LinkOffsets[ID.x];
+				// int count = LinkCounts[ID.x];
+
+				for (
+				     // int i = offset;
+				     // i < offset + count;
+				     // i++
+				     int i = 0;
+				     i < NumLinks;
+				     i++
+				     )
+				{
+
+					int affectingBodyID = LinkIndices[i];
+					int Linkinout1 = Linkinout[i];
+
+
+					float3 new_v;
+					if (Linkinout1 == 1)
+					{
+						new_v = Positions[affectingBodyID] + Velocities[affectingBodyID] - Positions[i] - Velocities[i];
+					}else
+					{
+						new_v = Positions[i] + Velocities[i] - Positions[affectingBodyID] - Velocities[affectingBodyID];
+					}
+
+
+					////////////////////////////////////////////////////////////////
+					// if(ID.x==0)
+					// {
+					// 	Positions[0]=Positions[ID.x];
+					//
+					// 	alphaS[ID.x] = new_v.x;
+					// 	return;
+					// }else
+					// {
+					// 	return;
+					// }
+					//
+					///////////////////////////////////////////////////////////////
+			
+					float l = length(new_v);
+					l = (l - 30) /
+						l * alphaUUU * LinkStrengths[i];
+					new_v *= l;
+					if (Linkinout1 == 1)
+					{
+						Velocities[i] += new_v * (1 - LinkBiases[i]);
+					}
+					else
+					{
+						Velocities[i] -= new_v * (LinkBiases[i]);
+					}
+				}
+			
+
+				// We signaled that the link force is finished. 
+				alphaS[0]=100; 
+
+				AllMemoryBarrier();
+				// DeviceMemoryBarrier();
+				
+			}
+
+			while(!value_is_close_to(alphaS[0],100,0.1))
+			{
+				// AllMemoryBarrier();
+				// DeviceMemoryBarrier();
+				// Wait for the link force to finish
+			}
+			
+		}
+		
+		
+
+		
+		
+	
+
+
+		float3 Acceleration= float3(0, 0, 0);
+		// Calculate gravitational force
+		if (calculateGravityForce)
+		{
+			for (uint i = 0; i < NumBodies; i++)
+			{
+				// Skip if self.
+				if (i == ID.x) continue;
+				float3 GravityForce = CalculateGravitationalForce(ID.x, i,alphaUUU);
+				Acceleration += GravityForce;
+			}
+		}
+		
+		Velocities[ID.x] += Acceleration;
+
+
+		const float velocityDecay = 0.6;
+		Velocities[ID.x] *= velocityDecay;
+
+
+		// Logically, we should add a barrier here so that every node has finished update their velocity before we try to move to the next step. 
+
+		Positions[ID.x] += Velocities[ID.x];
+
+
+		// Set the signal back to some value else. 
+		if (ID.x==0)
+		{
+			alphaS[0]=0;
+		}
+	}
+	else {
+
+
+		
+		// float s=wasteTime();
+		//
+		//
+		// if (ID.x==0)
+		// {
+		// 	alphaS[ID.x] = s;
+		// }else
+		// {
+		// 	alphaS[ID.x] = alpha;
+		//
+		// }
+
+
+		
+		// Positions[ID.x] =Positions[ID.x];
+
+
+		
+		// float3 pos = Positions[ID.x];  // Read the current position
+		// pos += float3(1.0, 1.0,1.0);  // Increment each component by 1
+		// Positions[ID.x] = pos;  // Write it back to the buffer
+		//
+	}
+
+}
+
+

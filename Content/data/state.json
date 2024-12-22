@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": "Gavroche"
+    },
+    {
+      "id": "Courfeyrac"
+    },
+    {
+      "id": "Mme.Hucheloup"
+    }
+  ],
+  "links": [
+    {
+      "source": "Mme.Hucheloup",
+      "target": "Courfeyrac"
+    },
+    {
+      "source": "Mme.Hucheloup",
+      "target": "Gavroche"
+    }
+  ]
+}

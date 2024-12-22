@@ -1,0 +1,6364 @@
+{
+    "nodes": [
+        {
+            "id": "Myriel",
+            "group": 1,
+            "__indexColor": "#5803a2",
+            "__bckgDimensions": [
+                58.019922539372324,
+                24.2995279120152
+            ],
+            "index": 0
+        },
+        {
+            "id": "Napoleon",
+            "group": 1,
+            "__indexColor": "#4403a3",
+            "__bckgDimensions": [
+                90.70235662140358,
+                24.2995279120152
+            ],
+            "index": 1
+        },
+        {
+            "id": "Mlle.Baptistine",
+            "group": 1,
+            "__indexColor": "#3003a4",
+            "__bckgDimensions": [
+                135.66909246124732,
+                24.2995279120152
+            ],
+            "index": 2
+        },
+        {
+            "id": "Mme.Magloire",
+            "group": 1,
+            "__indexColor": "#1c03a5",
+            "__bckgDimensions": [
+                132.26944951691138,
+                24.2995279120152
+            ],
+            "index": 3
+        },
+        {
+            "id": "CountessdeLo",
+            "group": 1,
+            "__indexColor": "#0803a6",
+            "__bckgDimensions": [
+                134.58201055206763,
+                24.2995279120152
+            ],
+            "index": 4
+        },
+        {
+            "id": "Geborand",
+            "group": 1,
+            "__indexColor": "#f403a7",
+            "__bckgDimensions": [
+                94.07239751495827,
+                24.2995279120152
+            ],
+            "index": 5
+        },
+        {
+            "id": "Champtercier",
+            "group": 1,
+            "__indexColor": "#e003a8",
+            "__bckgDimensions": [
+                125.52935247101296,
+                24.2995279120152
+            ],
+            "index": 6
+        },
+        {
+            "id": "Cravatte",
+            "group": 1,
+            "__indexColor": "#cc03a9",
+            "__bckgDimensions": [
+                80.54281072296608,
+                24.2995279120152
+            ],
+            "index": 7
+        },
+        {
+            "id": "Count",
+            "group": 1,
+            "__indexColor": "#b803aa",
+            "__bckgDimensions": [
+                58.0594428030442,
+                24.2995279120152
+            ],
+            "index": 8
+        },
+        {
+            "id": "OldMan",
+            "group": 1,
+            "__indexColor": "#a403ab",
+            "__bckgDimensions": [
+                74.91953496613014,
+                24.2995279120152
+            ],
+            "index": 9
+        },
+        {
+            "id": "Labarre",
+            "group": 2,
+            "__indexColor": "#9003ac",
+            "__bckgDimensions": [
+                73.81263188995827,
+                24.2995279120152
+            ],
+            "index": 10
+        },
+        {
+            "id": "Valjean",
+            "group": 2,
+            "__indexColor": "#7c03ad",
+            "__bckgDimensions": [
+                70.0670569387864,
+                24.2995279120152
+            ],
+            "index": 11
+        },
+        {
+            "id": "Marguerite",
+            "group": 3,
+            "__indexColor": "#6803ae",
+            "__bckgDimensions": [
+                100.79268865265358,
+                24.2995279120152
+            ],
+            "index": 12
+        },
+        {
+            "id": "Mme.deR",
+            "group": 2,
+            "__indexColor": "#5403af",
+            "__bckgDimensions": [
+                91.77959661163796,
+                24.2995279120152
+            ],
+            "index": 13
+        },
+        {
+            "id": "Isabeau",
+            "group": 2,
+            "__indexColor": "#4003b0",
+            "__bckgDimensions": [
+                76.0758002249192,
+                24.2995279120152
+            ],
+            "index": 14
+        },
+        {
+            "id": "Gervais",
+            "group": 2,
+            "__indexColor": "#2c03b1",
+            "__bckgDimensions": [
+                73.7829993215989,
+                24.2995279120152
+            ],
+            "index": 15
+        },
+        {
+            "id": "Tholomyes",
+            "group": 3,
+            "__indexColor": "#1803b2",
+            "__bckgDimensions": [
+                103.03611211456764,
+                24.2995279120152
+            ],
+            "index": 16
+        },
+        {
+            "id": "Listolier",
+            "group": 3,
+            "__indexColor": "#0403b3",
+            "__bckgDimensions": [
+                73.79285649933327,
+                24.2995279120152
+            ],
+            "index": 17
+        },
+        {
+            "id": "Fameuil",
+            "group": 3,
+            "__indexColor": "#f003b4",
+            "__bckgDimensions": [
+                76.03627996124733,
+                24.2995279120152
+            ],
+            "index": 18
+        },
+        {
+            "id": "Blacheville",
+            "group": 3,
+            "__indexColor": "#dc03b5",
+            "__bckgDimensions": [
+                100.80257634796608,
+                24.2995279120152
+            ],
+            "index": 19
+        },
+        {
+            "id": "Favourite",
+            "group": 3,
+            "__indexColor": "#c803b6",
+            "__bckgDimensions": [
+                88.41941289581764,
+                24.2995279120152
+            ],
+            "index": 20
+        },
+        {
+            "id": "Dahlia",
+            "group": 3,
+            "__indexColor": "#b403b7",
+            "__bckgDimensions": [
+                61.429483696598886,
+                24.2995279120152
+            ],
+            "index": 21
+        },
+        {
+            "id": "Zephine",
+            "group": 3,
+            "__indexColor": "#a003b8",
+            "__bckgDimensions": [
+                77.19256047882546,
+                24.2995279120152
+            ],
+            "index": 22
+        },
+        {
+            "id": "Fantine",
+            "group": 3,
+            "__indexColor": "#8c03b9",
+            "__bckgDimensions": [
+                71.55935125030983,
+                24.2995279120152
+            ],
+            "index": 23
+        },
+        {
+            "id": "Mme.Thenardier",
+            "group": 4,
+            "__indexColor": "#7803ba",
+            "__bckgDimensions": [
+                152.52918462433325,
+                24.2995279120152
+            ],
+            "index": 24
+        },
+        {
+            "id": "Thenardier",
+            "group": 4,
+            "__indexColor": "#6403bb",
+            "__bckgDimensions": [
+                101.92920903839577,
+                24.2995279120152
+            ],
+            "index": 25
+        },
+        {
+            "id": "Cosette",
+            "group": 5,
+            "__indexColor": "#5003bc",
+            "__bckgDimensions": [
+                73.80274419464577,
+                24.2995279120152
+            ],
+            "index": 26
+        },
+        {
+            "id": "Javert",
+            "group": 4,
+            "__indexColor": "#3c03bd",
+            "__bckgDimensions": [
+                59.16631536163795,
+                24.2995279120152
+            ],
+            "index": 27
+        },
+        {
+            "id": "Fauchelevent",
+            "group": 0,
+            "__indexColor": "#2803be",
+            "__bckgDimensions": [
+                125.5688879934739,
+                24.2995279120152
+            ],
+            "index": 28
+        },
+        {
+            "id": "Bamatabois",
+            "group": 2,
+            "__indexColor": "#1403bf",
+            "__bckgDimensions": [
+                110.93245916046608,
+                24.2995279120152
+            ],
+            "index": 29
+        },
+        {
+            "id": "Perpetue",
+            "group": 3,
+            "__indexColor": "#0003c0",
+            "__bckgDimensions": [
+                86.19578008331764,
+                24.2995279120152
+            ],
+            "index": 30
+        },
+        {
+            "id": "Simplice",
+            "group": 2,
+            "__indexColor": "#ec03c1",
+            "__bckgDimensions": [
+                80.5329535452317,
+                24.2995279120152
+            ],
+            "index": 31
+        },
+        {
+            "id": "Scaufflaire",
+            "group": 2,
+            "__indexColor": "#d803c2",
+            "__bckgDimensions": [
+                99.31025151886452,
+                24.2995279120152
+            ],
+            "index": 32
+        },
+        {
+            "id": "Woman1",
+            "group": 2,
+            "__indexColor": "#c403c3",
+            "__bckgDimensions": [
+                84.6738684622239,
+                24.2995279120152
+            ],
+            "index": 33
+        },
+        {
+            "id": "Judge",
+            "group": 2,
+            "__indexColor": "#b003c4",
+            "__bckgDimensions": [
+                59.19597844757545,
+                24.2995279120152
+            ],
+            "index": 34
+        },
+        {
+            "id": "Champmathieu",
+            "group": 2,
+            "__indexColor": "#9c03c5",
+            "__bckgDimensions": [
+                141.30233220734107,
+                24.2995279120152
+            ],
+            "index": 35
+        },
+        {
+            "id": "Brevet",
+            "group": 2,
+            "__indexColor": "#8803c6",
+            "__bckgDimensions": [
+                62.546228691716074,
+                24.2995279120152
+            ],
+            "index": 36
+        },
+        {
+            "id": "Chenildieu",
+            "group": 2,
+            "__indexColor": "#7403c7",
+            "__bckgDimensions": [
+                99.69570378937233,
+                24.2995279120152
+            ],
+            "index": 37
+        },
+        {
+            "id": "Cochepaille",
+            "group": 2,
+            "__indexColor": "#6003c8",
+            "__bckgDimensions": [
+                109.81569890655983,
+                24.2995279120152
+            ],
+            "index": 38
+        },
+        {
+            "id": "Pontmercy",
+            "group": 4,
+            "__indexColor": "#4c03c9",
+            "__bckgDimensions": [
+                100.78281621613014,
+                24.2995279120152
+            ],
+            "index": 39
+        },
+        {
+            "id": "Boulatruelle",
+            "group": 6,
+            "__indexColor": "#3803ca",
+            "__bckgDimensions": [
+                110.94231633820046,
+                24.2995279120152
+            ],
+            "index": 40
+        },
+        {
+            "id": "Eponine",
+            "group": 4,
+            "__indexColor": "#2403cb",
+            "__bckgDimensions": [
+                78.32908086456764,
+                24.2995279120152
+            ],
+            "index": 41
+        },
+        {
+            "id": "Anzelma",
+            "group": 4,
+            "__indexColor": "#1003cc",
+            "__bckgDimensions": [
+                82.79612188019264,
+                24.2995279120152
+            ],
+            "index": 42
+        },
+        {
+            "id": "Woman2",
+            "group": 5,
+            "__indexColor": "#fc03cd",
+            "__bckgDimensions": [
+                84.6738684622239,
+                24.2995279120152
+            ],
+            "index": 43
+        },
+        {
+            "id": "MotherInnocent",
+            "group": 0,
+            "__indexColor": "#e803ce",
+            "__bckgDimensions": [
+                144.69210271515357,
+                24.2995279120152
+            ],
+            "index": 44
+        },
+        {
+            "id": "Gribier",
+            "group": 0,
+            "__indexColor": "#d403cf",
+            "__bckgDimensions": [
+                64.77974919952858,
+                24.2995279120152
+            ],
+            "index": 45
+        },
+        {
+            "id": "Jondrette",
+            "group": 7,
+            "__indexColor": "#c003d0",
+            "__bckgDimensions": [
+                88.43917302765358,
+                24.2995279120152
+            ],
+            "index": 46
+        },
+        {
+            "id": "Mme.Burgon",
+            "group": 7,
+            "__indexColor": "#ac03d1",
+            "__bckgDimensions": [
+                119.9159338919114,
+                24.2995279120152
+            ],
+            "index": 47
+        },
+        {
+            "id": "Gavroche",
+            "group": 8,
+            "__indexColor": "#9803d2",
+            "__bckgDimensions": [
+                91.7993567434739,
+                24.2995279120152
+            ],
+            "index": 48
+        },
+        {
+            "id": "Gillenormand",
+            "group": 5,
+            "__indexColor": "#8403d3",
+            "__bckgDimensions": [
+                124.42249517120827,
+                24.2995279120152
+            ],
+            "index": 49
+        },
+        {
+            "id": "Magnon",
+            "group": 5,
+            "__indexColor": "#7003d4",
+            "__bckgDimensions": [
+                77.19257573761452,
+                24.2995279120152
+            ],
+            "index": 50
+        },
+        {
+            "id": "Mlle.Gillenormand",
+            "group": 5,
+            "__indexColor": "#5c03d5",
+            "__bckgDimensions": [
+                167.15574102081763,
+                24.2995279120152
+            ],
+            "index": 51
+        },
+        {
+            "id": "Mme.Pontmercy",
+            "group": 5,
+            "__indexColor": "#4803d6",
+            "__bckgDimensions": [
+                151.38279180206763,
+                24.2995279120152
+            ],
+            "index": 52
+        },
+        {
+            "id": "Mlle.Vaubois",
+            "group": 5,
+            "__indexColor": "#3403d7",
+            "__bckgDimensions": [
+                118.4236243215989,
+                24.2995279120152
+            ],
+            "index": 53
+        },
+        {
+            "id": "Lt.Gillenormand",
+            "group": 5,
+            "__indexColor": "#2003d8",
+            "__bckgDimensions": [
+                146.92562322296607,
+                24.2995279120152
+            ],
+            "index": 54
+        },
+        {
+            "id": "Marius",
+            "group": 8,
+            "__indexColor": "#0c03d9",
+            "__bckgDimensions": [
+                64.77976445831764,
+                24.2995279120152
+            ],
+            "index": 55
+        },
+        {
+            "id": "BaronessT",
+            "group": 5,
+            "__indexColor": "#f803da",
+            "__bckgDimensions": [
+                101.91933660187233,
+                24.2995279120152
+            ],
+            "index": 56
+        },
+        {
+            "id": "Mabeuf",
+            "group": 8,
+            "__indexColor": "#e403db",
+            "__bckgDimensions": [
+                71.5593665090989,
+                24.2995279120152
+            ],
+            "index": 57
+        },
+        {
+            "id": "Enjolras",
+            "group": 8,
+            "__indexColor": "#d003dc",
+            "__bckgDimensions": [
+                77.17278508820046,
+                24.2995279120152
+            ],
+            "index": 58
+        },
+        {
+            "id": "Combeferre",
+            "group": 8,
+            "__indexColor": "#bc03dd",
+            "__bckgDimensions": [
+                110.91268376984108,
+                24.2995279120152
+            ],
+            "index": 59
+        },
+        {
+            "id": "Prouvaire",
+            "group": 8,
+            "__indexColor": "#a803de",
+            "__bckgDimensions": [
+                90.67269353546608,
+                24.2995279120152
+            ],
+            "index": 60
+        },
+        {
+            "id": "Feuilly",
+            "group": 8,
+            "__indexColor": "#9403df",
+            "__bckgDimensions": [
+                62.536356255192636,
+                24.2995279120152
+            ],
+            "index": 61
+        },
+        {
+            "id": "Courfeyrac",
+            "group": 8,
+            "__indexColor": "#8003e0",
+            "__bckgDimensions": [
+                103.03608159698952,
+                24.2995279120152
+            ],
+            "index": 62
+        },
+        {
+            "id": "Bahorel",
+            "group": 8,
+            "__indexColor": "#6c03e1",
+            "__bckgDimensions": [
+                73.81263188995827,
+                24.2995279120152
+            ],
+            "index": 63
+        },
+        {
+            "id": "Bossuet",
+            "group": 8,
+            "__indexColor": "#5803e2",
+            "__bckgDimensions": [
+                77.18267278351296,
+                24.2995279120152
+            ],
+            "index": 64
+        },
+        {
+            "id": "Joly",
+            "group": 8,
+            "__indexColor": "#4403e3",
+            "__bckgDimensions": [
+                40.04310063995826,
+                24.2995279120152
+            ],
+            "index": 65
+        },
+        {
+            "id": "Grantaire",
+            "group": 8,
+            "__indexColor": "#3003e4",
+            "__bckgDimensions": [
+                88.41941289581764,
+                24.2995279120152
+            ],
+            "index": 66
+        },
+        {
+            "id": "MotherPlutarch",
+            "group": 9,
+            "__indexColor": "#1c03e5",
+            "__bckgDimensions": [
+                141.29241399445044,
+                24.2995279120152
+            ],
+            "index": 67
+        },
+        {
+            "id": "Gueulemer",
+            "group": 4,
+            "__indexColor": "#0803e6",
+            "__bckgDimensions": [
+                104.17263250030983,
+                24.2995279120152
+            ],
+            "index": 68
+        },
+        {
+            "id": "Babet",
+            "group": 4,
+            "__indexColor": "#f403e7",
+            "__bckgDimensions": [
+                56.94268254913795,
+                24.2995279120152
+            ],
+            "index": 69
+        },
+        {
+            "id": "Claquesous",
+            "group": 4,
+            "__indexColor": "#e003e8",
+            "__bckgDimensions": [
+                110.94234685577858,
+                24.2995279120152
+            ],
+            "index": 70
+        },
+        {
+            "id": "Montparnasse",
+            "group": 4,
+            "__indexColor": "#cc03e9",
+            "__bckgDimensions": [
+                132.30896978058325,
+                24.2995279120152
+            ],
+            "index": 71
+        },
+        {
+            "id": "Toussaint",
+            "group": 5,
+            "__indexColor": "#b803ea",
+            "__bckgDimensions": [
+                89.5559485403489,
+                24.2995279120152
+            ],
+            "index": 72
+        },
+        {
+            "id": "Child1",
+            "group": 10,
+            "__indexColor": "#a403eb",
+            "__bckgDimensions": [
+                61.429483696598886,
+                24.2995279120152
+            ],
+            "index": 73
+        },
+        {
+            "id": "Child2",
+            "group": 10,
+            "__indexColor": "#9003ec",
+            "__bckgDimensions": [
+                61.429483696598886,
+                24.2995279120152
+            ],
+            "index": 74
+        },
+        {
+            "id": "Brujon",
+            "group": 4,
+            "__indexColor": "#7c03ed",
+            "__bckgDimensions": [
+                62.556116387028574,
+                24.2995279120152
+            ],
+            "index": 75
+        },
+        {
+            "id": "Mme.Hucheloup",
+            "group": 8,
+            "__indexColor": "#6803ee",
+            "__bckgDimensions": [
+                151.42232732452857,
+                24.2995279120152
+            ],
+            "index": 76
+        }
+    ],
+    "links": [
+        {
+            "value": 1,
+            "__indexColor": "#5403ef",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 0,
+            "source": "Napoleon",
+            "target": "Myriel"
+        },
+        {
+            "value": 8,
+            "__indexColor": "#4003f0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 1,
+            "source": "Mlle.Baptistine",
+            "target": "Myriel"
+        },
+        {
+            "value": 10,
+            "__indexColor": "#2c03f1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 2,
+            "source": "Mme.Magloire",
+            "target": "Myriel"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#1803f2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 3,
+            "source": "Mme.Magloire",
+            "target": "Mlle.Baptistine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#0403f3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 4,
+            "source": "CountessdeLo",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f003f4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 5,
+            "source": "Geborand",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#dc03f5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 6,
+            "source": "Champtercier",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#c803f6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 7,
+            "source": "Cravatte",
+            "target": "Myriel"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#b403f7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 8,
+            "source": "Count",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a003f8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 9,
+            "source": "OldMan",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#8c03f9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 10,
+            "source": "Valjean",
+            "target": "Labarre"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#7803fa",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 11,
+            "source": "Valjean",
+            "target": "Mme.Magloire"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#6403fb",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 12,
+            "source": "Valjean",
+            "target": "Mlle.Baptistine"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#5003fc",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 13,
+            "source": "Valjean",
+            "target": "Myriel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#3c03fd",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 14,
+            "source": "Marguerite",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#2803fe",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 15,
+            "source": "Mme.deR",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#1403ff",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 16,
+            "source": "Isabeau",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#000400",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 17,
+            "source": "Gervais",
+            "target": "Valjean"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#ec0401",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 18,
+            "source": "Listolier",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#d80402",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 19,
+            "source": "Fameuil",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#c40403",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 20,
+            "source": "Fameuil",
+            "target": "Listolier"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#b00404",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 21,
+            "source": "Blacheville",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#9c0405",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 22,
+            "source": "Blacheville",
+            "target": "Listolier"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#880406",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 23,
+            "source": "Blacheville",
+            "target": "Fameuil"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#740407",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 24,
+            "source": "Favourite",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#600408",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 25,
+            "source": "Favourite",
+            "target": "Listolier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#4c0409",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 26,
+            "source": "Favourite",
+            "target": "Fameuil"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#38040a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 27,
+            "source": "Favourite",
+            "target": "Blacheville"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#24040b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 28,
+            "source": "Dahlia",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#10040c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 29,
+            "source": "Dahlia",
+            "target": "Listolier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#fc040d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 30,
+            "source": "Dahlia",
+            "target": "Fameuil"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#e8040e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 31,
+            "source": "Dahlia",
+            "target": "Blacheville"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#d4040f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 32,
+            "source": "Dahlia",
+            "target": "Favourite"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#c00410",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 33,
+            "source": "Zephine",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#ac0411",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 34,
+            "source": "Zephine",
+            "target": "Listolier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#980412",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 35,
+            "source": "Zephine",
+            "target": "Fameuil"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#840413",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 36,
+            "source": "Zephine",
+            "target": "Blacheville"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#700414",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 37,
+            "source": "Zephine",
+            "target": "Favourite"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#5c0415",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 38,
+            "source": "Zephine",
+            "target": "Dahlia"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#480416",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 39,
+            "source": "Fantine",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#340417",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 40,
+            "source": "Fantine",
+            "target": "Listolier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#200418",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 41,
+            "source": "Fantine",
+            "target": "Fameuil"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#0c0419",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 42,
+            "source": "Fantine",
+            "target": "Blacheville"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#f8041a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 43,
+            "source": "Fantine",
+            "target": "Favourite"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#e4041b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 44,
+            "source": "Fantine",
+            "target": "Dahlia"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#d0041c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 45,
+            "source": "Fantine",
+            "target": "Zephine"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#bc041d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 46,
+            "source": "Fantine",
+            "target": "Marguerite"
+        },
+        {
+            "value": 9,
+            "__indexColor": "#a8041e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 47,
+            "source": "Fantine",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#94041f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 48,
+            "source": "Mme.Thenardier",
+            "target": "Fantine"
+        },
+        {
+            "value": 7,
+            "__indexColor": "#800420",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 49,
+            "source": "Mme.Thenardier",
+            "target": "Valjean"
+        },
+        {
+            "value": 13,
+            "__indexColor": "#6c0421",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 50,
+            "source": "Thenardier",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#580422",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 51,
+            "source": "Thenardier",
+            "target": "Fantine"
+        },
+        {
+            "value": 12,
+            "__indexColor": "#440423",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 52,
+            "source": "Thenardier",
+            "target": "Valjean"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#300424",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 53,
+            "source": "Cosette",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 31,
+            "__indexColor": "#1c0425",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 54,
+            "source": "Cosette",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#080426",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 55,
+            "source": "Cosette",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f40427",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 56,
+            "source": "Cosette",
+            "target": "Thenardier"
+        },
+        {
+            "value": 17,
+            "__indexColor": "#e00428",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 57,
+            "source": "Javert",
+            "target": "Valjean"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#cc0429",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 58,
+            "source": "Javert",
+            "target": "Fantine"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#b8042a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 59,
+            "source": "Javert",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a4042b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 60,
+            "source": "Javert",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#90042c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 61,
+            "source": "Javert",
+            "target": "Cosette"
+        },
+        {
+            "value": 8,
+            "__indexColor": "#7c042d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 62,
+            "source": "Fauchelevent",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#68042e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 63,
+            "source": "Fauchelevent",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#54042f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 64,
+            "source": "Bamatabois",
+            "target": "Fantine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#400430",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 65,
+            "source": "Bamatabois",
+            "target": "Javert"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#2c0431",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 66,
+            "source": "Bamatabois",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#180432",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 67,
+            "source": "Perpetue",
+            "target": "Fantine"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#040433",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 68,
+            "source": "Simplice",
+            "target": "Perpetue"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#f00434",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 69,
+            "source": "Simplice",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#dc0435",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 70,
+            "source": "Simplice",
+            "target": "Fantine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#c80436",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 71,
+            "source": "Simplice",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#b40437",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 72,
+            "source": "Scaufflaire",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#a00438",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 73,
+            "source": "Woman1",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#8c0439",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 74,
+            "source": "Woman1",
+            "target": "Javert"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#78043a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 75,
+            "source": "Judge",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#64043b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 76,
+            "source": "Judge",
+            "target": "Bamatabois"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#50043c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 77,
+            "source": "Champmathieu",
+            "target": "Valjean"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#3c043d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 78,
+            "source": "Champmathieu",
+            "target": "Judge"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#28043e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 79,
+            "source": "Champmathieu",
+            "target": "Bamatabois"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#14043f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 80,
+            "source": "Brevet",
+            "target": "Judge"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#000440",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 81,
+            "source": "Brevet",
+            "target": "Champmathieu"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#ec0441",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 82,
+            "source": "Brevet",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#d80442",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 83,
+            "source": "Brevet",
+            "target": "Bamatabois"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#c40443",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 84,
+            "source": "Chenildieu",
+            "target": "Judge"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#b00444",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 85,
+            "source": "Chenildieu",
+            "target": "Champmathieu"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#9c0445",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 86,
+            "source": "Chenildieu",
+            "target": "Brevet"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#880446",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 87,
+            "source": "Chenildieu",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#740447",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 88,
+            "source": "Chenildieu",
+            "target": "Bamatabois"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#600448",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 89,
+            "source": "Cochepaille",
+            "target": "Judge"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#4c0449",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 90,
+            "source": "Cochepaille",
+            "target": "Champmathieu"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#38044a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 91,
+            "source": "Cochepaille",
+            "target": "Brevet"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#24044b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 92,
+            "source": "Cochepaille",
+            "target": "Chenildieu"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#10044c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 93,
+            "source": "Cochepaille",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#fc044d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 94,
+            "source": "Cochepaille",
+            "target": "Bamatabois"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e8044e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 95,
+            "source": "Pontmercy",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#d4044f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 96,
+            "source": "Boulatruelle",
+            "target": "Thenardier"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#c00450",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 97,
+            "source": "Eponine",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#ac0451",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 98,
+            "source": "Eponine",
+            "target": "Thenardier"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#980452",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 99,
+            "source": "Anzelma",
+            "target": "Eponine"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#840453",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 100,
+            "source": "Anzelma",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#700454",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 101,
+            "source": "Anzelma",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#5c0455",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 102,
+            "source": "Woman2",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#480456",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 103,
+            "source": "Woman2",
+            "target": "Cosette"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#340457",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 104,
+            "source": "Woman2",
+            "target": "Javert"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#200458",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 105,
+            "source": "MotherInnocent",
+            "target": "Fauchelevent"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#0c0459",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 106,
+            "source": "MotherInnocent",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#f8045a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 107,
+            "source": "Gribier",
+            "target": "Fauchelevent"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e4045b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 108,
+            "source": "Mme.Burgon",
+            "target": "Jondrette"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#d0045c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 109,
+            "source": "Gavroche",
+            "target": "Mme.Burgon"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#bc045d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 110,
+            "source": "Gavroche",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a8045e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 111,
+            "source": "Gavroche",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#94045f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 112,
+            "source": "Gavroche",
+            "target": "Valjean"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#800460",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 113,
+            "source": "Gillenormand",
+            "target": "Cosette"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#6c0461",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 114,
+            "source": "Gillenormand",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#580462",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 115,
+            "source": "Magnon",
+            "target": "Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#440463",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 116,
+            "source": "Magnon",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 9,
+            "__indexColor": "#300464",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 117,
+            "source": "Mlle.Gillenormand",
+            "target": "Gillenormand"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#1c0465",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 118,
+            "source": "Mlle.Gillenormand",
+            "target": "Cosette"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#080466",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 119,
+            "source": "Mlle.Gillenormand",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f40467",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 120,
+            "source": "Mme.Pontmercy",
+            "target": "Mlle.Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e00468",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 121,
+            "source": "Mme.Pontmercy",
+            "target": "Pontmercy"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#cc0469",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 122,
+            "source": "Mlle.Vaubois",
+            "target": "Mlle.Gillenormand"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#b8046a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 123,
+            "source": "Lt.Gillenormand",
+            "target": "Mlle.Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a4046b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 124,
+            "source": "Lt.Gillenormand",
+            "target": "Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#90046c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 125,
+            "source": "Lt.Gillenormand",
+            "target": "Cosette"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#7c046d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 126,
+            "source": "Marius",
+            "target": "Mlle.Gillenormand"
+        },
+        {
+            "value": 12,
+            "__indexColor": "#68046e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 127,
+            "source": "Marius",
+            "target": "Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#54046f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 128,
+            "source": "Marius",
+            "target": "Pontmercy"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#400470",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 129,
+            "source": "Marius",
+            "target": "Lt.Gillenormand"
+        },
+        {
+            "value": 21,
+            "__indexColor": "#2c0471",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 130,
+            "source": "Marius",
+            "target": "Cosette"
+        },
+        {
+            "value": 19,
+            "__indexColor": "#180472",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 131,
+            "source": "Marius",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#040473",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 132,
+            "source": "Marius",
+            "target": "Tholomyes"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#f00474",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 133,
+            "source": "Marius",
+            "target": "Thenardier"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#dc0475",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 134,
+            "source": "Marius",
+            "target": "Eponine"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#c80476",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 135,
+            "source": "Marius",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#b40477",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 136,
+            "source": "BaronessT",
+            "target": "Gillenormand"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a00478",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 137,
+            "source": "BaronessT",
+            "target": "Marius"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#8c0479",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 138,
+            "source": "Mabeuf",
+            "target": "Marius"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#78047a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 139,
+            "source": "Mabeuf",
+            "target": "Eponine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#64047b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 140,
+            "source": "Mabeuf",
+            "target": "Gavroche"
+        },
+        {
+            "value": 7,
+            "__indexColor": "#50047c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 141,
+            "source": "Enjolras",
+            "target": "Marius"
+        },
+        {
+            "value": 7,
+            "__indexColor": "#3c047d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 142,
+            "source": "Enjolras",
+            "target": "Gavroche"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#28047e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 143,
+            "source": "Enjolras",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#14047f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 144,
+            "source": "Enjolras",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#000480",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 145,
+            "source": "Enjolras",
+            "target": "Valjean"
+        },
+        {
+            "value": 15,
+            "__indexColor": "#ec0481",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 146,
+            "source": "Combeferre",
+            "target": "Enjolras"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#d80482",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 147,
+            "source": "Combeferre",
+            "target": "Marius"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#c40483",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 148,
+            "source": "Combeferre",
+            "target": "Gavroche"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#b00484",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 149,
+            "source": "Combeferre",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#9c0485",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 150,
+            "source": "Prouvaire",
+            "target": "Gavroche"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#880486",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 151,
+            "source": "Prouvaire",
+            "target": "Enjolras"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#740487",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 152,
+            "source": "Prouvaire",
+            "target": "Combeferre"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#600488",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 153,
+            "source": "Feuilly",
+            "target": "Gavroche"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#4c0489",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 154,
+            "source": "Feuilly",
+            "target": "Enjolras"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#38048a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 155,
+            "source": "Feuilly",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#24048b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 156,
+            "source": "Feuilly",
+            "target": "Combeferre"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#10048c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 157,
+            "source": "Feuilly",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#fc048d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 158,
+            "source": "Feuilly",
+            "target": "Marius"
+        },
+        {
+            "value": 9,
+            "__indexColor": "#e8048e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 159,
+            "source": "Courfeyrac",
+            "target": "Marius"
+        },
+        {
+            "value": 17,
+            "__indexColor": "#d4048f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 160,
+            "source": "Courfeyrac",
+            "target": "Enjolras"
+        },
+        {
+            "value": 13,
+            "__indexColor": "#c00490",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 161,
+            "source": "Courfeyrac",
+            "target": "Combeferre"
+        },
+        {
+            "value": 7,
+            "__indexColor": "#ac0491",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 162,
+            "source": "Courfeyrac",
+            "target": "Gavroche"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#980492",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 163,
+            "source": "Courfeyrac",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#840493",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 164,
+            "source": "Courfeyrac",
+            "target": "Eponine"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#700494",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 165,
+            "source": "Courfeyrac",
+            "target": "Feuilly"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#5c0495",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 166,
+            "source": "Courfeyrac",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#480496",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 167,
+            "source": "Bahorel",
+            "target": "Combeferre"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#340497",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 168,
+            "source": "Bahorel",
+            "target": "Gavroche"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#200498",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 169,
+            "source": "Bahorel",
+            "target": "Courfeyrac"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#0c0499",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 170,
+            "source": "Bahorel",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#f8049a",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 171,
+            "source": "Bahorel",
+            "target": "Enjolras"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#e4049b",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 172,
+            "source": "Bahorel",
+            "target": "Feuilly"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#d0049c",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 173,
+            "source": "Bahorel",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#bc049d",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 174,
+            "source": "Bahorel",
+            "target": "Marius"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#a8049e",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 175,
+            "source": "Bossuet",
+            "target": "Marius"
+        },
+        {
+            "value": 12,
+            "__indexColor": "#94049f",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 176,
+            "source": "Bossuet",
+            "target": "Courfeyrac"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#8004a0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 177,
+            "source": "Bossuet",
+            "target": "Gavroche"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#6c04a1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 178,
+            "source": "Bossuet",
+            "target": "Bahorel"
+        },
+        {
+            "value": 10,
+            "__indexColor": "#5804a2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 179,
+            "source": "Bossuet",
+            "target": "Enjolras"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#4404a3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 180,
+            "source": "Bossuet",
+            "target": "Feuilly"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#3004a4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 181,
+            "source": "Bossuet",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 9,
+            "__indexColor": "#1c04a5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 182,
+            "source": "Bossuet",
+            "target": "Combeferre"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#0804a6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 183,
+            "source": "Bossuet",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f404a7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 184,
+            "source": "Bossuet",
+            "target": "Valjean"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#e004a8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 185,
+            "source": "Joly",
+            "target": "Bahorel"
+        },
+        {
+            "value": 7,
+            "__indexColor": "#cc04a9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 186,
+            "source": "Joly",
+            "target": "Bossuet"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#b804aa",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 187,
+            "source": "Joly",
+            "target": "Gavroche"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#a404ab",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 188,
+            "source": "Joly",
+            "target": "Courfeyrac"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#9004ac",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 189,
+            "source": "Joly",
+            "target": "Enjolras"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#7c04ad",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 190,
+            "source": "Joly",
+            "target": "Feuilly"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#6804ae",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 191,
+            "source": "Joly",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#5404af",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 192,
+            "source": "Joly",
+            "target": "Combeferre"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#4004b0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 193,
+            "source": "Joly",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#2c04b1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 194,
+            "source": "Joly",
+            "target": "Marius"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#1804b2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 195,
+            "source": "Grantaire",
+            "target": "Bossuet"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#0404b3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 196,
+            "source": "Grantaire",
+            "target": "Enjolras"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f004b4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 197,
+            "source": "Grantaire",
+            "target": "Combeferre"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#dc04b5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 198,
+            "source": "Grantaire",
+            "target": "Courfeyrac"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#c804b6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 199,
+            "source": "Grantaire",
+            "target": "Joly"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#b404b7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 200,
+            "source": "Grantaire",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a004b8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 201,
+            "source": "Grantaire",
+            "target": "Bahorel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#8c04b9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 202,
+            "source": "Grantaire",
+            "target": "Feuilly"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#7804ba",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 203,
+            "source": "Grantaire",
+            "target": "Prouvaire"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#6404bb",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 204,
+            "source": "MotherPlutarch",
+            "target": "Mabeuf"
+        },
+        {
+            "value": 5,
+            "__indexColor": "#5004bc",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 205,
+            "source": "Gueulemer",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#3c04bd",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 206,
+            "source": "Gueulemer",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#2804be",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 207,
+            "source": "Gueulemer",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#1404bf",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 208,
+            "source": "Gueulemer",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#0004c0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 209,
+            "source": "Gueulemer",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#ec04c1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 210,
+            "source": "Gueulemer",
+            "target": "Eponine"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#d804c2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 211,
+            "source": "Babet",
+            "target": "Thenardier"
+        },
+        {
+            "value": 6,
+            "__indexColor": "#c404c3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 212,
+            "source": "Babet",
+            "target": "Gueulemer"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#b004c4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 213,
+            "source": "Babet",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#9c04c5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 214,
+            "source": "Babet",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#8804c6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 215,
+            "source": "Babet",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#7404c7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 216,
+            "source": "Babet",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#6004c8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 217,
+            "source": "Babet",
+            "target": "Eponine"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#4c04c9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 218,
+            "source": "Claquesous",
+            "target": "Thenardier"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#3804ca",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 219,
+            "source": "Claquesous",
+            "target": "Babet"
+        },
+        {
+            "value": 4,
+            "__indexColor": "#2404cb",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 220,
+            "source": "Claquesous",
+            "target": "Gueulemer"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#1004cc",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 221,
+            "source": "Claquesous",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#fc04cd",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 222,
+            "source": "Claquesous",
+            "target": "Mme.Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e804ce",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 223,
+            "source": "Claquesous",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#d404cf",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 224,
+            "source": "Claquesous",
+            "target": "Eponine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#c004d0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 225,
+            "source": "Claquesous",
+            "target": "Enjolras"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#ac04d1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 226,
+            "source": "Montparnasse",
+            "target": "Javert"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#9804d2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 227,
+            "source": "Montparnasse",
+            "target": "Babet"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#8404d3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 228,
+            "source": "Montparnasse",
+            "target": "Gueulemer"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#7004d4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 229,
+            "source": "Montparnasse",
+            "target": "Claquesous"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#5c04d5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 230,
+            "source": "Montparnasse",
+            "target": "Valjean"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#4804d6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 231,
+            "source": "Montparnasse",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#3404d7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 232,
+            "source": "Montparnasse",
+            "target": "Eponine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#2004d8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 233,
+            "source": "Montparnasse",
+            "target": "Thenardier"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#0c04d9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 234,
+            "source": "Toussaint",
+            "target": "Cosette"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f804da",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 235,
+            "source": "Toussaint",
+            "target": "Javert"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e404db",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 236,
+            "source": "Toussaint",
+            "target": "Valjean"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#d004dc",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 237,
+            "source": "Child1",
+            "target": "Gavroche"
+        },
+        {
+            "value": 2,
+            "__indexColor": "#bc04dd",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 238,
+            "source": "Child2",
+            "target": "Gavroche"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#a804de",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 239,
+            "source": "Child2",
+            "target": "Child1"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#9404df",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 240,
+            "source": "Brujon",
+            "target": "Babet"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#8004e0",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 241,
+            "source": "Brujon",
+            "target": "Gueulemer"
+        },
+        {
+            "value": 3,
+            "__indexColor": "#6c04e1",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 242,
+            "source": "Brujon",
+            "target": "Thenardier"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#5804e2",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 243,
+            "source": "Brujon",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#4404e3",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 244,
+            "source": "Brujon",
+            "target": "Eponine"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#3004e4",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 245,
+            "source": "Brujon",
+            "target": "Claquesous"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#1c04e5",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 246,
+            "source": "Brujon",
+            "target": "Montparnasse"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#0804e6",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 247,
+            "source": "Mme.Hucheloup",
+            "target": "Bossuet"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#f404e7",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 248,
+            "source": "Mme.Hucheloup",
+            "target": "Joly"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#e004e8",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 249,
+            "source": "Mme.Hucheloup",
+            "target": "Grantaire"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#cc04e9",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 250,
+            "source": "Mme.Hucheloup",
+            "target": "Bahorel"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#b804ea",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 251,
+            "source": "Mme.Hucheloup",
+            "target": "Courfeyrac"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#a404eb",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 252,
+            "source": "Mme.Hucheloup",
+            "target": "Gavroche"
+        },
+        {
+            "value": 1,
+            "__indexColor": "#9004ec",
+            "__photons": [
+                {
+                    "__progressRatio": 0.1820000000000008
+                },
+                {
+                    "__progressRatio": 0.432000000000001
+                },
+                {
+                    "__progressRatio": 0.6820000000000009
+                },
+                {
+                    "__progressRatio": 0.9320000000000009
+                }
+            ],
+            "__controlPoints": null,
+            "index": 253,
+            "source": "Mme.Hucheloup",
+            "target": "Enjolras"
+        }
+    ]
+}

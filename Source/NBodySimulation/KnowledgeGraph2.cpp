@@ -301,25 +301,33 @@ void AKnowledgeGraph::default_generate_graph_method()
 			for (int32 i = 0; i < jnodessss; i++)
 			{
 				auto jobj = jnodes[i]->AsObject();
-				FString jid;
 				FVector jlocation;
 				
-				
-				jid = jobj->GetStringField("user_generate_id_7577777777");
-				if (1)
+				FString jid = jobj->GetStringField("user_generate_id_7577777777");
+
+
+				if (jobj->HasField("ue_location_X") &&
+					jobj->HasField("ue_location_Y") &&
+					jobj->HasField("ue_location_Z")
+					)
 				{
 					jlocation = FVector(
 						jobj->GetNumberField("ue_location_X"),
 						jobj->GetNumberField("ue_location_Y"),
 						jobj->GetNumberField("ue_location_Z")
 					);
+					// You can use jlocation vector as needed
 				}
 				else
 				{
-					float k=jnodessss * 10.0f;
-					jlocation = FVector(k, k, k
-					);
+					// Send a warning to the client. 
+					ll("location does not exist", log);
+					
+					// Handle cases where location coordinates do not exist
+					// For example, assigning a default value or logging an error
+					jlocation = FVector(0, 0, 0); // Default value if no location found
 				}
+
 
 				ll("location111111111111111: " + jlocation.ToString(), log);
 			

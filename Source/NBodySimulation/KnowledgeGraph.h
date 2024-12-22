@@ -86,6 +86,11 @@ enum class CGM : uint8
 	DATABASE UMETA(DisplayName = "database333333")
 };
 
+
+
+
+
+
 UCLASS()
 class NBODYSIMULATION_API AKnowledgeGraph : public AActor
 {
@@ -108,6 +113,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool use_predefined_location = true;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	bool initialize_using_actor_location = true;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	int32 use_json_file_index = 0;
@@ -244,7 +251,8 @@ public:
 	TArray<int> Linkinout;
 
 	
-	
+
+	FVector current_own_position;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float alpha = 1;
 	int iterationsf = 0;

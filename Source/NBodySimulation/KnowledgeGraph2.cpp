@@ -754,7 +754,10 @@ void AKnowledgeGraph::apply_force()
 
 void AKnowledgeGraph::initialize_node_position()
 {
-
+	if (initialize_using_actor_location)
+	{
+		current_own_position = GetActorLocation();
+	}
 	
 	if (!cpu_use_parallel)
 	{
@@ -844,6 +847,12 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 				radius * sin(rollAngle) * sin(yawAngle) * universal_graph_scale
 			);
 		}
+
+		if (initialize_using_actor_location)
+		{
+			init_pos += current_own_position;
+		}
+		
 	}
 	
 	nodePositions[index] = init_pos;

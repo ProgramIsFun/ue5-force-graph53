@@ -49,6 +49,7 @@ void AKnowledgeGraph::request_a_graph()
 
 
 
+
 void AKnowledgeGraph::request_graph_http()
 {
 	TSharedPtr<FJsonObject> Js = MakeShareable(new FJsonObject());

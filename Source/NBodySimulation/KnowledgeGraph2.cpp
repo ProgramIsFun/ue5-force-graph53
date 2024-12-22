@@ -336,13 +336,33 @@ void AKnowledgeGraph::default_generate_graph_method()
 				predefined_positions[i]=jlocation;
 
 			}
-		
+
 			
+			if(use_predefined_locationand_then_center_to_current_actor)
+			{
+				FVector center = GetActorLocation();
+				FVector aggregation = FVector(0, 0, 0);
+
+				for (int32 i = 0; i < jnodessss; i++)
+				{
+					aggregation += predefined_positions[i];
+				}
+			
+				aggregation /= jnodessss;
+				for (int32 i = 0; i < jnodessss; i++)
+				{
+					predefined_positions[i] -=  (aggregation-center );
+				}
+			}
 		}else 
 		{
 			ll("Pretty fine location feature is only available for using database.  ", log);
 			qq();
 		}
+
+
+
+		
 		
 	}
 

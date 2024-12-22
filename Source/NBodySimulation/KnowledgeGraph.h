@@ -114,6 +114,10 @@ public:
 	bool use_predefined_location = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	bool use_predefined_locationand_then_center_to_current_actor = true;
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool initialize_using_actor_location = true;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)

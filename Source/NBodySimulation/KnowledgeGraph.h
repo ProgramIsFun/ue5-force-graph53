@@ -334,6 +334,7 @@ public:
 	void add_edge(int32 id, int32 source, int32 target);
 	void initialize_node_position();
 	void initialize_node_position_individual(int index);
+	FVector get_player_location727();
 	void calculate_bias_and_strength_of_links();
 	void apply_force();
 	void calculate_link_force_and_update_velocity();

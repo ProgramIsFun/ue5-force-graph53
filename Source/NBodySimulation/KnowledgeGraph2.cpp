@@ -915,6 +915,11 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 	}
 }
 
+FVector AKnowledgeGraph::get_player_location727()
+{
+	return GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+}
+
 void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 {
 	if (use_shaders && !GPUvalid)
@@ -922,6 +927,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 		return;
 	}
 
+	FVector PlayerLocation = get_player_location727();
 
 	// Update bodies visual with new positions.
 	for (int i = 0; i < nodePositions.Num(); i++)
@@ -944,7 +950,6 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 			if (rotate_to_face_player)
 			{
-				FVector PlayerLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 				// Compute the direction from the text component to the player.
 				FVector ToPlayer = PlayerLocation - NewPosition;
 				ToPlayer.Normalize();

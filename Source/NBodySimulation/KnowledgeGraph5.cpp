@@ -120,7 +120,12 @@ void AKnowledgeGraph::add_node_to_database1115()
 {
 	// Get the first character locations.
 	FVector player_location =get_player_location727();
+
+
+	
 	// Create a JSON writer and JSON Array
+
+	
 	// Make http requests if successful create a note in the handler. 
 }
 

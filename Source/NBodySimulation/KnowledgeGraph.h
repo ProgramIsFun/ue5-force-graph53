@@ -245,7 +245,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_link_from_database1117();
 
-
 	
 	TArray<int> LinkOffsets; // Holds the offset for each body
 	TArray<int> LinkCounts; // Holds the count of links for each body

@@ -45,11 +45,6 @@ void AKnowledgeGraph::request_a_graph()
 	}
 }
 
-
-
-
-
-
 void AKnowledgeGraph::request_graph_http()
 {
 	TSharedPtr<FJsonObject> Js = MakeShareable(new FJsonObject());
@@ -75,7 +70,6 @@ void AKnowledgeGraph::request_graph_http()
 	HttpRequest->ProcessRequest();
 	ll("YourFunction called", true, 0, TEXT("YourFunction: "));
 }
-
 void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	bool log = true;
@@ -121,46 +115,20 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 }
 
 
-void AKnowledgeGraph::debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response)
-{
-	precheck_succeed = false;
-	ll("Request failed", true, 2);
 
-	// Additional debugging information
-	if (!Response.IsValid())
-	{
-		ll("No response was received.", true, 3);
-	}
-	else
-	{
-		ll(FString::Printf(TEXT("HTTP Status Code: %d"), Response->GetResponseCode()), true, 3);
-		ll(FString::Printf(TEXT("Response Content: %s"), *Response->GetContentAsString()), true, 3);
-	}
-
-	
-	// Log information about the request itself
-	ll(FString::Printf(TEXT("HTTP Verb: %s"), *Request->GetVerb()), true, 3);
-	ll(FString::Printf(TEXT("Requested URL: %s"), *Request->GetURL()), true, 3);
-
-	// Checking connectivity or endpoint issues
-	if (Response->GetResponseCode() == -1)
-	{
-		ll("Could be a network connectivity issue or the endpoint might be down.", true, 3);
-	}
-}
 void AKnowledgeGraph::add_node_to_database1115()
 {
-
 	// Get the first character locations.
 	FVector player_location =get_player_location727();
-
-
 	// Create a JSON writer and JSON Array
-
-
 	// Make http requests if successful create a note in the handler. 
-	
 }
+
+void AKnowledgeGraph::add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest,
+	TSharedPtr<IHttpResponse> HttpResponse, bool bArg)
+{
+}
+
 
 void AKnowledgeGraph::delete_node_from_database1116()
 {
@@ -233,4 +201,33 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 
 	// Send the request
 	Request->ProcessRequest();
+}
+
+
+void AKnowledgeGraph::debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response)
+{
+	precheck_succeed = false;
+	ll("Request failed", true, 2);
+
+	// Additional debugging information
+	if (!Response.IsValid())
+	{
+		ll("No response was received.", true, 3);
+	}
+	else
+	{
+		ll(FString::Printf(TEXT("HTTP Status Code: %d"), Response->GetResponseCode()), true, 3);
+		ll(FString::Printf(TEXT("Response Content: %s"), *Response->GetContentAsString()), true, 3);
+	}
+
+	
+	// Log information about the request itself
+	ll(FString::Printf(TEXT("HTTP Verb: %s"), *Request->GetVerb()), true, 3);
+	ll(FString::Printf(TEXT("Requested URL: %s"), *Request->GetURL()), true, 3);
+
+	// Checking connectivity or endpoint issues
+	if (Response->GetResponseCode() == -1)
+	{
+		ll("Could be a network connectivity issue or the endpoint might be down.", true, 3);
+	}
 }

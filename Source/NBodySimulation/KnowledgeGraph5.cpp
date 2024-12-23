@@ -177,6 +177,10 @@ void AKnowledgeGraph::add_link_to_database1114()
 void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 {
 
+
+	bool log = true;
+
+	ll("222222222update_position_of_all_nodes_to_database1113 called", log, 0, TEXT("update_position_of_all_nodes_to_database1113: "));
 	// Create a JSON writer and JSON Array
 	FString OutputString;
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
@@ -206,7 +210,7 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 	Request->SetVerb("POST");
-	Request->SetURL("localhost:3062/api/v0/update_position_of_all_nodes111"); //Your server's endpoint
+	Request->SetURL("http://localhost:3062/api/v0/update_position_of_all_nodes111"); //Your server's endpoint
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetContentAsString(OutputString);
 
@@ -216,12 +220,14 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 		if(bWasSuccessful)
 		{
 			// Handle your server's response here
-			GLog->Log("Successfully sent JSON to server.");
+			// GLog->Log("Successfully sent JSON to server.");
+			ll2("Successfully sent JSON to server.", true, 2);
 			GLog->Log(Response->GetContentAsString());
 		}
 		else
 		{
-			GLog->Log("Failed to send JSON.");
+			// GLog->Log("Failed to send JSON.");
+			ll2("Failed to send JSON.", true, 2);
 		}
 	});
 

@@ -116,22 +116,49 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 
 
 
-void AKnowledgeGraph::add_node_to_database1115()
+void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 {
 	// Get the first character locations.
 	FVector player_location =get_player_location727();
-
-
 	
 	// Create a JSON writer and JSON Array
-
+	
 	
 	// Make http requests if successful create a note in the handler. 
+
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
+
+	HttpRequest->SetURL("http://yourserver.com/api/addnode"); // Change to your server URL
+	HttpRequest->SetVerb("POST");
+	HttpRequest->SetHeader("Content-Type", "application/json");
+
+	// Create JSON Object
+	TSharedPtr<FJsonObject> json_object_772 = MakeShareable(new FJsonObject);
+	json_object_772->SetStringField("name", NodeName);
+	json_object_772->SetNumberField("locationX", player_location.X);
+	json_object_772->SetNumberField("locationY", player_location.Y);
+	json_object_772->SetNumberField("locationZ", player_location.Z);
+
+	FString RequestBody;
+	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&RequestBody);
+	FJsonSerializer::Serialize(json_object_772.ToSharedRef(), Writer);
+
+	HttpRequest->SetContentAsString(RequestBody);
+
+	// Define response callback
+	HttpRequest->OnProcessRequestComplete().BindUObject(this, &AKnowledgeGraph::add_node_to_database1115httpCompleted);
+
+	// Execute the request
+	HttpRequest->ProcessRequest();
+
 }
 
 void AKnowledgeGraph::add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest,
 	TSharedPtr<IHttpResponse> HttpResponse, bool bArg)
 {
+
+	
+	
 }
 
 

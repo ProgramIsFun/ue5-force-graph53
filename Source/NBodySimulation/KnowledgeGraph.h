@@ -239,7 +239,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void add_link_to_database1114();
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void add_node_to_database1115();
+	void add_node_to_database1115(FString NodeName);
 	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 
 

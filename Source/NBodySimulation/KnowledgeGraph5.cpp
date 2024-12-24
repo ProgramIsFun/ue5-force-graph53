@@ -157,7 +157,8 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 	if(bWasSuccessful && Response->GetResponseCode() == 200)
 	{
 		// Log the raw response content
-		UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
+		lp("Resp111111onse: " + Response->GetContentAsString(), true, 2);
+		// UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
 
 		// Parse the JSON response
 		TSharedPtr<FJsonObject> JsonObject;
@@ -167,11 +168,13 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 		{
 			// Extract the message field from JSON
 			FString Message = JsonObject->GetStringField("message");
-			UE_LOG(LogTemp, Log, TEXT("API message: %s"), *Message);
+			lp("API1111111 message: " + Message, true, 2);
+			// UE_LOG(LogTemp, Log, TEXT("API message: %s"), *Message);
 		}
 		else
 		{
-			UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON response"));
+			lp("Failed to parse JSON response", true, 2);
+			// UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON response"));
 		}
 	}
 	else

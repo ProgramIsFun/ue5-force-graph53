@@ -24,14 +24,14 @@ void AKnowledgeGraph::request_a_graph()
 					use_json_file_index];
 				FString JsonString; //Json converted to FString
 				FFileHelper::LoadFileToString(JsonString, *JsonFilePath);
-				JsonObject = MakeShareable(new FJsonObject());
+				JsonObject1 = MakeShareable(new FJsonObject());
 				TSharedRef<TJsonReader<>> JsonReader = TJsonReaderFactory<>::Create(JsonString);
 
 				if (
-					FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
-					JsonObject.IsValid())
+					FJsonSerializer::Deserialize(JsonReader, JsonObject1) &&
+					JsonObject1.IsValid())
 				{
-					TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject->GetArrayField("nodes");
+					TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 				}
 				else
 				{
@@ -83,13 +83,13 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 			Response->GetContentType() == "application/json; charset=utf-8"
 		)
 		{
-			JsonObject = MakeShareable(new FJsonObject());
+			JsonObject1 = MakeShareable(new FJsonObject());
 
 			TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(
 				Response->GetContentAsString());
 
-			if (FJsonSerializer::Deserialize(JsonReader, JsonObject) &&
-				JsonObject.IsValid())
+			if (FJsonSerializer::Deserialize(JsonReader, JsonObject1) &&
+				JsonObject1.IsValid())
 			{
 				ll("Successfully parsed JSON.", log, 0, TEXT("request_graph_httpCompleted: "));
 
@@ -123,12 +123,9 @@ void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 	
 	// Create a JSON writer and JSON Array
 	
-	
-	// Make http requests if successful create a note in the handler. 
-
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
 
-	HttpRequest->SetURL("http://yourserver.com/api/addnode"); // Change to your server URL
+	HttpRequest->SetURL("http://localhost:3062/api/v0/create_node77777777");
 	HttpRequest->SetVerb("POST");
 	HttpRequest->SetHeader("Content-Type", "application/json");
 
@@ -153,12 +150,36 @@ void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 
 }
 
-void AKnowledgeGraph::add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest,
-	TSharedPtr<IHttpResponse> HttpResponse, bool bArg)
+void AKnowledgeGraph::add_node_to_database1115httpCompleted(
+FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
+	)
 {
+	if(bWasSuccessful && Response->GetResponseCode() == 200)
+	{
+		// Log the raw response content
+		UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
 
-	
-	
+		// Parse the JSON response
+		TSharedPtr<FJsonObject> JsonObject;
+		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
+
+		if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
+		{
+			// Extract the message field from JSON
+			FString Message = JsonObject->GetStringField("message");
+			UE_LOG(LogTemp, Log, TEXT("API message: %s"), *Message);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON response"));
+		}
+	}
+	else
+	{
+		// Handle HTTP or server errors
+		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("Unable to get any response");
+		UE_LOG(LogTemp, Error, TEXT("Error adding node: %s"), *ErrorInfo);
+	}
 }
 
 

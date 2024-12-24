@@ -81,7 +81,7 @@ void AKnowledgeGraph::get_number_of_nodes()
 	}
 	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
 	{
-		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject->GetArrayField("nodes");
+		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 		jnodessss = jnodes.Num();
 	}
 }
@@ -91,7 +91,7 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 	bool log = false;
 
 
-	TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject->GetArrayField("nodes");
+	TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 	for (int32 i = 0; i < jnodessss; i++)
 	{
 		auto jobj = jnodes[i]->AsObject();
@@ -204,7 +204,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	}
 	else
 	{
-		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject->GetArrayField("nodes");
+		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 		for (int32 i = 0; i < jnodessss; i++)
 		{
 			auto jobj = jnodes[i]->AsObject();
@@ -248,7 +248,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 			}
 		}
 
-		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject->GetArrayField("links");
+		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
 		ll("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
 
 
@@ -297,7 +297,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 			// Retrieve the position of the nodes from the database
 			// and set the position of the nodes to the retrieved position.
 			// This is done by setting the nodePositions array to the retrieved position
-			TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject->GetArrayField("nodes");
+			TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 			for (int32 i = 0; i < jnodessss; i++)
 			{
 				auto jobj = jnodes[i]->AsObject();

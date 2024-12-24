@@ -275,7 +275,7 @@ public:
 	float velocityDecay = 0.6;
 	float initialAngle = PI * (3 - sqrt(5));
 	float initialRadius = 10;
-	TSharedPtr<FJsonObject> JsonObject;
+	TSharedPtr<FJsonObject> JsonObject1;
 	
 	
 	

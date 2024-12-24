@@ -157,7 +157,7 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 	if(bWasSuccessful && Response->GetResponseCode() == 200)
 	{
 		// Log the raw response content
-		lp("Resp111111onse: " + Response->GetContentAsString(), true, 2);
+		lp("print_out_everything: " + Response->GetContentAsString(), true, 2);
 		// UE_LOG(LogTemp, Log, TEXT("Response: %s"), *Response->GetContentAsString());
 
 		// Parse the JSON response
@@ -167,8 +167,16 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 		if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 		{
 			// Extract the message field from JSON
-			FString Message = JsonObject->GetStringField("message");
-			lp("API1111111 message: " + Message, true, 2);
+			FString id = JsonObject->GetStringField("id");
+			lp("id7: " + id, true, 2);
+			
+			FString name = JsonObject->GetStringField("name");
+
+			FVector player_location =get_player_location727();
+
+			late_add_node(name, id, player_location);
+			
+			
 			// UE_LOG(LogTemp, Log, TEXT("API message: %s"), *Message);
 		}
 		else
@@ -183,6 +191,12 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("Unable to get any response");
 		UE_LOG(LogTemp, Error, TEXT("Error adding node: %s"), *ErrorInfo);
 	}
+}
+
+void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
+{
+	
+	
 }
 
 

@@ -241,7 +241,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void add_node_to_database1115(FString NodeName);
 	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-
+	void late_add_node(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_node_from_database1116();
@@ -256,7 +256,7 @@ public:
 	TArray<float> LinkBiases; // Holds the bias of each link
 	TArray<int> Linkinout;
 
-	
+	bool use_predefined_position_should_update_once = true;
 
 	FVector current_own_position;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
@@ -320,7 +320,7 @@ public:
 	void post_generate_graph();
 	void prepare();
 	void update_parameter_in_shader(float DeltaTime);
-	bool early_exit(bool log);
+	bool is_graph_stabilized(bool log);
 	void cpu_calculate();
 	void update_position_array(bool log);
 	void update_alpha();

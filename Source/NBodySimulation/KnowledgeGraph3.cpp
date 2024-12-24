@@ -60,7 +60,7 @@ void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
 	}
 }
 
-bool AKnowledgeGraph::early_exit(bool log)
+bool AKnowledgeGraph::is_graph_stabilized(bool log)
 {
 	if (0)
 	{
@@ -68,17 +68,17 @@ bool AKnowledgeGraph::early_exit(bool log)
 		{
 			ll("iterations is greater than max_iterations", log);
 			FNBodySimModule::Get().EndRendering();
-			update_link_position();
+			// update_link_position();
 			return true;
 		}
 	}
 
-	ll("alpha Before update: " + FString::SanitizeFloat(alpha), log);
+	// ll("alpha Before update: " + FString::SanitizeFloat(alpha), log);
 	if (alpha < alphaMin)
 	{
 		ll("alpha is less than alphaMin", log);
 		FNBodySimModule::Get().EndRendering();
-		update_link_position();
+		// update_link_position();
 		return true;
 	}
 	return false;
@@ -176,31 +176,50 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 	ll("iterations: " + FString::FromInt(iterations), log);
 
 
-	if (early_exit(log))
+	if (is_graph_stabilized(log))
 	{
-		return true;
-	}
+		if (use_predefined_location)
+		{
+			if (use_predefined_position_should_update_once)
+			{
+				use_predefined_position_should_update_once = false;
+				update_node_world_position_according_to_position_array();
+			}
+			
+		}
 
-	update_alpha();
-	
-	print_out_location_of_the_node();
-
-	update_position_array(log);
-
-	print_out_location_of_the_node();
-	
-	update_node_world_position_according_to_position_array();
-	
-	if (update_link_before_stabilize)
+		if (link_use_debug_line)
+		{
+			update_link_position();
+		}
+		
+	}else
 	{
-		ll("update link position", log);
-		update_link_position();
+
+		update_alpha();
+	
+		print_out_location_of_the_node();
+
+		update_position_array(log);
+
+		print_out_location_of_the_node();
+
+		update_node_world_position_according_to_position_array();
+
+		if (update_link_before_stabilize)
+		{
+			ll("update link position", log);
+			update_link_position();
+		}
+	
+		if (use_shaders){
+	
+			update_parameter_in_shader(DeltaTime);
+		}
 	}
 	
-	if (use_shaders){
 	
-		update_parameter_in_shader(DeltaTime);
-	}
+	
 	return false;
 }
 

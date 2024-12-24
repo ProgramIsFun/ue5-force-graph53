@@ -198,11 +198,11 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 
 		update_alpha();
 	
-		print_out_location_of_the_node();
+		// print_out_location_of_the_node();
 
 		update_position_array(log);
 
-		print_out_location_of_the_node();
+		// print_out_location_of_the_node();
 
 		update_node_world_position_according_to_position_array();
 

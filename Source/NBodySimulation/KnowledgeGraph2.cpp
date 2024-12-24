@@ -277,14 +277,60 @@ void AKnowledgeGraph::default_generate_graph_method()
 
 	get_number_of_nodes();
 
-	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
+	if (
+		cgm == CGM::JSON || cgm == CGM::DATABASE
+		)
 	{
 		create_one_to_one_mapping();
 	}
+
+
+	
 	
 	initialize_arrays();
+	if (
+	cgm == CGM::DATABASE
+	)
+	{
+		// Assuming 'JsonObject1' is already a valid TSharedPtr<FJsonObject> pointing to a parsed JSON object
+		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 
+		// Placeholder for all nodes properties
+		// TArray<TMap<FString, FString>> AllNodeProperties;
 
+		for (int32 i = 0; i < jnodes.Num(); i++)
+		{
+			TSharedPtr<FJsonObject> jobj = jnodes[i]->AsObject();
+			if (jobj.IsValid())
+			{
+				// Create a map for this node's properties
+				TMap<FString, FString> NodeProperties;
+
+				// Iterate through all key-value pairs in the JSON object
+				for (const auto& Elem : jobj->Values)
+				{
+					// Elem.Key is the FString key, Elem.Value is the TSharedPtr<FJsonValue>
+					// Ensure that the value can be represented as a string
+					if (Elem.Value.IsValid() && Elem.Value->Type == EJson::String)
+					{
+						FString ValueAsString = Elem.Value->AsString();
+						NodeProperties.Add(Elem.Key, ValueAsString);
+					}
+					// As shown here, handle other types similarly if needed
+					else if (Elem.Value.IsValid() && Elem.Value->Type == EJson::Number)
+					{
+						NodeProperties.Add(Elem.Key, FString::SanitizeFloat(Elem.Value->AsNumber()));
+					}
+					// Add more conditions as needed for types like Bool, Arrays, etc.
+				}
+
+				// Add the populated map to the array of all nodes' properties
+				AllNodeProperties.Add(NodeProperties);
+			}
+		}
+
+		
+	}
 	if (generate_objects_for_node_and_link()) return;
 
 

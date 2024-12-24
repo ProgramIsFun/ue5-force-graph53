@@ -199,6 +199,48 @@ void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector locati
 	
 }
 
+void AKnowledgeGraph::select_closest_node_from_player222()
+{
+
+	FVector player_location = get_player_location727();  // Assuming GetPlayerLocation() is the correct function to obtain player position.
+	float min_distance = FLT_MAX;  // Use max float value for initial comparison.
+	int32 closest_node_index = -1;    // To store the index of the closest node.
+
+	// Check if nodePositions array is filled correctly with FVector elements
+	if (nodePositions.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("nodePositions array is empty!"));
+		return;
+	}
+
+	for (int i = 0; i < nodePositions.Num(); i++)
+	{
+		float distance = FVector::Dist(player_location, nodePositions[i]); // Calculate Euclidean distance between each node and the player.
+
+		if (distance < min_distance)
+		{
+			min_distance = distance;  // Update min_distance with the smallest found distance.
+			closest_node_index = i;   // Update the index of the closest node.
+		}
+	}
+
+	// Logging the result. You can implement other actions depending on your use case.
+	if (closest_node_index != -1)
+	{
+		selected_node_index = closest_node_index;
+
+		selected_node_name = id_to_string[closest_node_index];
+		lp("The closest node index is: " + FString::FromInt(closest_node_index) + " with a distance of: " + FString::SanitizeFloat(min_distance), true, 2);
+		// UE_LOG(LogTemp, Log, TEXT("The closest node index is: %d with a distance of: %.2f"), closest_node_index, min_distance);
+	}
+	else
+	{
+		lp("Could not find the closest node.", true, 2);
+		// UE_LOG(LogTemp, Warning, TEXT("Could not find the closest node."));
+	}
+
+}
+
 
 void AKnowledgeGraph::delete_node_from_database1116()
 {

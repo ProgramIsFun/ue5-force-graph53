@@ -244,6 +244,10 @@ public:
 	void late_add_node(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void select_closest_node_from_player222();
+	
+	
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_node_from_database1116();
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_link_from_database1117();
@@ -277,6 +281,10 @@ public:
 	float initialRadius = 10;
 	TSharedPtr<FJsonObject> JsonObject1;
 	
+	TArray<TMap<FString, FString>> AllNodeProperties;
+	int32 selected_node_index = -1;
+	int32 selected_node_index_previous = -1;
+	FString selected_node_name = "";
 	
 	
 	int32 jnodessss;

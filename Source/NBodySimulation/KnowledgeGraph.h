@@ -210,6 +210,7 @@ public:
 	void initialize_node_position_individual(int index);
 	FVector get_player_location727();
 	void calculate_bias_and_strength_of_links();
+	bool generate_actor_for_a_link(Link& link);
 	void apply_force();
 	void calculate_link_force_and_update_velocity();
 	void calculate_charge_force_and_update_velocity();

@@ -241,20 +241,17 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 		ll("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
 
 
-		int index = 0;
+		
 		for (int32 i = 0; i < jedges.Num(); i++)
 		{
 			auto jobj = jedges[i]->AsObject();
 			FString jid;
-			int jsource;
-			int jtarget;
 			FString jsourceS = jobj->GetStringField("source");
 			FString jtargetS = jobj->GetStringField("target");
-			jsource = string_to_id[jsourceS];
-			jtarget = string_to_id[jtargetS];
+			int jsource = string_to_id[jsourceS];
+			int jtarget = string_to_id[jtargetS];
 			ll("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
-			add_edge(index, jsource, jtarget);
-			index++;
+			add_edge(i, jsource, jtarget);
 		}
 	}
 	return false;
@@ -1183,66 +1180,73 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 }
 
 
-void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
+bool AKnowledgeGraph::generate_actor_for_a_link(Link& link)
 {
 	AKnowledgeEdge* e;
-	Link link = Link(source, target);
-	if (link_use_actor)
+	UClass* bpClass;
+	if (true)
 	{
-		UClass* bpClass;
-		if (true)
+		// This approach works in both play and editor and package game. 
+		UClass* loadedClass = StaticLoadClass(UObject::StaticClass(), nullptr,
+		                                      TEXT(
+			                                      // "Blueprint'/Game/Characters/Enemies/BP_LitchBoss1.BP_LitchBoss1_C'"
+			                                      "Blueprint'/Game/arttttttt/iii9.iii9_C'"
+		                                      ));
+		if (loadedClass)
 		{
-			// This approach works in both play and editor and package game. 
-			UClass* loadedClass = StaticLoadClass(UObject::StaticClass(), nullptr,
-			                                      TEXT(
-				                                      // "Blueprint'/Game/Characters/Enemies/BP_LitchBoss1.BP_LitchBoss1_C'"
-				                                      "Blueprint'/Game/arttttttt/iii9.iii9_C'"
-			                                      ));
-			if (loadedClass)
-			{
-				e = GetWorld()->SpawnActor<AKnowledgeEdge>(loadedClass);
-			}
-			else
-			{
-				qq();
-				return;
-				ll("error loading classsssssssssssssssssssssss");
-				e = GetWorld()->SpawnActor<AKnowledgeEdge>(
-					AKnowledgeEdge::StaticClass()
-				);
-			}
+			e = GetWorld()->SpawnActor<AKnowledgeEdge>(loadedClass);
 		}
 		else
 		{
-			// This approach works in Only play in editor
-			// Load the Blueprint
-			UBlueprint* LoadedBP = Cast<UBlueprint>(StaticLoadObject(
-					UBlueprint::StaticClass(),
-					nullptr,
-					TEXT(
-						// "Blueprint'/Game/NewBlueprint22222.NewBlueprint22222'"
-						"Blueprint'/Game/kkkkk/NewBlueprint22222.NewBlueprint22222'"
-					)
-				)
-			);
-			if (!LoadedBP)
-			{
-				UE_LOG(LogTemp, Error, TEXT("Failed to load the Blueprint."));
-				eeeee();
-			}
-			// Check if the Blueprint class is valid
-			bpClass = LoadedBP->GeneratedClass;
-			if (!bpClass)
-			{
-				UE_LOG(LogTemp, Error, TEXT("Generated class from Blueprint is null."));
-				eeeee();
-			}
+			qq();
+			return true;
+			ll("error loading classsssssssssssssssssssssss");
 			e = GetWorld()->SpawnActor<AKnowledgeEdge>(
-				bpClass
+				AKnowledgeEdge::StaticClass()
 			);
 		}
-		// all_links1.Emplace(id, e);
-		link.edge = e;
+	}
+	else
+	{
+		// This approach works in Only play in editor
+		// Load the Blueprint
+		UBlueprint* LoadedBP = Cast<UBlueprint>(StaticLoadObject(
+				UBlueprint::StaticClass(),
+				nullptr,
+				TEXT(
+					// "Blueprint'/Game/NewBlueprint22222.NewBlueprint22222'"
+					"Blueprint'/Game/kkkkk/NewBlueprint22222.NewBlueprint22222'"
+				)
+			)
+		);
+		if (!LoadedBP)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to load the Blueprint."));
+			eeeee();
+		}
+		// Check if the Blueprint class is valid
+		bpClass = LoadedBP->GeneratedClass;
+		if (!bpClass)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Generated class from Blueprint is null."));
+			eeeee();
+		}
+		e = GetWorld()->SpawnActor<AKnowledgeEdge>(
+			bpClass
+		);
+	}
+	link.edge = e;
+	return false;
+}
+
+void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
+{
+	
+	Link link = Link(source, target);
+	if (link_use_actor)
+	{
+
+		if (generate_actor_for_a_link(link)) return;
 	}
 
 

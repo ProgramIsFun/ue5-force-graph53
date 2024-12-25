@@ -97,6 +97,132 @@ class NBODYSIMULATION_API AKnowledgeGraph : public AActor
 	GENERATED_BODY()
 	
 public:
+	
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void set_text_size_of_all_nodes1112(float size);
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void increase_or_decrease_text_size_of_all_nodes1112(bool increase, float size);
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void increase_text_size_of_all_nodes1112(float size);
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void decrease_text_size_of_all_nodes1112(float size);
+
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void update_position_of_all_nodes_to_database1113();
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void add_link_to_database1114();
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void add_node_to_database1115(FString NodeName);
+	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+	void late_add_node(FString NodeName, FString id, FVector location);
+
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void select_closest_node_from_player222();
+	
+	
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void delete_node_from_database1116();
+	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
+	void delete_link_from_database1117();
+
+
+
+	TSharedPtr<FJsonObject> JsonObject1;
+	
+	TArray<TMap<FString, FString>> AllNodeProperties;
+	int32 selected_node_index = -1;
+	int32 selected_node_index_previous = -1;
+	FString selected_node_name = "";
+	
+	int32 jnodessss;
+	bool graph_initialized = false;
+	bool graph_requested = false;
+	bool precheck_succeed = true;
+	bool GPUvalid = false;
+	
+	TMap<int32, FString> id_to_string;
+	TMap<FString, int32> string_to_id;
+	TArray<Node> all_nodes2;
+	TArray<Link> all_links2;
+	TArray<FVector> predefined_positions;
+	TArray<FVector> nodePositions;
+	TArray<FVector> nodeVelocities;
+
+
+
+
+	
+
+	OctreeNode* OctreeData2;
+
+
+
+	
+	FNBodySimParameters SimParameters;
+	UPROPERTY()
+	TArray<FTransform> BodyTransforms;
+	TArray<int> LinkOffsets; // Holds the offset for each body
+	TArray<int> LinkCounts; // Holds the count of links for each body
+	TArray<int> LinkIndices; // Flat array containing all links
+	TArray<float> LinkStrengths; // Holds the strength of each link
+	TArray<float> LinkBiases; // Holds the bias of each link
+	TArray<int> Linkinout;
+
+
+
+
+
+	
+	UPROPERTY(VisibleAnywhere, Instanced)
+	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
+
+	TMap<int32, FString> fileIndexToPath = {
+		{0, "statered.json"},
+		{1, "state - 2024-06-18T223257.374.json"},
+		{2, "state777777777.json"},
+	};
+
+	void debug_test();
+	void gpu_get_positions();
+	bool main_function(float DeltaTime);
+	void pass_parameters_to_shader_management();
+	void post_generate_graph();
+	void prepare();
+	void update_parameter_in_shader(float DeltaTime);
+	bool is_graph_stabilized(bool log);
+	void cpu_calculate();
+	void update_position_array(bool log);
+	void update_alpha();
+	void print_out_location_of_the_node();
+	bool generate_actor_and_register(AKnowledgeNode*& kn);
+	void generate_text_render_component_and_attach(FString name);
+	void get_number_of_nodes();
+	void create_one_to_one_mapping();
+	void miscellaneous();
+	void set_array_lengths();
+	void set_array_values();
+	void initialize_arrays();
+	bool generate_objects_for_node_and_link();
+	void extracting_property_list_and_store();
+	void default_generate_graph_method();
+	void add_edge(int32 id, int32 source, int32 target);
+	void initialize_node_position();
+	void initialize_node_position_individual(int index);
+	FVector get_player_location727();
+	void calculate_bias_and_strength_of_links();
+	void apply_force();
+	void calculate_link_force_and_update_velocity();
+	void calculate_charge_force_and_update_velocity();
+	void calculate_centre_force_and_update_position();
+	void update_node_world_position_according_to_position_array();
+	void update_position_array_according_to_velocity_array();
+	void update_link_position();
+	void request_graph_httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+	void request_graph_http();
+	void request_a_graph();
+	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
+
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float universal_graph_scale = 1.0f;
@@ -223,130 +349,6 @@ public:
 	bool connect_to_previous = true;
 
 
-
-	
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void set_text_size_of_all_nodes1112(float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void increase_or_decrease_text_size_of_all_nodes1112(bool increase, float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void increase_text_size_of_all_nodes1112(float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void decrease_text_size_of_all_nodes1112(float size);
-
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void update_position_of_all_nodes_to_database1113();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void add_link_to_database1114();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void add_node_to_database1115(FString NodeName);
-	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void late_add_node(FString NodeName, FString id, FVector location);
-
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void select_closest_node_from_player222();
-	
-	
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void delete_node_from_database1116();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void delete_link_from_database1117();
-
-
-
-	TSharedPtr<FJsonObject> JsonObject1;
-	
-	TArray<TMap<FString, FString>> AllNodeProperties;
-	int32 selected_node_index = -1;
-	int32 selected_node_index_previous = -1;
-	FString selected_node_name = "";
-	
-	int32 jnodessss;
-	bool graph_initialized = false;
-	bool graph_requested = false;
-	bool precheck_succeed = true;
-	bool GPUvalid = false;
-	
-	TMap<int32, FString> id_to_string;
-	TMap<FString, int32> string_to_id;
-	TArray<Node> all_nodes2;
-	TArray<Link> all_links2;
-	TArray<FVector> predefined_positions;
-	TArray<FVector> nodePositions;
-	TArray<FVector> nodeVelocities;
-
-
-
-
-	
-
-	OctreeNode* OctreeData2;
-
-
-
-	
-	FNBodySimParameters SimParameters;
-	UPROPERTY()
-	TArray<FTransform> BodyTransforms;
-	TArray<int> LinkOffsets; // Holds the offset for each body
-	TArray<int> LinkCounts; // Holds the count of links for each body
-	TArray<int> LinkIndices; // Flat array containing all links
-	TArray<float> LinkStrengths; // Holds the strength of each link
-	TArray<float> LinkBiases; // Holds the bias of each link
-	TArray<int> Linkinout;
-
-
-
-
-
-	
-	UPROPERTY(VisibleAnywhere, Instanced)
-	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
-
-	TMap<int32, FString> fileIndexToPath = {
-		{0, "statered.json"},
-		{1, "state - 2024-06-18T223257.374.json"},
-		{2, "state777777777.json"},
-	};
-
-	void debug_test();
-	void gpu_get_positions();
-	bool main_function(float DeltaTime);
-	void pass_parameters_to_shader_management();
-	void post_generate_graph();
-	void prepare();
-	void update_parameter_in_shader(float DeltaTime);
-	bool is_graph_stabilized(bool log);
-	void cpu_calculate();
-	void update_position_array(bool log);
-	void update_alpha();
-	void print_out_location_of_the_node();
-	bool generate_actor_and_register(AKnowledgeNode*& kn);
-	void generate_text_render_component_and_attach(FString name);
-	void get_number_of_nodes();
-	void create_one_to_one_mapping();
-	void miscellaneous();
-	void set_array_lengths();
-	void set_array_values();
-	void initialize_arrays();
-	bool generate_objects_for_node_and_link();
-	void default_generate_graph_method();
-	void add_edge(int32 id, int32 source, int32 target);
-	void initialize_node_position();
-	void initialize_node_position_individual(int index);
-	FVector get_player_location727();
-	void calculate_bias_and_strength_of_links();
-	void apply_force();
-	void calculate_link_force_and_update_velocity();
-	void calculate_charge_force_and_update_velocity();
-	void calculate_centre_force_and_update_position();
-	void update_node_world_position_according_to_position_array();
-	void update_position_array_according_to_velocity_array();
-	void update_link_position();
-	void request_graph_httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void request_graph_http();
-	void request_a_graph();
-	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
 
 	
 

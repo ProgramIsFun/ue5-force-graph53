@@ -347,7 +347,6 @@ public:
 	float nodeStrength = -60;
 	float distancemin = 1;
 	float distancemax = 10000000;
-	float theta2 = 0.81;
 	float alphaTarget = 0;
 	float velocityDecay = 0.6;
 	float initialAngle = PI * (3 - sqrt(5));
@@ -368,22 +367,10 @@ public:
 	{
 		// auto start = std::chrono::high_resolution_clock::now();
 		double StartTime = FPlatformTime::Seconds();
-
-
-		// Invoke the member function
 		(this->*function)(std::forward<Args>(args)...);
-
-
-		// auto end = std::chrono::high_resolution_clock::now();
-		// auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-		// lll("Execution time: " + FString::FromInt(duration.count()) + " milliseconds");
-
-
 		double EndTime = FPlatformTime::Seconds();
 		double ElapsedTime = EndTime - StartTime;
 		lll("Elapsed time For " + FString(functionName) + ": " + FString::SanitizeFloat(ElapsedTime) + " seconds");
-
-
 		return ElapsedTime;
 	}
 

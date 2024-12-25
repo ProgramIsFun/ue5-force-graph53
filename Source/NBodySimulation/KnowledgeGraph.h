@@ -127,9 +127,16 @@ public:
 	void delete_link_from_database1117();
 
 
-	// Important Variables.
+
 
 	
+	// Temporary variables. 
+	bool use_predefined_position_should_update_once = true;
+	FVector current_own_position;
+
+
+	
+	// Important Variables.
 	TSharedPtr<FJsonObject> JsonObject1;
 	TArray<TMap<FString, FString>> AllNodeProperties;
 
@@ -334,13 +341,9 @@ public:
 
 
 
-	
-
-	bool use_predefined_position_should_update_once = true;
-
-	FVector current_own_position;
 
 	
+	// Internal hard coded variables.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float alpha = 1;
 	int iterationsf = 0;
@@ -356,7 +359,6 @@ public:
 	float velocityDecay = 0.6;
 	float initialAngle = PI * (3 - sqrt(5));
 	float initialRadius = 10;
-
 	float node_use_actor_size = 0.3f;
 
 

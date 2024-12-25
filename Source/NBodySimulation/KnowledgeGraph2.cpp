@@ -144,19 +144,12 @@ void AKnowledgeGraph::miscellaneous()
 	}
 }
 
-void AKnowledgeGraph::initialize_arrays()
+void AKnowledgeGraph::set_array_lengths()
 {
 	nodePositions.SetNumUninitialized(jnodessss);
 	nodeVelocities.SetNumUninitialized(jnodessss);
 	all_nodes2.SetNumUninitialized(jnodessss);
-	for (FVector& velocity : nodeVelocities)
-	{
-		velocity.X = 0.0f;
-		velocity.Y = 0.0f;
-		velocity.Z = 0.0f;
-	}
-
-
+	
 	if (use_shaders)
 	{
 		SimParameters.Bodies.SetNumUninitialized(
@@ -168,6 +161,26 @@ void AKnowledgeGraph::initialize_arrays()
 		BodyTransforms.SetNumUninitialized(
 			jnodessss);
 	}
+}
+
+void AKnowledgeGraph::set_array_values()
+{
+	for (FVector& velocity : nodeVelocities)
+	{
+		velocity.X = 0.0f;
+		velocity.Y = 0.0f;
+		velocity.Z = 0.0f;
+	}
+}
+
+void AKnowledgeGraph::initialize_arrays()
+{
+	
+	set_array_lengths();
+
+	set_array_values();
+
+		
 }
 
 bool AKnowledgeGraph::generate_objects_for_node_and_link()

@@ -338,6 +338,8 @@ public:
 	void get_number_of_nodes();
 	void create_one_to_one_mapping();
 	void miscellaneous();
+	void set_array_lengths();
+	void set_array_values();
 	void initialize_arrays();
 	bool generate_objects_for_node_and_link();
 	void default_generate_graph_method();

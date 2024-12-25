@@ -712,14 +712,6 @@ void AKnowledgeGraph::update_link_position()
 		FVector Location1 = nodePositions[link.source];
 		FVector Location2 = nodePositions[link.target];
 
-		if (link_use_actor)
-		{
-			auto l = link.edge;
-			l->ChangeLoc(
-				Location1,
-				Location2
-			);
-		}
 
 		if (link_use_static_mesh)
 		{
@@ -1243,11 +1235,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 {
 	
 	Link link = Link(source, target);
-	if (link_use_actor)
-	{
-
-		if (generate_actor_for_a_link(link)) return;
-	}
+	
 
 
 	if (link_use_static_mesh)
@@ -1269,6 +1257,9 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 			link_use_static_meshlinkMesh
 		);
 
+		CylinderMesh->SetMaterial(0, CylinderMaterial);
+
+		
 		link.edgeMesh = CylinderMesh;
 	}
 

@@ -183,10 +183,13 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			{
 				use_predefined_position_should_update_once = false;
 				update_node_world_position_according_to_position_array();
+				update_link_position();
 			}
 			
 		}
 
+
+		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
 		if (link_use_debug_line)
 		{
 			update_link_position();

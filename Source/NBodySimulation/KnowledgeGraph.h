@@ -260,21 +260,12 @@ public:
 	// Turn on logging or not. 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool use_logging = false;
-	//Node setting////////////////////////////////////////////////////////////////////////////////////////////////////
-	// 1////////////////////
-	// Use instance static mesh or not
+
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool node_use_instance_static_mesh = false;
-	// The size of the node
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float node_use_instance_static_mesh_size = 0.3f;
-	// 2////////////////////
-	// Use a lot of actor Or not
-	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool node_use_actor = false;
-	// The size of Static mesh
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float node_use_actor_size = 0.3f;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	UStaticMesh* SelectedMesh1111111111111;
 	// 3////////////////////
@@ -292,25 +283,21 @@ public:
 
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Link setting////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// 1////////////////////
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool link_use_actor = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool link_use_static_mesh = false;
-
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	UStaticMesh* link_use_static_meshlinkMesh;
 
+	// Editable material
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UMaterialInterface* CylinderMaterial;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float link_use_static_mesh_size1 = 0.05f;
-	
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float link_use_static_mesh_size = 0.01f;
@@ -373,6 +360,7 @@ public:
 	float initialAngle = PI * (3 - sqrt(5));
 	float initialRadius = 10;
 
+	float node_use_actor_size = 0.3f;
 
 
 	AKnowledgeGraph();

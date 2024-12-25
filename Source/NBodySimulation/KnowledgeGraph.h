@@ -252,40 +252,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_link_from_database1117();
 
-	
-	TArray<int> LinkOffsets; // Holds the offset for each body
-	TArray<int> LinkCounts; // Holds the count of links for each body
-	TArray<int> LinkIndices; // Flat array containing all links
-	TArray<float> LinkStrengths; // Holds the strength of each link
-	TArray<float> LinkBiases; // Holds the bias of each link
-	TArray<int> Linkinout;
 
-	bool use_predefined_position_should_update_once = true;
 
-	FVector current_own_position;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float alpha = 1;
-	int iterationsf = 0;
-	float iterations = 0;
-	float alphaMin = 0.001;
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float alphaDecay = 1 - FMath::Pow(alphaMin, 1.0 / 300);
-	float edgeDistance = 30;
-	float nodeStrength = -60;
-	float distancemin = 1;
-	float distancemax = 10000000;
-	float theta2 = 0.81;
-	float alphaTarget = 0;
-	float velocityDecay = 0.6;
-	float initialAngle = PI * (3 - sqrt(5));
-	float initialRadius = 10;
 	TSharedPtr<FJsonObject> JsonObject1;
 	
 	TArray<TMap<FString, FString>> AllNodeProperties;
 	int32 selected_node_index = -1;
 	int32 selected_node_index_previous = -1;
 	FString selected_node_name = "";
-	
 	
 	int32 jnodessss;
 	bool graph_initialized = false;
@@ -296,22 +270,36 @@ public:
 	TMap<int32, FString> id_to_string;
 	TMap<FString, int32> string_to_id;
 	TArray<Node> all_nodes2;
-
+	TArray<Link> all_links2;
 	TArray<FVector> predefined_positions;
 	TArray<FVector> nodePositions;
 	TArray<FVector> nodeVelocities;
 
-	TArray<Link> all_links2;
+
+
+
+	
 
 	OctreeNode* OctreeData2;
+
+
+
 	
-	TArray<double> ElapsedTimes;
-
 	FNBodySimParameters SimParameters;
-
 	UPROPERTY()
 	TArray<FTransform> BodyTransforms;
+	TArray<int> LinkOffsets; // Holds the offset for each body
+	TArray<int> LinkCounts; // Holds the count of links for each body
+	TArray<int> LinkIndices; // Flat array containing all links
+	TArray<float> LinkStrengths; // Holds the strength of each link
+	TArray<float> LinkBiases; // Holds the bias of each link
+	TArray<int> Linkinout;
 
+
+
+
+
+	
 	UPROPERTY(VisibleAnywhere, Instanced)
 	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
 
@@ -360,6 +348,27 @@ public:
 	void request_a_graph();
 	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
 
+	
+
+	bool use_predefined_position_should_update_once = true;
+
+	FVector current_own_position;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	float alpha = 1;
+	int iterationsf = 0;
+	float iterations = 0;
+	float alphaMin = 0.001;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	float alphaDecay = 1 - FMath::Pow(alphaMin, 1.0 / 300);
+	float edgeDistance = 30;
+	float nodeStrength = -60;
+	float distancemin = 1;
+	float distancemax = 10000000;
+	float theta2 = 0.81;
+	float alphaTarget = 0;
+	float velocityDecay = 0.6;
+	float initialAngle = PI * (3 - sqrt(5));
+	float initialRadius = 10;
 
 
 

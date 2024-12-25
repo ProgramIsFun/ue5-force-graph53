@@ -115,6 +115,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void add_node_to_database1115(FString NodeName);
 	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+	void clean_up_objects();
 	void late_add_node(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
@@ -157,6 +158,8 @@ public:
 	TArray<Node> all_nodes2;
 	TArray<Link> all_links2;
 	TArray<FVector> predefined_positions;
+
+	
 	TArray<FVector> nodePositions;
 	TArray<FVector> nodeVelocities;
 

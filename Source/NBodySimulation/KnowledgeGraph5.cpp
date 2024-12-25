@@ -184,13 +184,35 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 	}
 }
 
+void AKnowledgeGraph::clean_up_objects()
+{
+
+	
+	
+	if (node_use_instance_static_mesh)
+	{
+		InstancedStaticMeshComponent->ClearInstances();
+	}
+
+
+
+	
+}
+
 void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
 {
 	bool request_the_whole_graph_again = false;
 	if (request_the_whole_graph_again)
 	{
-		use_predefined_position_should_update_once = true;
+		
+		clean_up_objects();
 
+
+
+
+		graph_requesting = true;
+		graph_initialized = false;
+		use_predefined_position_should_update_once = true;
 		prepare();
 	}
 	else

@@ -177,19 +177,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	{
 		for (int32 i = 0; i < jnodessss; i++)
 		{
-			if (node_use_actor)
-			{
-				AKnowledgeNode* kn;
-				if (generate_actor_and_register(kn))
-				{
-					ll("generate_actor_and_register failed", log, 2);
-					qq();
-					return true;
-				}
-				int id111 = i;
-				nodeVelocities[id111] = FVector(0, 0, 0);
-				all_nodes2[id111] = Node(id111, kn);
-			}
+			
 			if (node_use_text_render_components)
 			{
 				FString name;
@@ -209,20 +197,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 		{
 			auto jobj = jnodes[i]->AsObject();
 
-			if (node_use_actor)
-			{
-				AKnowledgeNode* kn;
-				if (generate_actor_and_register(kn))
-				{
-					ll("generate_actor_and_register failed", log, 2);
-					qq();
-					return true;
-				}
-				int id111 = i;
-				nodeVelocities[id111] = FVector(0, 0, 0);
-				all_nodes2[id111] = Node(id111, kn);
-			}
-
+			
 			if (node_use_text_render_components)
 			{
 				FString name;
@@ -972,11 +947,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 	{
 		FVector NewPosition = nodePositions[i];
 
-		if (node_use_actor)
-		{
-			all_nodes2[i].node->SetActorLocation(NewPosition);
-		}
-
+		
 		if (node_use_instance_static_mesh)
 		{
 			BodyTransforms[i].SetTranslation(NewPosition);

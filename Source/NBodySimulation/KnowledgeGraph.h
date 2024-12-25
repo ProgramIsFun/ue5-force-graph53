@@ -143,8 +143,8 @@ public:
 	float node_use_instance_static_mesh_size = 0.3f;
 	// 2////////////////////
 	// Use a lot of actor Or not
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool node_use_actor = true;
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	bool node_use_actor = false;
 	// The size of Static mesh
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float node_use_actor_size = 0.3f;

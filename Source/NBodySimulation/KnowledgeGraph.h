@@ -160,7 +160,6 @@ public:
 	TArray<FVector> predefined_positions;
 	TArray<FVector> nodePositions;
 	TArray<FVector> nodeVelocities;
-	OctreeNode* OctreeData2;
 
 
 
@@ -407,6 +406,10 @@ public:
 	TArray<float> LinkBiases; // Holds the bias of each link
 	TArray<int> Linkinout;
 
+
+
+	// Other variables. 
+	OctreeNode* OctreeData2;
 
 
 

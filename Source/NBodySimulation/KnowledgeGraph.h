@@ -301,10 +301,10 @@ public:
 	UMaterialInterface* CylinderMaterial;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float link_use_static_mesh_size1 = 0.05f;
+	float link_use_static_mesh_thickness = 0.05f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float link_use_static_mesh_size = 0.01f;
+	float link_use_static_mesh_length_fine_tune = 0.01f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool link_use_debug_line = false;

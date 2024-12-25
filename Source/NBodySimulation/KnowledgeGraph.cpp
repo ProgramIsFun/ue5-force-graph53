@@ -34,6 +34,7 @@ void AKnowledgeGraph::BeginPlay()
 {
 	Super::BeginPlay();
 	ClearLogFile();
+	
 }
 
 void AKnowledgeGraph::Tick(float DeltaTime)

@@ -29,12 +29,6 @@ void AKnowledgeGraph::post_generate_graph()
 
 void AKnowledgeGraph::prepare()
 {
-	if (use_tick_interval)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Restricting tick interval"));
-
-		PrimaryActorTick.TickInterval = tick_interval;
-	}
 	request_a_graph();
 	
 	if(use_predefined_location)
@@ -61,17 +55,6 @@ void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
 
 bool AKnowledgeGraph::is_graph_stabilized(bool log)
 {
-	if (0)
-	{
-		if (iterations > max_iterations)
-		{
-			ll("iterations is greater than max_iterations", log);
-			FNBodySimModule::Get().EndRendering();
-			// update_link_position();
-			return true;
-		}
-	}
-
 	// ll("alpha Before update: " + FString::SanitizeFloat(alpha), log);
 	if (alpha < alphaMin)
 	{

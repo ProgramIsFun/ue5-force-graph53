@@ -316,16 +316,6 @@ public:
 	float use_constant_delta_time = 1;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	int32 max_iterations = 1000000;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	// Use extremely small tick interval
-	bool use_tick_interval = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float tick_interval = 0.9f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	int jnodes1 = 50;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
@@ -344,6 +334,8 @@ public:
 	bool use_predefined_position_should_update_once = true;
 
 	FVector current_own_position;
+
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float alpha = 1;
 	int iterationsf = 0;

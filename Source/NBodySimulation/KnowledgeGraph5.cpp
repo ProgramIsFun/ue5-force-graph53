@@ -166,28 +166,19 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 
 		if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 		{
-			// Extract the message field from JSON
 			FString id = JsonObject->GetStringField("id");
 			lp("id7: " + id, true, 2);
-			
 			FString name = JsonObject->GetStringField("name");
-
 			FVector player_location =get_player_location727();
-
 			late_add_node(name, id, player_location);
-			
-			
-			// UE_LOG(LogTemp, Log, TEXT("API message: %s"), *Message);
 		}
 		else
 		{
 			lp("Failed to parse JSON response", true, 2);
-			// UE_LOG(LogTemp, Error, TEXT("Failed to parse JSON response"));
 		}
 	}
 	else
 	{
-		// Handle HTTP or server errors
 		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("Unable to get any response");
 		UE_LOG(LogTemp, Error, TEXT("Error adding node: %s"), *ErrorInfo);
 	}
@@ -195,6 +186,8 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 
 void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
 {
+
+	prepare();
 	// Update the arrays with the Correct length
 
 

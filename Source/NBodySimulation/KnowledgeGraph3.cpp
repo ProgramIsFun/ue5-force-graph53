@@ -33,6 +33,8 @@ void AKnowledgeGraph::prepare()
 	
 	if(use_predefined_location)
 	{
+
+		// Predefine locations could be regarded stable  
 		alpha = 0;
 	}
 }
@@ -40,16 +42,11 @@ void AKnowledgeGraph::prepare()
 
 void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
 {
-	if (use_constant_delta_time < 0)
+	if (1)
 	{
-		SimParameters.DeltaTime = DeltaTime;
-		FNBodySimModule::Get().UpdateDeltaTime(DeltaTime, alpha);
-	}
-	else
-	{
-		float DeltaTime = use_constant_delta_time;
-		SimParameters.DeltaTime = DeltaTime;
-		FNBodySimModule::Get().UpdateDeltaTime(DeltaTime, alpha);
+		float kkkkkkkkk=1;
+		SimParameters.DeltaTime = kkkkkkkkk;
+		FNBodySimModule::Get().UpdateDeltaTime(kkkkkkkkk, alpha);
 	}
 }
 

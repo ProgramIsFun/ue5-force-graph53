@@ -97,7 +97,8 @@ class NBODYSIMULATION_API AKnowledgeGraph : public AActor
 	GENERATED_BODY()
 	
 public:
-	
+
+	// Function exposed to blueprints
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void set_text_size_of_all_nodes1112(float size);
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
@@ -126,16 +127,20 @@ public:
 	void delete_link_from_database1117();
 
 
+	// Important Variables.
 
-	TSharedPtr<FJsonObject> JsonObject1;
 	
+	TSharedPtr<FJsonObject> JsonObject1;
 	TArray<TMap<FString, FString>> AllNodeProperties;
+
 	int32 selected_node_index = -1;
 	int32 selected_node_index_previous = -1;
 	FString selected_node_name = "";
 	
 	int32 jnodessss;
+	
 	bool graph_initialized = false;
+	
 	bool graph_requested = false;
 	bool precheck_succeed = true;
 	bool GPUvalid = false;
@@ -157,7 +162,9 @@ public:
 
 
 
-	
+
+
+	// Shader related variables. 
 	FNBodySimParameters SimParameters;
 	UPROPERTY()
 	TArray<FTransform> BodyTransforms;
@@ -182,6 +189,9 @@ public:
 		{2, "state777777777.json"},
 	};
 
+
+
+	// Internal functions. 
 	void debug_test();
 	void gpu_get_positions();
 	bool main_function(float DeltaTime);
@@ -293,7 +303,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	UStaticMesh* link_use_static_meshlinkMesh;
 
-	// Editable material
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	UMaterialInterface* CylinderMaterial;
 	
@@ -310,11 +319,7 @@ public:
 	bool update_link_before_stabilize = false;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// If want to use constant delta time
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	float use_constant_delta_time = 1;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	int jnodes1 = 50;
 

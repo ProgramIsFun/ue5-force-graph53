@@ -194,6 +194,7 @@ public:
 	void update_position_array(bool log);
 	void update_alpha();
 	void print_out_location_of_the_node();
+	void update_iterations();
 	bool generate_actor_and_register(AKnowledgeNode*& kn);
 	void generate_text_render_component_and_attach(FString name);
 	void get_number_of_nodes();

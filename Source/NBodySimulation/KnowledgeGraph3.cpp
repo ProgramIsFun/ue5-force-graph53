@@ -164,15 +164,21 @@ void AKnowledgeGraph::print_out_location_of_the_node()
 	ll("third element. " + nodePositions[2].ToString(), log);
 }
 
-bool AKnowledgeGraph::main_function(float DeltaTime)
+void AKnowledgeGraph::update_iterations()
 {
-	bool log = use_logging;
-	
+	bool log=false;
 	iterations += 1;
-	
 	ll("TICK----------------------------------------------------------------------------"
 	   "----------------------------------------------------------------------------", log);
 	ll("iterations: " + FString::FromInt(iterations), log);
+}
+
+bool AKnowledgeGraph::main_function(float DeltaTime)
+{
+	bool log = use_logging;
+
+	
+	update_iterations();
 
 
 	if (is_graph_stabilized(log))
@@ -187,8 +193,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			}
 			
 		}
-
-
+		
 		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
 		if (link_use_debug_line)
 		{

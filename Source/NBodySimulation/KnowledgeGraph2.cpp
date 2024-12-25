@@ -172,7 +172,7 @@ void AKnowledgeGraph::initialize_arrays()
 
 bool AKnowledgeGraph::generate_objects_for_node_and_link()
 {
-	bool log=false;
+	bool log = false;
 	if (cgm == CGM::GENERATE)
 	{
 		for (int32 i = 0; i < jnodessss; i++)
@@ -233,7 +233,8 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 					FString Substring(TEXT("everythingallaccount"));
 					FString ReplacementSubstring(TEXT("e"));
 
-					if (name.StartsWith(Substring)) {
+					if (name.StartsWith(Substring))
+					{
 						// Remove the substring by creating a new string that starts right after the substring
 						name = name.Mid(Substring.Len());
 
@@ -279,17 +280,15 @@ void AKnowledgeGraph::default_generate_graph_method()
 
 	if (
 		cgm == CGM::JSON || cgm == CGM::DATABASE
-		)
+	)
 	{
 		create_one_to_one_mapping();
 	}
 
 
-	
-	
 	initialize_arrays();
 	if (
-	cgm == CGM::DATABASE
+		cgm == CGM::DATABASE
 	)
 	{
 		// Assuming 'JsonObject1' is already a valid TSharedPtr<FJsonObject> pointing to a parsed JSON object
@@ -328,17 +327,18 @@ void AKnowledgeGraph::default_generate_graph_method()
 				AllNodeProperties.Add(NodeProperties);
 			}
 		}
-
-		
 	}
-	if (generate_objects_for_node_and_link()) return;
+	if (generate_objects_for_node_and_link())
+	{
+		return;
+	}
 
 
-	if(use_predefined_location)
+	if (use_predefined_location)
 	{
 		predefined_positions.SetNumUninitialized(jnodessss);
-		
-		if(cgm == CGM::DATABASE)
+
+		if (cgm == CGM::DATABASE)
 		{
 			// Retrieve the position of the nodes from the database
 			// and set the position of the nodes to the retrieved position.
@@ -348,14 +348,14 @@ void AKnowledgeGraph::default_generate_graph_method()
 			{
 				auto jobj = jnodes[i]->AsObject();
 				FVector jlocation;
-				
+
 				FString jid = jobj->GetStringField("user_generate_id_7577777777");
 
 
 				if (jobj->HasField("ue_location_X") &&
 					jobj->HasField("ue_location_Y") &&
 					jobj->HasField("ue_location_Z")
-					)
+				)
 				{
 					jlocation = FVector(
 						jobj->GetNumberField("ue_location_X"),
@@ -368,7 +368,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 				{
 					// Send a warning to the client. 
 					ll("location does not exist", log);
-					
+
 					// Handle cases where location coordinates do not exist
 					// For example, assigning a default value or logging an error
 					jlocation = FVector(0, 0, 0); // Default value if no location found
@@ -376,15 +376,14 @@ void AKnowledgeGraph::default_generate_graph_method()
 
 
 				ll("location111111111111111: " + jlocation.ToString(), log);
-			
+
 				// int id111 = string_to_id[jid];
 				// predefined_positions[id111] = jlocation;
-				predefined_positions[i]=jlocation;
-
+				predefined_positions[i] = jlocation;
 			}
 
-			
-			if(use_predefined_locationand_then_center_to_current_actor)
+
+			if (use_predefined_locationand_then_center_to_current_actor)
 			{
 				FVector center = GetActorLocation();
 				FVector aggregation = FVector(0, 0, 0);
@@ -393,31 +392,24 @@ void AKnowledgeGraph::default_generate_graph_method()
 				{
 					aggregation += predefined_positions[i];
 				}
-			
+
 				aggregation /= jnodessss;
 				for (int32 i = 0; i < jnodessss; i++)
 				{
-					predefined_positions[i] -=  (aggregation-center );
+					predefined_positions[i] -= (aggregation - center);
 				}
 			}
-		}else 
+		}
+		else
 		{
 			ll("Pretty fine location feature is only available for using database.  ", log);
 			qq();
 		}
-
-
-
-		
-		
 	}
 
 
-	
 	post_generate_graph();
 }
-
-
 
 
 void AKnowledgeGraph::calculate_link_force_and_update_velocity()
@@ -832,7 +824,7 @@ void AKnowledgeGraph::initialize_node_position()
 	{
 		current_own_position = GetActorLocation();
 	}
-	
+
 	if (!cpu_use_parallel)
 	{
 		for (
@@ -853,7 +845,7 @@ void AKnowledgeGraph::initialize_node_position()
 			}
 		);
 	}
-	
+
 	if (node_use_instance_static_mesh)
 	{
 		InstancedStaticMeshComponent->AddInstances(BodyTransforms, false);
@@ -867,7 +859,8 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 	if (use_predefined_location)
 	{
 		init_pos = predefined_positions[index];
-	}else
+	}
+	else
 	{
 		// Calculate index-based radius
 		float radius;
@@ -926,13 +919,12 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		{
 			init_pos += current_own_position;
 		}
-		
 	}
-	
+
 	nodePositions[index] = init_pos;
-	
+
 	ll("index: " + FString::FromInt(index) + " init_pos: " + init_pos.ToString());
-	
+
 	if (node_use_instance_static_mesh)
 	{
 		float s = node_use_instance_static_mesh_size;

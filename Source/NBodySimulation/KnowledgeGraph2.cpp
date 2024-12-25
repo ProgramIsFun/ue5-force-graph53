@@ -1254,7 +1254,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 		CylinderMesh->SetWorldScale3D(FVector(1, 1, 1));
 
 		CylinderMesh->SetStaticMesh(
-			link_use_static_meshlinkMesh
+			link_use_static_mesh_mesh
 		);
 
 		CylinderMesh->SetMaterial(0, CylinderMaterial);

@@ -275,7 +275,7 @@ void AKnowledgeGraph::debug_test()
 			NewCylinderMesh->SetWorldScale3D(FVector(10, 1, 1));
     
 			// Set static mesh
-			NewCylinderMesh->SetStaticMesh(link_use_static_meshlinkMesh);
+			NewCylinderMesh->SetStaticMesh(link_use_static_mesh_mesh);
     
 			// Set different relative locations for each cylinder to avoid overlap
 			NewCylinderMesh->SetRelativeLocation(FVector(10, 10, 100 + i * 120));

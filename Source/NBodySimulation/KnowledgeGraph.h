@@ -173,6 +173,11 @@ public:
 	UPROPERTY(VisibleAnywhere, Instanced)
 	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	TArray<UTextRenderComponent*> TextComponents11111111111111111111;
+	
+
+	
 	TMap<int32, FString> fileIndexToPath = {
 		{0, "statered.json"},
 		{1, "state - 2024-06-18T223257.374.json"},
@@ -272,12 +277,11 @@ public:
 	// 3////////////////////
 	// Use TextRenderComponent or not
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool node_use_text_render_components = false;
+	bool node_use_text_render_components = true;
 	// The size of TextRenderComponent
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	float text_size = 10;
-	UPROPERTY(VisibleAnywhere)
-	TArray<UTextRenderComponent*> TextComponents11111111111111111111;
+
 	// rotation to face the player
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool rotate_to_face_player = true;
@@ -288,10 +292,10 @@ public:
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool link_use_static_mesh = false;
+	bool link_use_static_mesh = true;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	UStaticMesh* link_use_static_meshlinkMesh;
+	UStaticMesh* link_use_static_mesh_mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	UMaterialInterface* CylinderMaterial;
@@ -303,10 +307,10 @@ public:
 	float link_use_static_mesh_size = 0.01f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool link_use_debug_line = true;
+	bool link_use_debug_line = false;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool update_link_before_stabilize = false;
+	bool update_link_before_stabilize = true;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
@@ -314,7 +318,7 @@ public:
 	int jnodes1 = 50;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
-	bool cpu_use_parallel = false;
+	bool cpu_use_parallel = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
 	bool cpu_many_body_use_brute_force = true;

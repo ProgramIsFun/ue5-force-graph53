@@ -130,10 +130,12 @@ public:
 
 
 	
-	// Temporary variables. 
-	bool use_predefined_position_should_update_once = true;
+	// Temporary variables.
+	bool graph_requesting = false;
 	bool graph_initialized = false;
-	bool graph_requested = false;
+
+	
+	bool use_predefined_position_should_update_once = true;
 	bool precheck_succeed = true;
 	FVector current_own_position;
 

@@ -23,7 +23,8 @@ void AKnowledgeGraph::post_generate_graph()
 	{
 		pass_parameters_to_shader_management();
 	}
-
+	
+	graph_requesting = false;
 	graph_initialized = true;
 }
 

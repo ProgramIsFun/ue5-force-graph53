@@ -48,15 +48,18 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 
 	if (!graph_initialized)
 	{
-		if (graph_requested)
+		if (graph_requesting)
 		{
 			ll("Graph is requested but not initialized. ", true, 2);
 		}else
 		{
-			graph_requested = true;
+			graph_requesting = true;
 			prepare();
 		}
 		return;
+	}else
+	{
+		// ll("Graph is initialized. We have enough data to move on.  ", true, 2);
 	}
 	
 

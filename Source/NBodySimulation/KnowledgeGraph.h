@@ -132,8 +132,13 @@ public:
 	
 	// Temporary variables. 
 	bool use_predefined_position_should_update_once = true;
+	bool graph_initialized = false;
+	bool graph_requested = false;
+	bool precheck_succeed = true;
 	FVector current_own_position;
 
+	bool GPUvalid = false;
+	
 
 	
 	// Important Variables.
@@ -146,12 +151,6 @@ public:
 	
 	int32 jnodessss;
 	
-	bool graph_initialized = false;
-	
-	bool graph_requested = false;
-	bool precheck_succeed = true;
-	bool GPUvalid = false;
-	
 	TMap<int32, FString> id_to_string;
 	TMap<FString, int32> string_to_id;
 	TArray<Node> all_nodes2;
@@ -159,28 +158,9 @@ public:
 	TArray<FVector> predefined_positions;
 	TArray<FVector> nodePositions;
 	TArray<FVector> nodeVelocities;
-
-
-
-
-	
-
 	OctreeNode* OctreeData2;
 
 
-
-
-
-	// Shader related variables. 
-	FNBodySimParameters SimParameters;
-	UPROPERTY()
-	TArray<FTransform> BodyTransforms;
-	TArray<int> LinkOffsets; // Holds the offset for each body
-	TArray<int> LinkCounts; // Holds the count of links for each body
-	TArray<int> LinkIndices; // Flat array containing all links
-	TArray<float> LinkStrengths; // Holds the strength of each link
-	TArray<float> LinkBiases; // Holds the bias of each link
-	TArray<int> Linkinout;
 
 
 
@@ -362,6 +342,9 @@ public:
 	float node_use_actor_size = 0.3f;
 
 
+
+
+	// Unreal engine actor functions. 
 	AKnowledgeGraph();
 	virtual ~AKnowledgeGraph() override;
 	virtual void BeginPlay() override;
@@ -369,6 +352,13 @@ public:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void Tick(float DeltaTime) override;
 
+
+
+
+
+
+
+	// Helper functions.
 	template <typename Func, typename... Args>
 	auto timeThisMemberFunction(const char* functionName, Func function, Args&&... args)
 	{
@@ -380,19 +370,16 @@ public:
 		lll("Elapsed time For " + FString(functionName) + ": " + FString::SanitizeFloat(ElapsedTime) + " seconds");
 		return ElapsedTime;
 	}
-
 	void qq()
 	{
 		// This doesn't block the game thread. It just sent a request to end the game. 
 		UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit,
 		                               false);
 	}
-
 	void s()
 	{
 		FNBodySimModule::Get().EndRendering();
 	}
-
 	void ll(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		if(use_logging)
@@ -400,11 +387,26 @@ public:
 			ll2(StringToLog, LOG, SeverityLevel, Prefix);
 		}
 	}
-
 	void lp(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, StringToLog);
 	}
+
+
+
+	// Shader related variables. 
+	FNBodySimParameters SimParameters;
+	UPROPERTY()
+	TArray<FTransform> BodyTransforms;
+	TArray<int> LinkOffsets; // Holds the offset for each body
+	TArray<int> LinkCounts; // Holds the count of links for each body
+	TArray<int> LinkIndices; // Flat array containing all links
+	TArray<float> LinkStrengths; // Holds the strength of each link
+	TArray<float> LinkBiases; // Holds the bias of each link
+	TArray<int> Linkinout;
+
+
+
 
 	
 };

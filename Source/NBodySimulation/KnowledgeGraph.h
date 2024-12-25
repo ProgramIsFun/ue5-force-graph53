@@ -138,7 +138,6 @@ public:
 	bool use_predefined_position_should_update_once = true;
 	bool precheck_succeed = true;
 	FVector current_own_position;
-
 	bool GPUvalid = false;
 	
 

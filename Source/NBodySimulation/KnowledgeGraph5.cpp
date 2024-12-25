@@ -186,12 +186,24 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 
 void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
 {
+	bool request_the_whole_graph_again = false;
+	if (request_the_whole_graph_again)
+	{
+		use_predefined_position_should_update_once = true;
 
-	prepare();
-	// Update the arrays with the Correct length
+		prepare();
+	}
+	else
+	{
+	
+		// Update the arrays with the Correct length
 
 
-	// Create new objects.
+		// Create new objects.
+		
+	}
+
+
 
 
 	

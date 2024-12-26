@@ -297,6 +297,80 @@ void AKnowledgeGraph::extracting_property_list_and_store()
 	}
 }
 
+void AKnowledgeGraph::deal_with_predefined_location()
+{
+	bool log=false;
+	predefined_positions.SetNumUninitialized(jnodessss);
+
+	if (cgm == CGM::DATABASE)
+	{
+		// Retrieve the position of the nodes from the database
+		// and set the position of the nodes to the retrieved position.
+		// This is done by setting the nodePositions array to the retrieved position
+		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
+		for (int32 i = 0; i < jnodessss; i++)
+		{
+			auto jobj = jnodes[i]->AsObject();
+			FVector jlocation;
+
+			FString jid = jobj->GetStringField("user_generate_id_7577777777");
+
+
+			if (jobj->HasField("ue_location_X") &&
+				jobj->HasField("ue_location_Y") &&
+				jobj->HasField("ue_location_Z")
+			)
+			{
+				jlocation = FVector(
+					jobj->GetNumberField("ue_location_X"),
+					jobj->GetNumberField("ue_location_Y"),
+					jobj->GetNumberField("ue_location_Z")
+				);
+				// You can use jlocation vector as needed
+			}
+			else
+			{
+				// Send a warning to the client. 
+				ll("location does not exist", log);
+
+				// Handle cases where location coordinates do not exist
+				// For example, assigning a default value or logging an error
+				jlocation = FVector(0, 0, 0); // Default value if no location found
+			}
+
+
+			ll("location111111111111111: " + jlocation.ToString(), log);
+
+			// int id111 = string_to_id[jid];
+			// predefined_positions[id111] = jlocation;
+			predefined_positions[i] = jlocation;
+		}
+
+
+		if (use_predefined_locationand_then_center_to_current_actor)
+		{
+			FVector center = GetActorLocation();
+			FVector aggregation = FVector(0, 0, 0);
+
+			for (int32 i = 0; i < jnodessss; i++)
+			{
+				aggregation += predefined_positions[i];
+			}
+
+			aggregation /= jnodessss;
+			for (int32 i = 0; i < jnodessss; i++)
+			{
+				predefined_positions[i] -= (aggregation - center);
+			}
+		}
+	}
+	else
+	{
+		ll("Pretty fine location feature is only available for using database.  ", log);
+		qq();
+	}
+}
+
 void AKnowledgeGraph::default_generate_graph_method()
 {
 	bool log = true;
@@ -328,76 +402,8 @@ void AKnowledgeGraph::default_generate_graph_method()
 
 
 	if (use_predefined_location)
-	{
-		predefined_positions.SetNumUninitialized(jnodessss);
-
-		if (cgm == CGM::DATABASE)
-		{
-			// Retrieve the position of the nodes from the database
-			// and set the position of the nodes to the retrieved position.
-			// This is done by setting the nodePositions array to the retrieved position
-			TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-			for (int32 i = 0; i < jnodessss; i++)
-			{
-				auto jobj = jnodes[i]->AsObject();
-				FVector jlocation;
-
-				FString jid = jobj->GetStringField("user_generate_id_7577777777");
-
-
-				if (jobj->HasField("ue_location_X") &&
-					jobj->HasField("ue_location_Y") &&
-					jobj->HasField("ue_location_Z")
-				)
-				{
-					jlocation = FVector(
-						jobj->GetNumberField("ue_location_X"),
-						jobj->GetNumberField("ue_location_Y"),
-						jobj->GetNumberField("ue_location_Z")
-					);
-					// You can use jlocation vector as needed
-				}
-				else
-				{
-					// Send a warning to the client. 
-					ll("location does not exist", log);
-
-					// Handle cases where location coordinates do not exist
-					// For example, assigning a default value or logging an error
-					jlocation = FVector(0, 0, 0); // Default value if no location found
-				}
-
-
-				ll("location111111111111111: " + jlocation.ToString(), log);
-
-				// int id111 = string_to_id[jid];
-				// predefined_positions[id111] = jlocation;
-				predefined_positions[i] = jlocation;
-			}
-
-
-			if (use_predefined_locationand_then_center_to_current_actor)
-			{
-				FVector center = GetActorLocation();
-				FVector aggregation = FVector(0, 0, 0);
-
-				for (int32 i = 0; i < jnodessss; i++)
-				{
-					aggregation += predefined_positions[i];
-				}
-
-				aggregation /= jnodessss;
-				for (int32 i = 0; i < jnodessss; i++)
-				{
-					predefined_positions[i] -= (aggregation - center);
-				}
-			}
-		}
-		else
-		{
-			ll("Pretty fine location feature is only available for using database.  ", log);
-			qq();
-		}
+	{	
+		deal_with_predefined_location();
 	}
 
 

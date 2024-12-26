@@ -960,14 +960,11 @@ FVector AKnowledgeGraph::get_player_location727()
 FVector AKnowledgeGraph::get_location_of_somewhere_in_front_of_player727()
 {
 	// Get the current location
-	FVector CurrentLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-
+	FVector CurrentLocation = get_player_location727();
 	// Get the forward direction
 	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorForwardVector();
-
 	// Calculate the new location
 	FVector NewLocation = CurrentLocation + (ForwardVector * 10000); // 100 meters away in the forward direction
-	
 	return NewLocation;
 }
 
@@ -980,8 +977,6 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 	{
 		return;
 	}
-
-	FVector PlayerLocation = get_player_location727();
 
 	// Update bodies visual with new positions.
 	for (int i = 0; i < nodePositions.Num(); i++)
@@ -998,18 +993,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 		{
 			all_nodes2[i].textComponent->SetWorldLocation(NewPosition);
 			// TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
-
-			if (rotate_to_face_player)
-			{
-				// Compute the direction from the text component to the player.
-				FVector ToPlayer = PlayerLocation - NewPosition;
-				ToPlayer.Normalize();
-
-				// Create a look-at rotation. The second parameter is the up-vector, adjust if needed.
-				FRotator NewRotation = FRotationMatrix::MakeFromX(ToPlayer).Rotator();
-				all_nodes2[i].textComponent->SetWorldRotation(NewRotation);
-				// TextComponents11111111111111111111[i]->SetWorldRotation(NewRotation);
-			}
+			
 		}
 	}
 

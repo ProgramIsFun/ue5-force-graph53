@@ -211,11 +211,40 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			update_parameter_in_shader(DeltaTime);
 		}
 	}
-	
-	
+	if (rotate_to_face_player)
+	{
+		rotate_to_face_player111();
+	}
 	
 	return false;
 }
+
+
+void AKnowledgeGraph::rotate_to_face_player111()
+{
+	FVector PlayerLocation = get_player_location727();
+
+	for (int i = 0; i < nodePositions.Num(); i++)
+	{
+		FVector NewPosition = nodePositions[i];
+		if (node_use_text_render_components)
+		{
+			if (rotate_to_face_player)
+			{
+				// Compute the direction from the text component to the player.
+				FVector ToPlayer = PlayerLocation - NewPosition;
+				ToPlayer.Normalize();
+				// Create a look-at rotation. The second parameter is the up-vector, adjust if needed.
+				FRotator NewRotation = FRotationMatrix::MakeFromX(ToPlayer).Rotator();
+				all_nodes2[i].textComponent->SetWorldRotation(NewRotation);
+				// TextComponents11111111111111111111[i]->SetWorldRotation(NewRotation);
+			}
+		}
+	}
+
+}
+
+
 
 void AKnowledgeGraph::gpu_get_positions()
 {

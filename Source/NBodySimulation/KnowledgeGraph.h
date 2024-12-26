@@ -171,6 +171,7 @@ public:
 	void debug_test();
 	void gpu_get_positions();
 	bool main_function(float DeltaTime);
+	void rotate_to_face_player111();
 	void pass_parameters_to_shader_management();
 	void post_generate_graph();
 	void prepare();

@@ -100,6 +100,7 @@ public:
 	void add_node_to_database1115(FString NodeName);
 	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 	void clean_up_objects();
+	void reload_the_whole_graph();
 	void late_add_node(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")

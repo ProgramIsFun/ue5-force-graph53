@@ -236,18 +236,23 @@ void AKnowledgeGraph::clean_up_objects()
 	}
 }
 
+void AKnowledgeGraph::reload_the_whole_graph()
+{
+	clean_up_objects();
+		
+	graph_requesting = true;
+	graph_initialized = false;
+	use_predefined_position_should_update_once = true;
+	prepare();
+}
+
 void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
 {
 	// bool request_the_whole_graph_again = false;
 	if (refresh_whole_graph_again_after_editing)
 	{
 		
-		clean_up_objects();
-		
-		graph_requesting = true;
-		graph_initialized = false;
-		use_predefined_position_should_update_once = true;
-		prepare();
+		reload_the_whole_graph();
 	}
 	else
 	{

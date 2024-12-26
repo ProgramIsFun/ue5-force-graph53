@@ -99,15 +99,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void select_closest_node_from_player222();
 	
-	
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_node_from_database1116();
 	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
 	void delete_link_from_database1117();
-
-
-
-
 	
 	// Temporary variables.
 	bool graph_requesting = false;

@@ -54,10 +54,16 @@ class Node
 public:
 	int id;
 	AKnowledgeNode* node;
+	UTextRenderComponent* textComponent;
 	Node(int id, AKnowledgeNode* node)
 	{
 		this->id = id;
 		this->node = node;
+	}
+	Node(int id, UTextRenderComponent* textComponent)
+	{
+		this->id = id;
+		this->textComponent = textComponent;
 	}
 };
 
@@ -174,7 +180,7 @@ public:
 	void print_out_location_of_the_node();
 	void update_iterations();
 	bool generate_actor_and_register(AKnowledgeNode*& kn);
-	void generate_text_render_component_and_attach(FString name);
+	void generate_text_render_component_and_attach(FString name,int32 index);
 	void get_number_of_nodes();
 	void create_one_to_one_mapping();
 	void miscellaneous();

@@ -70,7 +70,8 @@ void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
 	{
 		if (node_use_text_render_components)
 		{
-			TextComponents11111111111111111111[i]->SetWorldSize(size);
+			all_nodes2[i].textComponent->SetWorldSize(size);
+			// TextComponents11111111111111111111[i]->SetWorldSize(size);
 		}
 	} 
 }
@@ -80,7 +81,8 @@ void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool incre
 	{
 		if (node_use_text_render_components)
 		{
-			float current_size = TextComponents11111111111111111111[i]->WorldSize;
+			float current_size = all_nodes2[i].textComponent->WorldSize;
+			// float current_size = TextComponents11111111111111111111[i]->WorldSize;
 			if (increase)
 			{
 				current_size += size;
@@ -88,7 +90,9 @@ void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool incre
 			{
 				current_size -= size;
 			}
-			TextComponents11111111111111111111[i]->SetWorldSize(current_size);
+
+			all_nodes2[i].textComponent->SetWorldSize(current_size);
+			// TextComponents11111111111111111111[i]->SetWorldSize(current_size);
 		}
 	}
 }

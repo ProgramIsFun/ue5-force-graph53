@@ -55,7 +55,7 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 	return false;
 }
 
-void AKnowledgeGraph::generate_text_render_component_and_attach(FString name)
+void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int32 index)
 {
 	UTextRenderComponent* TextComponent = NewObject<UTextRenderComponent>(
 		this, FName("TextComponent" + name)
@@ -66,9 +66,8 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name)
 		TextComponent->SetupAttachment(RootComponent);
 		TextComponent->SetWorldSize(text_size);
 		TextComponent->RegisterComponent(); // This is important to initialize the component
-
-		TextComponents11111111111111111111.Add(TextComponent);
-		// Assuming TextComponents is a valid TArray<UTextRenderComponent*>
+		all_nodes2[index].textComponent = TextComponent;
+		// TextComponents11111111111111111111.Add(TextComponent);
 	}
 }
 
@@ -190,17 +189,13 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	{
 		for (int32 i = 0; i < jnodessss; i++)
 		{
-			
 			if (node_use_text_render_components)
 			{
 				FString name;
 				name = "Sample Text : " + FString::FromInt(i);
-
-
-				generate_text_render_component_and_attach(name);
+				generate_text_render_component_and_attach(name,i);
 			}
 		}
-
 		miscellaneous();
 	}
 	else
@@ -209,8 +204,6 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 		for (int32 i = 0; i < jnodessss; i++)
 		{
 			auto jobj = jnodes[i]->AsObject();
-
-			
 			if (node_use_text_render_components)
 			{
 				FString name;
@@ -233,14 +226,12 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				{
 					name = "Sample Text : " + FString::FromInt(i);
 				}
-				generate_text_render_component_and_attach(name);
+				generate_text_render_component_and_attach(name,i);
 			}
 		}
 
 		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
 		ll("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
-
-
 		
 		for (int32 i = 0; i < jedges.Num(); i++)
 		{
@@ -971,7 +962,8 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 		if (node_use_text_render_components)
 		{
-			TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
+			all_nodes2[i].textComponent->SetWorldLocation(NewPosition);
+			// TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
 
 			if (rotate_to_face_player)
 			{
@@ -981,7 +973,8 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 				// Create a look-at rotation. The second parameter is the up-vector, adjust if needed.
 				FRotator NewRotation = FRotationMatrix::MakeFromX(ToPlayer).Rotator();
-				TextComponents11111111111111111111[i]->SetWorldRotation(NewRotation);
+				all_nodes2[i].textComponent->SetWorldRotation(NewRotation);
+				// TextComponents11111111111111111111[i]->SetWorldRotation(NewRotation);
 			}
 		}
 	}

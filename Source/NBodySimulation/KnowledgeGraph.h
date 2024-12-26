@@ -28,31 +28,22 @@ class Link
 public:
 	int32 source;
 	int32 target;
-
 	float bias;
 	float strength;
 	float distance;
-
-
 	AKnowledgeEdge* edge;
-	
 	UStaticMeshComponent* edgeMesh;
-	
-
 	Link(int32 source, int32 target, AKnowledgeEdge* edge)
 	{
 		this->source = source;
 		this->target = target;
 		this->edge = edge;
 	}
-
 	Link(int32 source, int32 target)
 	{
 		this->source = source;
 		this->target = target;
 	}
-
-
 	Link()
 	{
 	}
@@ -63,20 +54,12 @@ class Node
 public:
 	int id;
 	AKnowledgeNode* node;
-
-	// Node(AKnowledgeNode* node)
-	// {
-	// 	this->node = node;
-	// }
-
 	Node(int id, AKnowledgeNode* node)
 	{
 		this->id = id;
 		this->node = node;
 	}
 };
-
-
 
 UENUM(BlueprintType)
 enum class CGM : uint8
@@ -85,11 +68,6 @@ enum class CGM : uint8
 	JSON UMETA(DisplayName = "json22222"),
 	DATABASE UMETA(DisplayName = "database333333")
 };
-
-
-
-
-
 
 UCLASS()
 class NBODYSIMULATION_API AKnowledgeGraph : public AActor

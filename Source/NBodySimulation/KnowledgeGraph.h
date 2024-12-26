@@ -114,6 +114,8 @@ public:
 	bool graph_requesting = false;
 	bool graph_initialized = false;
 
+	// UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	bool refresh_whole_graph_again_after_editing = true;
 	
 	bool use_predefined_position_should_update_once = true;
 	bool precheck_succeed = true;

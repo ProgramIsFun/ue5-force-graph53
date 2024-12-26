@@ -187,29 +187,56 @@ FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful
 void AKnowledgeGraph::clean_up_objects()
 {
 
-	
+	// For every node
+	for (int32 i = 0; i < jnodessss; i++)
+	{
+		// Remove the text render component
+		if (node_use_text_render_components)
+		{
+			if (all_nodes2[i].textComponent && all_nodes2[i].textComponent->IsRegistered())
+			{
+				// Detach the component from its parent
+				all_nodes2[i].textComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+				// Unregister the component
+				all_nodes2[i].textComponent->UnregisterComponent();
+				// Actually destroy the component
+				all_nodes2[i].textComponent->DestroyComponent();
+				// Nullify local reference
+				all_nodes2[i].textComponent = nullptr;
+			}
+		}
+	}
 	
 	if (node_use_instance_static_mesh)
 	{
 		InstancedStaticMeshComponent->ClearInstances();
 	}
 
-
-
-	
+	// For each link
+	for (int32 i = 0; i < all_links2.Num(); i++)
+	{
+		if (all_links2[i].edgeMesh && all_links2[i].edgeMesh->IsRegistered())
+		{
+			// Detach the component from its parent
+			all_links2[i].edgeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			// Unregister the component
+			all_links2[i].edgeMesh->UnregisterComponent();
+			// Actually destroy the component
+			all_links2[i].edgeMesh->DestroyComponent();
+			// Nullify local reference
+			all_links2[i].edgeMesh = nullptr;
+		}
+	}
 }
 
 void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
 {
-	bool request_the_whole_graph_again = false;
-	if (request_the_whole_graph_again)
+	// bool request_the_whole_graph_again = false;
+	if (refresh_whole_graph_again_after_editing)
 	{
 		
 		clean_up_objects();
-
-
-
-
+		
 		graph_requesting = true;
 		graph_initialized = false;
 		use_predefined_position_should_update_once = true;

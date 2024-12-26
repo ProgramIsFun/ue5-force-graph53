@@ -205,6 +205,7 @@ void AKnowledgeGraph::clean_up_objects()
 				all_nodes2[i].textComponent = nullptr;
 			}
 		}
+		
 	}
 	
 	if (node_use_instance_static_mesh)

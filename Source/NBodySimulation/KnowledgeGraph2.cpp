@@ -114,6 +114,8 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 
 void AKnowledgeGraph::miscellaneous()
 {
+	all_links2.SetNumUninitialized(jnodessss-1);
+
 	bool log = false;
 	// Edge creation loop
 	if (!connect_to_previous)
@@ -184,7 +186,11 @@ void AKnowledgeGraph::initialize_arrays()
 
 bool AKnowledgeGraph::generate_objects_for_node_and_link()
 {
-	bool log = false;
+
+
+
+	
+	bool log = true;
 	if (cgm == CGM::GENERATE)
 	{
 		for (int32 i = 0; i < jnodessss; i++)
@@ -229,10 +235,19 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				generate_text_render_component_and_attach(name,i);
 			}
 		}
+		ll("Number of node generated: " + FString::FromInt(jnodessss), log);
+
+
+
+
+
+
 
 		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
 		ll("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
-		
+		all_links2.SetNumUninitialized(jedges.Num());
+
+
 		for (int32 i = 0; i < jedges.Num(); i++)
 		{
 			auto jobj = jedges[i]->AsObject();
@@ -241,9 +256,11 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 			FString jtargetS = jobj->GetStringField("target");
 			int jsource = string_to_id[jsourceS];
 			int jtarget = string_to_id[jtargetS];
-			ll("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
+			// ll("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
 			add_edge(i, jsource, jtarget);
 		}
+
+		ll("Number of link generated: " + FString::FromInt(jedges.Num()), log);
 	}
 	return false;
 }
@@ -1265,5 +1282,6 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 	link.strength = 1;
 	link.distance = edgeDistance;
 
-	all_links2.Add(link);
+
+	all_links2[id] = link;
 }

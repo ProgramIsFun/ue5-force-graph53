@@ -957,6 +957,23 @@ FVector AKnowledgeGraph::get_player_location727()
 	return GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 }
 
+FVector AKnowledgeGraph::get_location_of_somewhere_in_front_of_player727()
+{
+	// Get the current location
+	FVector CurrentLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+
+	// Get the forward direction
+	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorForwardVector();
+
+	// Calculate the new location
+	FVector NewLocation = CurrentLocation + (ForwardVector * 10000); // 100 meters away in the forward direction
+	
+	return NewLocation;
+}
+
+
+
+
 void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 {
 	if (use_shaders && !GPUvalid)

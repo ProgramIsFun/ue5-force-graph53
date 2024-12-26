@@ -119,7 +119,13 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 {
 	// Get the first character locations.
+
+
+
+	
 	FVector player_location =get_player_location727();
+
+
 	
 	// Create a JSON writer and JSON Array
 	

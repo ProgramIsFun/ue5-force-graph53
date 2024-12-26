@@ -197,6 +197,7 @@ public:
 	void initialize_node_position();
 	void initialize_node_position_individual(int index);
 	FVector get_player_location727();
+	FVector get_location_of_somewhere_in_front_of_player727();
 	void calculate_bias_and_strength_of_links();
 	bool generate_actor_for_a_link(Link77& link);
 	void apply_force();

@@ -987,7 +987,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 {
-	bool log = true;
+	bool log = false;
 	float n = all_nodes2.Num();
 	float m = all_links2.Num();
 

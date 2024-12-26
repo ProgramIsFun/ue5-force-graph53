@@ -23,7 +23,9 @@ void AKnowledgeGraph::post_generate_graph()
 	{
 		pass_parameters_to_shader_management();
 	}
-	
+
+
+	ll("Graph is generated. Now setting initialized to true.  ", true, 2);
 	graph_requesting = false;
 	graph_initialized = true;
 }

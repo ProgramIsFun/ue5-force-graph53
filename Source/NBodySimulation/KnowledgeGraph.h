@@ -211,59 +211,59 @@ public:
 
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float universal_graph_scale = 1.0f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool use_shaders = false;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	int32 use_shaders_debug = 0;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	CGM cgm= CGM::GENERATE;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool use_predefined_location = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool use_predefined_locationand_then_center_to_current_actor = true;
 
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool initialize_using_actor_location = true;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	int32 use_json_file_index = 0;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool cpu_linkc = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// Calculate many body force or not. 
 	bool cpu_manybody = true;
 
 	// Turn on logging or not. 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool use_logging = false;
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool node_use_instance_static_mesh = false;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float node_use_instance_static_mesh_size = 0.3f;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	UStaticMesh* SelectedMesh1111111111111;
 	// 3////////////////////
 	// Use TextRenderComponent or not
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool node_use_text_render_components = true;
 	// The size of TextRenderComponent
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float text_size = 10;
 
 	// rotation to face the player
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool rotate_to_face_player = true;
 
 
@@ -271,39 +271,39 @@ public:
 	//Link setting////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool link_use_static_mesh = true;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	UStaticMesh* link_use_static_mesh_mesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	UMaterialInterface* CylinderMaterial;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float link_use_static_mesh_thickness = 0.05f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float link_use_static_mesh_length_fine_tune = 0.01f;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool link_use_debug_line = false;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool update_link_before_stabilize = true;
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	int jnodes1 = 50;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool cpu_use_parallel = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool cpu_many_body_use_brute_force = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	bool connect_to_previous = true;
 
 
@@ -311,7 +311,7 @@ public:
 
 	
 	// Internal hard coded variables.
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Attributes)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float alpha = 1;
 	int iterationsf = 0;
 	float iterations = 0;

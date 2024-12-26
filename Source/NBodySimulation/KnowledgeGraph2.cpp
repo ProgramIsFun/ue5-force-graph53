@@ -1171,7 +1171,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 }
 
 
-bool AKnowledgeGraph::generate_actor_for_a_link(Link& link)
+bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 {
 	AKnowledgeEdge* e;
 	UClass* bpClass;
@@ -1233,7 +1233,7 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link& link)
 void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 {
 	
-	Link link = Link(source, target);
+	Link77 link = Link77(source, target);
 	
 
 

@@ -98,7 +98,7 @@ bool OctreeNode::check_contain_data_or_not()
 
 void OctreeNode::AddAll1(
 	
-	TArray<Node> all_nodes,
+	TArray<Node77> all_nodes,
 	TArray<FVector> nodePositions
 )
 {

@@ -23,7 +23,7 @@
 
 #include "KnowledgeGraph.generated.h"
 
-class Link
+class Link77
 {
 public:
 	int32 source;
@@ -33,34 +33,34 @@ public:
 	float distance;
 	AKnowledgeEdge* edge;
 	UStaticMeshComponent* edgeMesh;
-	Link(int32 source, int32 target, AKnowledgeEdge* edge)
+	Link77(int32 source, int32 target, AKnowledgeEdge* edge)
 	{
 		this->source = source;
 		this->target = target;
 		this->edge = edge;
 	}
-	Link(int32 source, int32 target)
+	Link77(int32 source, int32 target)
 	{
 		this->source = source;
 		this->target = target;
 	}
-	Link()
+	Link77()
 	{
 	}
 };
 
-class Node
+class Node77
 {
 public:
 	int id;
 	AKnowledgeNode* node;
 	UTextRenderComponent* textComponent;
-	Node(int id, AKnowledgeNode* node)
+	Node77(int id, AKnowledgeNode* node)
 	{
 		this->id = id;
 		this->node = node;
 	}
-	Node(int id, UTextRenderComponent* textComponent)
+	Node77(int id, UTextRenderComponent* textComponent)
 	{
 		this->id = id;
 		this->textComponent = textComponent;
@@ -136,8 +136,8 @@ public:
 	
 	TMap<int32, FString> id_to_string;
 	TMap<FString, int32> string_to_id;
-	TArray<Node> all_nodes2;
-	TArray<Link> all_links2;
+	TArray<Node77> all_nodes2;
+	TArray<Link77> all_links2;
 	TArray<FVector> predefined_positions;
 
 	
@@ -198,7 +198,7 @@ public:
 	void initialize_node_position_individual(int index);
 	FVector get_player_location727();
 	void calculate_bias_and_strength_of_links();
-	bool generate_actor_for_a_link(Link& link);
+	bool generate_actor_for_a_link(Link77& link);
 	void apply_force();
 	void calculate_link_force_and_update_velocity();
 	void calculate_charge_force_and_update_velocity();

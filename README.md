@@ -14,6 +14,11 @@ Dependency link
 
 https://vasturiano.github.io/3d-force-graph/example/large-graph/ -> https://github.com/vasturiano/three-forcegraph -> https://github.com/vasturiano/d3-force-3d -> https://github.com/vasturiano/d3-octree
 
+
+## shader
+The shader code is right here  https://github.com/ProgramIsFun/ue5-force-graph53/blob/master/Plugins/NBodySimShader/Source/NBodySim/Private/NBodySimCS.cpp
+
+
 ## To do list
 
 [a relative link](To_do_list.md)

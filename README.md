@@ -60,9 +60,9 @@ But in this project, there is no such separations. All the header files and CPP 
 
 Basically, it is a cpp class  and it inherits from the Pawns class.
 
-Source/ue544_blankkkkkkkkkk/KnowledgeGraph.cpp
+KnowledgeGraph.cpp
 
-Source/ue544_blankkkkkkkkkk/KnowledgeGraph.h
+KnowledgeGraph.h
 
 Usually every actor and all its child's class have a constructor and a destructor, begin play, and tick function.
 
@@ -78,8 +78,6 @@ So how to put this in the map that we want to play? We can drag the KnowledgeGra
 
 You can open different maps by clicking the file in the content browser.
 
-Content/CreatePlanetsSSS/NewMapPPPPPPP.umap   is the map that looks like in the universe.
-
 5.Usual workflow
 
 Every time we modify the source code, we need to recompile the project.
@@ -89,12 +87,3 @@ In order to speed up the workflow, we can add a UPROPERTY() macro in front of th
 
 https://benui.ca/unreal/uproperty/
 
-## Notice
-
-This project is Mainly in git@gitee.com:nameeeee/aaaaaaaaa.git
-
-The project in Other git platform is just a mirror of the project in gitee.
-
-git push -u origin main521:main521github
-
-git push -u origin3gitee main521:main521

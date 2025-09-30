@@ -40,7 +40,7 @@ void AKnowledgeGraph::BeginPlay()
 void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+	ll("tick is called. ", true, 2);
 	if (!precheck_succeed)
 	{
 		ll("Prechecks failed!!!!!!!!!!!!! ", true, 2);

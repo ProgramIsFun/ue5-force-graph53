@@ -364,6 +364,7 @@ public:
 	}
 	void qq()
 	{
+		ll("received qq to quit the game", true, 2);
 		// This doesn't block the game thread. It just sent a request to end the game. 
 		UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit,
 		                               false);

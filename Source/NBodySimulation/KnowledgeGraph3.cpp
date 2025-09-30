@@ -22,9 +22,11 @@ void AKnowledgeGraph::post_generate_graph()
 	if (use_shaders)
 	{
 		pass_parameters_to_shader_management();
+	}else
+	{
+		ll("not passing parameters to shader because use_shaders is false. ", true, 2);
 	}
-
-
+	
 	ll("Graph is generated. Now setting initialized to true.  ", true, 2);
 	graph_requesting = false;
 	graph_initialized = true;
@@ -163,7 +165,8 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 {
 	bool log = use_logging;
 
-	
+	ll("main_function called", log, 0, TEXT("main_function: "));
+
 	update_iterations();
 
 

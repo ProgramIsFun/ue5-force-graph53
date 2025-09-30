@@ -89,12 +89,9 @@ void AKnowledgeGraph::get_number_of_nodes()
 void AKnowledgeGraph::create_one_to_one_mapping()
 {
 	// Create one-to-one mapping between string IDs and integer indices
-
-
 	
 	bool log = false;
-
-
+	
 	TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 	for (int32 i = 0; i < jnodessss; i++)
 	{
@@ -181,20 +178,12 @@ void AKnowledgeGraph::set_array_values()
 
 void AKnowledgeGraph::initialize_arrays()
 {
-	
 	set_array_lengths();
-
 	set_array_values();
-
-		
 }
 
 bool AKnowledgeGraph::generate_objects_for_node_and_link()
 {
-
-
-
-	
 	bool log = true;
 	if (cgm == CGM::GENERATE)
 	{
@@ -393,7 +382,11 @@ void AKnowledgeGraph::default_generate_graph_method()
 		cgm == CGM::JSON || cgm == CGM::DATABASE
 	)
 	{
+		ll("creating one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
 		create_one_to_one_mapping();
+	}else
+	{
+		ll("auto generate graph, no need to create one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
 	}
 	
 	initialize_arrays();
@@ -401,6 +394,9 @@ void AKnowledgeGraph::default_generate_graph_method()
 	if (cgm == CGM::DATABASE)
 	{
 		extracting_property_list_and_store();
+	}else
+	{
+		
 	}
 	
 	if (generate_objects_for_node_and_link())
@@ -411,8 +407,12 @@ void AKnowledgeGraph::default_generate_graph_method()
 	if (use_predefined_location)
 	{	
 		deal_with_predefined_location();
+	}else
+	{
+		ll("not using predefined location", true, 0, TEXT("default_generate_graph_method: "));
 	}
-	
+
+	ll("post generate graph", true, 0, TEXT("default_generate_graph_method: "));
 	post_generate_graph();
 }
 

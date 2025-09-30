@@ -368,8 +368,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 	}
 	else
 	{
-		ll("Pretty fine location feature is only available for using database.  ", log);
-		qq();
+		ll("predefined_location location feature is only available for using database.  ", log);
 	}
 }
 
@@ -1191,7 +1190,9 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 {
 	AKnowledgeEdge* e;
 	UClass* bpClass;
-	if (true)
+
+	bool useCorrectWay=true;
+	if (useCorrectWay)
 	{
 		// This approach works in both play and editor and package game. 
 		UClass* loadedClass = StaticLoadClass(UObject::StaticClass(), nullptr,
@@ -1205,6 +1206,7 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 		}
 		else
 		{
+			ll("generate_actor_for_a_link failed to load class", true, 2);
 			qq();
 			return true;
 			ll("error loading classsssssssssssssssssssssss");

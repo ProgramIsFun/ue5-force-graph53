@@ -378,6 +378,9 @@ public:
 		if(use_logging)
 		{
 			ll2(StringToLog, LOG, SeverityLevel, Prefix);
+		}else
+		{
+			// Do nothing possibly for performance
 		}
 	}
 	void lp(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))

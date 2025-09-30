@@ -301,7 +301,7 @@ void AKnowledgeGraph::extracting_property_list_and_store()
 
 void AKnowledgeGraph::deal_with_predefined_location()
 {
-	bool log=false;
+	bool log=use_logging;
 	predefined_positions.SetNumUninitialized(jnodessss);
 
 	if (cgm == CGM::DATABASE)

@@ -12,14 +12,14 @@ void AKnowledgeGraph::request_a_graph()
 {
 	if (cgm == CGM::DATABASE)
 	{
+		ll("cgm is database via HTTP. ", true, 0, TEXT("YourFunction: "));
 		request_graph_http();
 	}
 	else
 	{
-
 		if (cgm==CGM::JSON)
 		{
-				ll("hiiiiiiiii", true, 0, TEXT("YourFunction: "));
+				ll("cgm is json", true, 0, TEXT("YourFunction: "));
 				const FString JsonFilePath = FPaths::ProjectContentDir() + "/data/state/" + fileIndexToPath[
 					use_json_file_index];
 				FString JsonString; //Json converted to FString
@@ -39,7 +39,9 @@ void AKnowledgeGraph::request_a_graph()
 					ll("Failed to deserialize JSON. ", true, 2);
 					return;
 				}
-			
+		}else
+		{
+			ll("cgm is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
 		}
 		default_generate_graph_method();
 	}

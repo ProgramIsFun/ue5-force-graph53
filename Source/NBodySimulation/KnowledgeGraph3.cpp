@@ -36,7 +36,6 @@ void AKnowledgeGraph::prepare()
 	
 	if(use_predefined_location)
 	{
-
 		// Predefine locations could be regarded stable  
 		alpha = 0;
 	}

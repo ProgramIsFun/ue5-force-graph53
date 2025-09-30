@@ -40,38 +40,38 @@ void AKnowledgeGraph::BeginPlay()
 void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 	if (!precheck_succeed)
 	{
-		ll("Prechecks failed. ", true, 2);
-		return;
-	}
-
-	if (!graph_initialized)
-	{
-		if (graph_requesting)
-		{
-			ll("Graph is requested but not initialized. ", true, 2);
-		}else
-		{
-			graph_requesting = true;
-			prepare();
-		}
-		return;
+		ll("Prechecks failed!!!!!!!!!!!!! ", true, 2);
+		
 	}else
 	{
-		// ll("Graph is initialized. We have enough data to move on.  ", true, 2);
+		if (!graph_initialized)
+		{
+			if (graph_requesting)
+			{
+				ll("Graph is requested but not initialized. ", true, 2);
+			}else
+			{
+				ll("Graph is not initialized and also not requested. We need to request a graph. ", true, 2);
+				graph_requesting = true;
+				prepare();
+			}
+			
+		}else
+		{
+			ll("Graph is initialized. We have enough data to move on.  ", true, 2);
+			if(iterationsf<10)
+			{
+				ll("The reason of this section is because the first few frames seems "
+			 "to be of sink between the gpu and the cpu. ", false, 2); 
+				iterationsf+=1;
+				return;
+			}
+	
+			main_function(DeltaTime);
+		}
 	}
 	
-
-	
-	if(iterationsf<10)
-	{
-		ll("The reason of this section is because the first few frames seems "
-	 "to be of sink between the gpu and the cpu. ", false, 2); 
-		iterationsf+=1;
-		return;
-	}
-	
-	main_function(DeltaTime);
-
 }

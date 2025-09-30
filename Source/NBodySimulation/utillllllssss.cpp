@@ -91,22 +91,17 @@ void ll2(const FString& StringToLog, bool LOG, int SeverityLevel, const FString&
 		return;
 	}
 	
-
 	if (!LOG)
 	{
 		return;
 	}
 	
-	
 	if (!StringToLog.IsEmpty())
 	{
-		FString LogMessage = Prefix + StringToLog; // Prepends a prefix to the original message
-		// ELogVerbosity::Type LogLevel1;
-
+		FString LogMessage = Prefix + StringToLog; 
 
 		if (1)
 		{
-			// Map SeverityLevel to ELogVerbosity
 			switch (SeverityLevel)
 			{
 			case 0:
@@ -123,20 +118,16 @@ void ll2(const FString& StringToLog, bool LOG, int SeverityLevel, const FString&
 				break;
 			}
 		}
-		else
-		{
-		}
 
-		if (0)
+		bool tryDebugOnScreen = false;
+		if (tryDebugOnScreen)
 		{
 			if (GEngine)
 			{
 				GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White, LogMessage);
 			}
 		}
-		else
-		{
-		}
+
 	}
 
 

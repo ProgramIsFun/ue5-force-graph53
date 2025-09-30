@@ -74,8 +74,9 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int
 void AKnowledgeGraph::get_number_of_nodes()
 {
 	if (cgm == CGM::GENERATE)
-
 	{
+		ll("Generating graph automatically. Number of nodes: " + FString::FromInt(jnodes1), true, 0,
+		   TEXT("get_number_of_nodes: "));
 		jnodessss = jnodes1;
 	}
 	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
@@ -87,6 +88,10 @@ void AKnowledgeGraph::get_number_of_nodes()
 
 void AKnowledgeGraph::create_one_to_one_mapping()
 {
+	// Create one-to-one mapping between string IDs and integer indices
+
+
+	
 	bool log = false;
 
 
@@ -381,7 +386,6 @@ void AKnowledgeGraph::deal_with_predefined_location()
 
 void AKnowledgeGraph::default_generate_graph_method()
 {
-	bool log = true;
 
 	get_number_of_nodes();
 
@@ -391,14 +395,10 @@ void AKnowledgeGraph::default_generate_graph_method()
 	{
 		create_one_to_one_mapping();
 	}
-
-
+	
 	initialize_arrays();
-
-
-	if (
-		cgm == CGM::DATABASE
-	)
+	
+	if (cgm == CGM::DATABASE)
 	{
 		extracting_property_list_and_store();
 	}
@@ -408,13 +408,11 @@ void AKnowledgeGraph::default_generate_graph_method()
 		return;
 	}
 
-
 	if (use_predefined_location)
 	{	
 		deal_with_predefined_location();
 	}
-
-
+	
 	post_generate_graph();
 }
 

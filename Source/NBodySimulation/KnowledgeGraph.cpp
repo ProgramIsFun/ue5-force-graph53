@@ -14,6 +14,9 @@ AKnowledgeGraph::AKnowledgeGraph()
 					TEXT("InstancedStaticMeshComponent"));
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.TickGroup = TG_DuringPhysics;
+
+	// Create the data manager
+	DataManager = CreateDefaultSubobject<UGraphDataManager>(TEXT("DataManager"));
 }
 
 void AKnowledgeGraph::BeginDestroy()
@@ -35,6 +38,11 @@ void AKnowledgeGraph::BeginPlay()
 	Super::BeginPlay();
 	ClearLogFile();
 	
+	// Bind to data manager's delegate
+	if (DataManager)
+	{
+		DataManager->OnGraphDataLoaded.AddDynamic(this, &AKnowledgeGraph::OnGraphDataLoadedCallback);
+	}
 }
 
 void AKnowledgeGraph::Tick(float DeltaTime)

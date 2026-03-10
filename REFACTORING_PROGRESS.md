@@ -26,7 +26,7 @@ AKnowledgeGraph (orchestrator)
 | Step | Component | Status | Files Changed |
 |------|-----------|--------|---------------|
 | 1 | Configuration Extraction | ✅ COMPLETE | 2 files |
-| 2 | GraphDataManager | ⏸️ NOT STARTED | - |
+| 2 | GraphDataManager | ✅ COMPLETE | 2 files |
 | 3 | GraphPhysicsSimulator | ⏸️ NOT STARTED | - |
 | 4 | GraphRenderer | ⏸️ NOT STARTED | - |
 | 5 | GraphInteractionHandler | ⏸️ NOT STARTED | - |
@@ -77,14 +77,70 @@ AKnowledgeGraph (orchestrator)
 - New code should use: `Config.bUseGPUShaders`, `Config.UniversalGraphScale`, etc.
 - Legacy properties will be removed in future steps
 
+### ✅ Step 2: Create GraphDataManager
+**Date:** 2026-03-10  
+**Status:** COMPLETE - Compiles successfully  
+**Tested:** Compilation only (not yet integrated)
+
+**Changes:**
+- Created `UGraphDataManager` class to handle all data operations
+- Introduced clean data structures:
+  - `FNodeData` - Replaces messy `Node77` class
+  - `FLinkData` - Replaces messy `Link77` class
+- Extracted all HTTP request code from `KnowledgeGraph5.cpp`
+- Extracted JSON parsing logic
+- Implemented ID mapping system (string ↔ integer)
+- Added delegate system for async operations (`FOnGraphDataLoaded`)
+- Proper error handling and logging
+
+**API Overview:**
+```cpp
+// Main operations
+void RequestGraphData(EGraphCreationMode Mode, ...);
+void AddNodeToDatabase(const FString& NodeName, const FVector& Location);
+void UpdateAllNodePositionsToDatabase(const TArray<FVector>& Positions);
+
+// Data access
+const TArray<FNodeData>& GetNodes() const;
+const TArray<FLinkData>& GetLinks() const;
+int32 GetNodeIndexFromStringId(const FString& StringId) const;
+```
+
+**Benefits:**
+- All HTTP/database code isolated in one class
+- Clean separation of data from logic
+- Easier to test data operations
+- Better error handling
+- Async operations with delegates
+
+**Files Created:**
+- `Source/NBodySimulation/GraphDataManager.h`
+- `Source/NBodySimulation/GraphDataManager.cpp`
+
+**Next Step:**
+Before proceeding to Step 3, we should integrate GraphDataManager into KnowledgeGraph to verify it works correctly. This is optional but recommended.
+
 ---
 
 ## Pending Steps
 
-### ⏸️ Step 2: Create GraphDataManager
+### ⏸️ Step 2b: Integrate GraphDataManager (OPTIONAL)
 **Status:** NOT STARTED  
-**Dependencies:** Step 1 (complete)  
-**Estimated Complexity:** Medium
+**Dependencies:** Step 2 (complete)  
+**Estimated Complexity:** Low
+
+**Goal:** Wire up the new GraphDataManager in KnowledgeGraph to replace old data code
+
+**What to do:**
+- Add `UGraphDataManager* DataManager` property to `AKnowledgeGraph`
+- Replace calls to old HTTP functions with DataManager API
+- Bind to `OnGraphDataLoaded` delegate
+- Test that graph loading still works
+
+### ⏸️ Step 3: Create GraphPhysicsSimulator
+**Status:** NOT STARTED  
+**Dependencies:** Step 2 (complete)  
+**Estimated Complexity:** High
 **Goal:** Extract all HTTP, JSON, and database operations
 
 **What to extract:**
@@ -177,7 +233,7 @@ When resuming this refactoring:
 5. **Test incrementally** - Compile and test after each change
 6. **Maintain compatibility** - Don't break existing code until Step 6
 
-**Current state:** Step 1 complete. Ready to begin Step 2 (GraphDataManager).
+**Current state:** Steps 1-2 complete. Ready to begin Step 3 (GraphPhysicsSimulator) or integrate Step 2 into KnowledgeGraph.
 
 ---
 

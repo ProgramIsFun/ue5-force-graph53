@@ -18,6 +18,7 @@
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
 #include "GraphConfiguration.h"
+#include "GraphDataManager.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +195,7 @@ public:
 	void set_array_values();
 	void initialize_arrays();
 	bool generate_objects_for_node_and_link();
+	bool generate_objects_for_node_and_link_new(); // New version using DataManager
 	void extracting_property_list_and_store();
 	void deal_with_predefined_location();
 	void default_generate_graph_method();
@@ -216,11 +218,19 @@ public:
 	void request_a_graph();
 	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
 
+	// New callback for DataManager
+	UFUNCTION()
+	void OnGraphDataLoadedCallback(bool bSuccess);
+
 
 
 	// New unified configuration struct
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Graph Configuration")
 	FGraphConfiguration Config;
+
+	// New data manager - handles all HTTP/JSON/database operations
+	UPROPERTY()
+	UGraphDataManager* DataManager;
 
 	// Legacy properties - kept for backward compatibility, will be removed in future
 	// These now redirect to Config struct

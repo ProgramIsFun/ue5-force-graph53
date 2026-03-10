@@ -728,6 +728,12 @@ void AKnowledgeGraph::update_link_position()
 		{
 			auto l = link.edgeMesh;
 
+			// Safety check - skip if mesh is null
+			if (!l)
+			{
+				continue;
+			}
+
 			FVector MidPoint = (Location1 + Location2) / 2.0f;
 			FVector ForwardVector = (Location2 - Location1);
 			float CylinderHeight = ForwardVector.Size();

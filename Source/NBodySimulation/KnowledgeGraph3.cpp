@@ -32,16 +32,7 @@ void AKnowledgeGraph::post_generate_graph()
 	graph_initialized = true;
 }
 
-void AKnowledgeGraph::prepare()
-{
-	request_a_graph();
-	
-	if(use_predefined_location)
-	{
-		// Predefine locations could be regarded stable  
-		alpha = 0;
-	}
-}
+// prepare() function moved to KnowledgeGraph_DataIntegration.cpp
 
 
 void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)

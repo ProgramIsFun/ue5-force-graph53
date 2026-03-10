@@ -1,3 +1,4 @@
+// Refactored from octreeeeeeeeee3.cpp in commit cfe5a2e49166b9a584b865688086bef641dc2862
 #include "NBodyOctree.h"
 
 #include <queue>

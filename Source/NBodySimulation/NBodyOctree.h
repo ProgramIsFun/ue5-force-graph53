@@ -1,3 +1,4 @@
+// Refactored from octreeeeeeeeee3.h in commit cfe5a2e49166b9a584b865688086bef641dc2862
 #pragma once
 
 #include <functional>

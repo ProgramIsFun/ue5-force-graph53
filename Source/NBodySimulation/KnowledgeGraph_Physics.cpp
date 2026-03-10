@@ -81,8 +81,27 @@ void AKnowledgeGraph::get_number_of_nodes()
 	}
 	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
 	{
+		if (!JsonObject1.IsValid())
+		{
+			ll("ERROR: JsonObject1 is invalid!", true, 3);
+			jnodessss = 0;
+			precheck_succeed = false;
+			return;
+		}
+		
 		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
 		jnodessss = jnodes.Num();
+		
+		// Safety check for reasonable node count
+		if (jnodessss < 0 || jnodessss > 100000)
+		{
+			ll("ERROR: Invalid node count: " + FString::FromInt(jnodessss), true, 3);
+			jnodessss = 0;
+			precheck_succeed = false;
+			return;
+		}
+		
+		ll("Loaded node count from JSON: " + FString::FromInt(jnodessss), true, 0);
 	}
 }
 
@@ -149,20 +168,27 @@ void AKnowledgeGraph::miscellaneous()
 
 void AKnowledgeGraph::set_array_lengths()
 {
+	// Safety check to prevent memory allocation crashes
+	if (jnodessss <= 0 || jnodessss > 100000)
+	{
+		ll("ERROR: Invalid jnodessss value: " + FString::FromInt(jnodessss) + ". Refusing to allocate arrays.", true, 3);
+		precheck_succeed = false;
+		return;
+	}
+	
+	ll("Setting array lengths for " + FString::FromInt(jnodessss) + " nodes", true, 0);
+	
 	nodePositions.SetNumUninitialized(jnodessss);
 	nodeVelocities.SetNumUninitialized(jnodessss);
 	all_nodes2.SetNumUninitialized(jnodessss);
 	
 	if (use_shaders)
 	{
-		SimParameters.Bodies.SetNumUninitialized(
-			jnodessss
-		);
+		SimParameters.Bodies.SetNumUninitialized(jnodessss);
 	}
 	if (node_use_instance_static_mesh)
 	{
-		BodyTransforms.SetNumUninitialized(
-			jnodessss);
+		BodyTransforms.SetNumUninitialized(jnodessss);
 	}
 }
 

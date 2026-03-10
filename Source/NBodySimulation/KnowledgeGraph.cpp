@@ -102,30 +102,45 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 
 void AKnowledgeGraph::DrawDebugGrid(const FVector& Center, int32 GridSize, float CellSize)
 {
-	// Draw a grid on the XY plane
+	// Draw a grid on the XY plane (horizontal)
 	for (int32 i = -GridSize; i <= GridSize; i++)
 	{
-		// X-axis lines
-		DrawDebugLine(
-			GetWorld(),
-			FVector(Center.X + i * CellSize, Center.Y - GridSize * CellSize, Center.Z),
-			FVector(Center.X + i * CellSize, Center.Y + GridSize * CellSize, Center.Z),
-			FColor::Green,
-			false, -1.0f, 0, 2.0f
-		);
-		
-		// Y-axis lines
+		// Lines parallel to X-axis (running along X direction)
 		DrawDebugLine(
 			GetWorld(),
 			FVector(Center.X - GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
 			FVector(Center.X + GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
+			FColor::Green,
+			false, -1.0f, 0, 2.0f
+		);
+		
+		// Lines parallel to Y-axis (running along Y direction)
+		DrawDebugLine(
+			GetWorld(),
+			FVector(Center.X + i * CellSize, Center.Y - GridSize * CellSize, Center.Z),
+			FVector(Center.X + i * CellSize, Center.Y + GridSize * CellSize, Center.Z),
 			FColor::Red,
 			false, -1.0f, 0, 2.0f
 		);
 	}
 	
-	// Draw coordinate axes
-	DrawDebugLine(GetWorld(), Center, Center + FVector(500, 0, 0), FColor::Red, false, -1.0f, 0, 5.0f);    // X
-	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 500, 0), FColor::Green, false, -1.0f, 0, 5.0f);  // Y
-	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 0, 500), FColor::Blue, false, -1.0f, 0, 5.0f);   // Z
+	// Draw vertical lines (along Z-axis) at each grid intersection
+	for (int32 x = -GridSize; x <= GridSize; x++)
+	{
+		for (int32 y = -GridSize; y <= GridSize; y++)
+		{
+			DrawDebugLine(
+				GetWorld(),
+				FVector(Center.X + x * CellSize, Center.Y + y * CellSize, Center.Z - GridSize * CellSize),
+				FVector(Center.X + x * CellSize, Center.Y + y * CellSize, Center.Z + GridSize * CellSize),
+				FColor::Blue,
+				false, -1.0f, 0, 2.0f
+			);
+		}
+	}
+	
+	// Draw coordinate axes (larger for visibility)
+	DrawDebugLine(GetWorld(), Center, Center + FVector(1000, 0, 0), FColor::Red, false, -1.0f, 0, 5.0f);    // X-axis (Red)
+	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 1000, 0), FColor::Green, false, -1.0f, 0, 5.0f);  // Y-axis (Green)
+	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 0, 1000), FColor::Blue, false, -1.0f, 0, 5.0f);   // Z-axis (Blue)
 }

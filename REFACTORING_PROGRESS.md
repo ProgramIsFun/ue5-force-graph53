@@ -32,13 +32,16 @@ AKnowledgeGraph (orchestrator)
 | 3b | Integrate GraphPhysicsSimulator | ✅ COMPLETE | 3 files |
 | 4 | GraphRenderer | ✅ COMPLETE | 2 files |
 | 4b | Integrate GraphRenderer | ✅ COMPLETE | 4 files |
-| 5 | GraphInteractionHandler | ⏸️ NOT STARTED | - |
-| 6 | Cleanup & Optimization | ⏸️ NOT STARTED | - |
+| 5 | GraphInteractionHandler | ⏭️ SKIPPED | - |
+| 6a | File Consolidation | 🚧 IN PROGRESS | 2 files |
+| 6b | Remove Old Code | ⏸️ NOT STARTED | - |
+| 6c | Final Cleanup | ⏸️ NOT STARTED | - |
 
 **Legend:**  
 ✅ COMPLETE - Done and tested  
 🚧 IN PROGRESS - Currently working on this  
 ⏸️ NOT STARTED - Planned but not begun  
+⏭️ SKIPPED - Intentionally skipped per user request  
 ❌ BLOCKED - Cannot proceed due to dependency
 
 ---
@@ -319,6 +322,94 @@ Ready to proceed to Step 5 (GraphInteractionHandler) or skip to Step 6 (Cleanup 
 
 ## Pending Steps
 
+### ⏭️ Step 5: Create GraphInteractionHandler
+**Status:** SKIPPED (per user request)  
+**Reason:** Blueprint functions are fine where they are. Moved to Step 6 file consolidation instead.
+
+---
+
+### 🚧 Step 6a: File Consolidation (IN PROGRESS)
+**Status:** IN PROGRESS  
+**Dependencies:** Steps 1-4b (complete)  
+**Estimated Complexity:** Medium
+**Goal:** Consolidate scattered implementations into organized files
+
+**Progress:**
+- ✅ Created `KnowledgeGraph_Utilities.cpp` with helper functions:
+  - `get_player_location727()`
+  - `get_location_of_somewhere_in_front_of_player727()`
+  - `print_out_location_of_the_node()`
+  - `update_iterations()`
+  - `update_alpha()`
+  - `is_graph_stabilized()`
+  - `update_parameter_in_shader()`
+  - `pass_parameters_to_shader_management()`
+  - `gpu_get_positions()`
+  - `debug_test()`
+
+- ✅ Created `KnowledgeGraph_BlueprintAPI.cpp` with Blueprint-callable functions:
+  - `select_closest_node_from_player222()`
+  - `add_node_to_database1115()` and callback
+  - `delete_node_from_database1116()` (stub)
+  - `delete_link_from_database1117()` (stub)
+  - `add_link_to_database1114()` (stub)
+  - `update_position_of_all_nodes_to_database1113()`
+  - `clean_up_objects()`
+  - `reload_the_whole_graph()`
+  - `late_add_node()`
+
+- ✅ Removed duplicate implementations from:
+  - `KnowledgeGraph5.cpp` (Blueprint API functions)
+  - `KnowledgeGraph3.cpp` (utility functions)
+  - `KnowledgeGraph2.cpp` (helper functions)
+
+**Files Created:**
+- `Source/NBodySimulation/KnowledgeGraph_Utilities.cpp`
+- `Source/NBodySimulation/KnowledgeGraph_BlueprintAPI.cpp`
+
+**Files Modified:**
+- `Source/NBodySimulation/KnowledgeGraph5.cpp` (removed duplicates)
+- `Source/NBodySimulation/KnowledgeGraph3.cpp` (removed duplicates)
+- `Source/NBodySimulation/KnowledgeGraph2.cpp` (removed duplicates)
+
+**Next Actions:**
+- Review remaining code in KnowledgeGraph2.cpp, KnowledgeGraph3.cpp, KnowledgeGraph5.cpp
+- Identify what can be deleted vs what needs to stay
+- Move any remaining useful code to appropriate integration files
+- Delete the old files once empty
+
+---
+
+### ⏸️ Step 6b: Remove Old Code
+**Status:** NOT STARTED  
+**Dependencies:** Step 6a (in progress)  
+**Goal:** Delete obsolete implementation files and old code paths
+
+**Tasks:**
+- Delete `KnowledgeGraph2.cpp` (old physics code)
+- Delete `KnowledgeGraph3.cpp` (old main loop code)
+- Delete `KnowledgeGraph5.cpp` (old HTTP/database code)
+- Remove old function implementations that are now handled by new components
+- Update function calls to use new component methods exclusively
+
+---
+
+### ⏸️ Step 6c: Final Cleanup
+**Status:** NOT STARTED  
+**Dependencies:** Step 6b (not started)  
+**Goal:** Polish and optimize the refactored codebase
+
+**Tasks:**
+- Remove legacy properties from KnowledgeGraph.h
+- Rename cryptic functions (`ll`, `qq`, `lll`)
+- Add comprehensive documentation
+- Remove commented code
+- Verify all functionality still works
+
+---
+
+## Pending Steps (OLD - REPLACED BY 6a/6b/6c ABOVE)
+
 ### ⏸️ Step 5: Create GraphInteractionHandler
 **Status:** NOT STARTED  
 **Dependencies:** Step 4b (complete)  
@@ -415,7 +506,7 @@ When resuming this refactoring:
 5. **Test incrementally** - Compile and test after each change
 6. **Maintain compatibility** - Don't break existing code until Step 6
 
-**Current state:** Steps 1-4b complete. GraphRenderer is now integrated and working. Ready to begin Step 5 (GraphInteractionHandler) or skip to Step 6 (Cleanup).
+**Current state:** Steps 1-4b complete. Step 5 skipped. Step 6a (File Consolidation) in progress - created KnowledgeGraph_Utilities.cpp and KnowledgeGraph_BlueprintAPI.cpp, removed duplicates from old files. Ready to continue with Step 6b (removing old files).
 
 ---
 

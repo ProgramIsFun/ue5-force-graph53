@@ -1,17 +1,7 @@
 #include "KnowledgeGraph.h"
 
 
-void AKnowledgeGraph::pass_parameters_to_shader_management()
-{
-	SimParameters.ViewportWidth = 8000.0;
-	SimParameters.CameraAspectRatio = 1.777778;
-	SimParameters.GravityConstant = 1000.0;
-	SimParameters.NumBodies = jnodessss;
-	SimParameters.alphaS = 1;
-	SimParameters.shaderdebug = static_cast<unsigned int>(use_shaders_debug);
-	FNBodySimModule::Get().BeginRendering();
-	FNBodySimModule::Get().InitWithParameters(SimParameters);
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
 void AKnowledgeGraph::post_generate_graph()
 {
@@ -38,28 +28,9 @@ void AKnowledgeGraph::post_generate_graph()
 // prepare() function moved to KnowledgeGraph_DataIntegration.cpp
 
 
-void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
-{
-	if (1)
-	{
-		float kkkkkkkkk=1;
-		SimParameters.DeltaTime = kkkkkkkkk;
-		FNBodySimModule::Get().UpdateDeltaTime(kkkkkkkkk, alpha);
-	}
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
-bool AKnowledgeGraph::is_graph_stabilized(bool log)
-{
-	// ll("alpha Before update: " + FString::SanitizeFloat(alpha), log);
-	if (alpha < alphaMin)
-	{
-		ll("alpha is less than alphaMin", log);
-		FNBodySimModule::Get().EndRendering();
-		// update_link_position();
-		return true;
-	}
-	return false;
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
 // Text size functions moved to KnowledgeGraph_RenderIntegration.cpp
 
@@ -110,30 +81,11 @@ void AKnowledgeGraph::update_position_array(bool log)
 	}
 }
 
-void AKnowledgeGraph::update_alpha()
-{
-	bool log=true;
-	alpha += (alphaTarget - alpha) * alphaDecay; //need to restart this if want to keep moving
-	ll("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(alpha), log);
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
-void AKnowledgeGraph::print_out_location_of_the_node()
-{
-	bool log=true;
-	ll("Before update. ", log);
-	ll("first element. " + nodePositions[0].ToString(), log);
-	ll("second element. " + nodePositions[1].ToString(), log);
-	ll("third element. " + nodePositions[2].ToString(), log);
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
-void AKnowledgeGraph::update_iterations()
-{
-	bool log=false;
-	iterations += 1;
-	ll("TICK----------------------------------------------------------------------------"
-	   "----------------------------------------------------------------------------", log);
-	ll("iterations: " + FString::FromInt(iterations), log);
-}
+// Function moved to KnowledgeGraph_Utilities.cpp
 
 bool AKnowledgeGraph::main_function(float DeltaTime)
 {
@@ -260,77 +212,6 @@ void AKnowledgeGraph::rotate_to_face_player111()
 
 
 
-void AKnowledgeGraph::gpu_get_positions()
-{
-	// Retrieve GPU computed bodies position.
-	TArray<FVector3f> GPUOutputPositions = FNBodySimModule::Get().GetComputedPositions();
-	if (GPUOutputPositions.Num() != SimParameters.Bodies.Num())
-	{
-		ll("Size differ. Bodies (" +
-		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
-		   ")", true, 2);
+// Function moved to KnowledgeGraph_Utilities.cpp
 
-		GPUvalid = false;
-		return;
-	}else
-	{
-		ll("Size is same. Bodies (" +
-		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
-		   ")", use_logging, 2);
-	}
-
-	TArray<float> alphas = FNBodySimModule::Get().GetComputedAlphas();
-	ll("alpha: " + FString::SanitizeFloat(alphas[0]), use_logging, 2);
-	ll("alpha1: " + FString::SanitizeFloat(alphas[1]), use_logging, 2);
-
-	// ll("First element position is: " + GPUOutputPositions[0].ToString(), use_logging, 2);
-	// ll("second element position is: " + GPUOutputPositions[1].ToString(), use_logging, 2);
-	// ll("third element position is: " + GPUOutputPositions[2].ToString(), use_logging, 2);
-	//
-	if (iterations == 1)
-	{
-		ll("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", use_logging, 2);
-		GPUvalid = false;
-		return;
-	}
-
-	for (int i = 0; i < SimParameters.Bodies.Num(); i++)
-	{
-		FVector NewPosition = FVector(GPUOutputPositions[i]);
-		nodePositions[i] = NewPosition;
-	}
-	GPUvalid = true;
-
-	
-}
-
-void AKnowledgeGraph::debug_test()
-{
-	if (0)
-	{
-	}
-	else
-	{
-		TArray<UStaticMeshComponent*> CylinderMeshes;
-
-		// Loop to create 10 Cylinder Meshes
-		for (int32 i = 0; i < 10; ++i)
-		{
-			UStaticMeshComponent* NewCylinderMesh = NewObject<UStaticMeshComponent>(this, FName(*FString::Printf(TEXT("CylinderMesh%d"), i)));
-			NewCylinderMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-			NewCylinderMesh->RegisterComponent();
-
-			// Set scale
-			NewCylinderMesh->SetWorldScale3D(FVector(10, 1, 1));
-    
-			// Set static mesh
-			NewCylinderMesh->SetStaticMesh(link_use_static_mesh_mesh);
-    
-			// Set different relative locations for each cylinder to avoid overlap
-			NewCylinderMesh->SetRelativeLocation(FVector(10, 10, 100 + i * 120));
-
-			// Add to the array
-			CylinderMeshes.Add(NewCylinderMesh);
-		}
-	}
-}
+// Function moved to KnowledgeGraph_Utilities.cpp

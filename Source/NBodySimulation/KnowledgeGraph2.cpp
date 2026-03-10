@@ -955,21 +955,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 	}
 }
 
-FVector AKnowledgeGraph::get_player_location727()
-{
-	return GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
-}
-
-FVector AKnowledgeGraph::get_location_of_somewhere_in_front_of_player727()
-{
-	// Get the current location
-	FVector CurrentLocation = get_player_location727();
-	// Get the forward direction
-	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorForwardVector();
-	// Calculate the new location
-	FVector NewLocation = CurrentLocation + (ForwardVector * 10000); // 100 meters away in the forward direction
-	return NewLocation;
-}
+// Functions moved to KnowledgeGraph_Utilities.cpp
 
 
 

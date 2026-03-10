@@ -33,6 +33,8 @@ The compute shader code can be found at:
 
 ## Project Status
 
+⚠️ **Active Refactoring in Progress** - The `KnowledgeGraph` class is currently being refactored into smaller, maintainable components. See [REFACTORING_PROGRESS.md](REFACTORING_PROGRESS.md) for current status and details.
+
 See the [To-Do List](To_do_list.md) for planned features and improvements.
 
 ## Comparison to UE4 Force Graph

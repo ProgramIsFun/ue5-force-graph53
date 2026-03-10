@@ -8,7 +8,7 @@
 #include "Engine/World.h"
 #include "CoreMinimal.h"
 #include "NBodyOctree.h"
-#include "utillllllssss.h"
+#include "NBodyUtils.h"
 
 #include "NBodySimModule.h"
 #include "Components/InstancedStaticMeshComponent.h"

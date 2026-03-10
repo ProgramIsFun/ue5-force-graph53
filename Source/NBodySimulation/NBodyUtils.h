@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿// Refactored from utillllllssss.h in commit cfe5a2e49166b9a584b865688086bef641dc2862
+#pragma once
 
 #include <string>
 

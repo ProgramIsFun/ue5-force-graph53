@@ -102,29 +102,32 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 
 void AKnowledgeGraph::DrawDebugGrid(const FVector& Center, int32 GridSize, float CellSize)
 {
-	// Draw a grid on the XY plane (horizontal)
-	for (int32 i = -GridSize; i <= GridSize; i++)
+	// Draw horizontal grids (XY plane) at multiple Z levels
+	for (int32 z = -GridSize; z <= GridSize; z++)
 	{
-		// Lines parallel to X-axis (running along X direction)
-		DrawDebugLine(
-			GetWorld(),
-			FVector(Center.X - GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
-			FVector(Center.X + GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
-			FColor::Green,
-			false, -1.0f, 0, 2.0f
-		);
-		
-		// Lines parallel to Y-axis (running along Y direction)
-		DrawDebugLine(
-			GetWorld(),
-			FVector(Center.X + i * CellSize, Center.Y - GridSize * CellSize, Center.Z),
-			FVector(Center.X + i * CellSize, Center.Y + GridSize * CellSize, Center.Z),
-			FColor::Red,
-			false, -1.0f, 0, 2.0f
-		);
+		for (int32 i = -GridSize; i <= GridSize; i++)
+		{
+			// Lines parallel to X-axis (running along X direction) - GREEN
+			DrawDebugLine(
+				GetWorld(),
+				FVector(Center.X - GridSize * CellSize, Center.Y + i * CellSize, Center.Z + z * CellSize),
+				FVector(Center.X + GridSize * CellSize, Center.Y + i * CellSize, Center.Z + z * CellSize),
+				FColor::Green,
+				false, -1.0f, 0, 2.0f
+			);
+			
+			// Lines parallel to Y-axis (running along Y direction) - RED
+			DrawDebugLine(
+				GetWorld(),
+				FVector(Center.X + i * CellSize, Center.Y - GridSize * CellSize, Center.Z + z * CellSize),
+				FVector(Center.X + i * CellSize, Center.Y + GridSize * CellSize, Center.Z + z * CellSize),
+				FColor::Red,
+				false, -1.0f, 0, 2.0f
+			);
+		}
 	}
 	
-	// Draw vertical lines (along Z-axis) at each grid intersection
+	// Draw vertical lines (along Z-axis) at each grid intersection - BLUE
 	for (int32 x = -GridSize; x <= GridSize; x++)
 	{
 		for (int32 y = -GridSize; y <= GridSize; y++)

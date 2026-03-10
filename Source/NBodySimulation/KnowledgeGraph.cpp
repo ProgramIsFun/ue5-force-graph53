@@ -15,7 +15,6 @@ AKnowledgeGraph::AKnowledgeGraph()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.TickGroup = TG_DuringPhysics;
 
-	DataManager = CreateDefaultSubobject<UGraphDataManager>(TEXT("DataManager"));
 	// Note: DataManager and PhysicsSimulator are created in BeginPlay
 	// because they are UObjects, not components
 }

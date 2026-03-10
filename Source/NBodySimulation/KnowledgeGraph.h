@@ -350,6 +350,9 @@ public:
 
 
 
+	// Debug visualization
+	void DrawDebugGrid(const FVector& Center, int32 GridSize = 10, float CellSize = 100.0f);
+
 	// Helper functions.
 	template <typename Func, typename... Args>
 	auto timeThisMemberFunction(const char* functionName, Func function, Args&&... args)

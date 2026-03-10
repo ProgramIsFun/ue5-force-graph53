@@ -40,6 +40,7 @@ void AKnowledgeGraph::BeginPlay()
 void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 	ll("tick is called. ", use_logging, 2);
 	if (!precheck_succeed)
 	{
@@ -75,4 +76,35 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		}
 	}
 	
+	DrawDebugGrid(GetActorLocation());
+}
+
+void AKnowledgeGraph::DrawDebugGrid(const FVector& Center, int32 GridSize, float CellSize)
+{
+	// Draw a grid on the XY plane
+	for (int32 i = -GridSize; i <= GridSize; i++)
+	{
+		// X-axis lines
+		DrawDebugLine(
+			GetWorld(),
+			FVector(Center.X + i * CellSize, Center.Y - GridSize * CellSize, Center.Z),
+			FVector(Center.X + i * CellSize, Center.Y + GridSize * CellSize, Center.Z),
+			FColor::Green,
+			false, -1.0f, 0, 2.0f
+		);
+		
+		// Y-axis lines
+		DrawDebugLine(
+			GetWorld(),
+			FVector(Center.X - GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
+			FVector(Center.X + GridSize * CellSize, Center.Y + i * CellSize, Center.Z),
+			FColor::Red,
+			false, -1.0f, 0, 2.0f
+		);
+	}
+	
+	// Draw coordinate axes
+	DrawDebugLine(GetWorld(), Center, Center + FVector(500, 0, 0), FColor::Red, false, -1.0f, 0, 5.0f);    // X
+	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 500, 0), FColor::Green, false, -1.0f, 0, 5.0f);  // Y
+	DrawDebugLine(GetWorld(), Center, Center + FVector(0, 0, 500), FColor::Blue, false, -1.0f, 0, 5.0f);   // Z
 }

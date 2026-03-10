@@ -17,6 +17,7 @@
 #include "HttpModule.h"
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
+#include "GraphConfiguration.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +68,7 @@ public:
 	}
 };
 
+// Legacy enum - kept for backward compatibility, use FGraphConfiguration::CreationMode instead
 UENUM(BlueprintType)
 enum class CGM : uint8
 {
@@ -216,6 +218,12 @@ public:
 
 
 
+	// New unified configuration struct
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Graph Configuration")
+	FGraphConfiguration Config;
+
+	// Legacy properties - kept for backward compatibility, will be removed in future
+	// These now redirect to Config struct
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	float universal_graph_scale = 1.0f;
 	

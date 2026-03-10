@@ -33,7 +33,7 @@ AKnowledgeGraph (orchestrator)
 | 4 | GraphRenderer | ✅ COMPLETE | 2 files |
 | 4b | Integrate GraphRenderer | ✅ COMPLETE | 4 files |
 | 5 | GraphInteractionHandler | ⏭️ SKIPPED | - |
-| 6a | File Consolidation | 🚧 IN PROGRESS | 2 files |
+| 6a | File Consolidation | ✅ COMPLETE | 8 files |
 | 6b | Remove Old Code | ⏸️ NOT STARTED | - |
 | 6c | Final Cleanup | ⏸️ NOT STARTED | - |
 
@@ -328,8 +328,9 @@ Ready to proceed to Step 5 (GraphInteractionHandler) or skip to Step 6 (Cleanup 
 
 ---
 
-### 🚧 Step 6a: File Consolidation (IN PROGRESS)
-**Status:** IN PROGRESS  
+### ✅ Step 6a: File Consolidation
+**Status:** COMPLETE  
+**Date:** 2026-03-10  
 **Dependencies:** Steps 1-4b (complete)  
 **Estimated Complexity:** Medium
 **Goal:** Consolidate scattered implementations into organized files
@@ -358,39 +359,59 @@ Ready to proceed to Step 5 (GraphInteractionHandler) or skip to Step 6 (Cleanup 
   - `reload_the_whole_graph()`
   - `late_add_node()`
 
-- ✅ Removed duplicate implementations from:
-  - `KnowledgeGraph5.cpp` (Blueprint API functions)
-  - `KnowledgeGraph3.cpp` (utility functions)
-  - `KnowledgeGraph2.cpp` (helper functions)
+- ✅ Created `KnowledgeGraph_Core.cpp` with main simulation loop:
+  - `main_function()` - Main tick loop
+  - `post_generate_graph()` - Post-generation setup
+  - `cpu_calculate()` - CPU physics calculation
+  - `update_position_array()` - Position update dispatcher
+  - `rotate_to_face_player111()` - Text rotation
+  - `increase_text_size_of_all_nodes1112()` / `decrease_text_size_of_all_nodes1112()`
+
+- ✅ Removed duplicate implementations from old files
+- ✅ Moved HTTP/data functions to KnowledgeGraph_DataIntegration.cpp
+- ✅ Renamed `KnowledgeGraph2.cpp` → `KnowledgeGraph_Physics.cpp` for clarity
 
 **Files Created:**
 - `Source/NBodySimulation/KnowledgeGraph_Utilities.cpp`
 - `Source/NBodySimulation/KnowledgeGraph_BlueprintAPI.cpp`
+- `Source/NBodySimulation/KnowledgeGraph_Core.cpp`
+
+**Files Deleted:**
+- `Source/NBodySimulation/KnowledgeGraph5.cpp` ✅
+- `Source/NBodySimulation/KnowledgeGraph3.cpp` ✅
+
+**Files Renamed:**
+- `KnowledgeGraph2.cpp` → `KnowledgeGraph_Physics.cpp` ✅
 
 **Files Modified:**
-- `Source/NBodySimulation/KnowledgeGraph5.cpp` (removed duplicates)
-- `Source/NBodySimulation/KnowledgeGraph3.cpp` (removed duplicates)
-- `Source/NBodySimulation/KnowledgeGraph2.cpp` (removed duplicates)
+- `Source/NBodySimulation/KnowledgeGraph_DataIntegration.cpp` (added HTTP functions)
 
-**Next Actions:**
-- Review remaining code in KnowledgeGraph2.cpp, KnowledgeGraph3.cpp, KnowledgeGraph5.cpp
-- Identify what can be deleted vs what needs to stay
-- Move any remaining useful code to appropriate integration files
-- Delete the old files once empty
+**Current File Structure:**
+```
+KnowledgeGraph.h/cpp                    - Main class definition
+KnowledgeGraph_Core.cpp                 - Main simulation loop
+KnowledgeGraph_Physics.cpp              - Physics calculations & graph generation
+KnowledgeGraph_DataIntegration.cpp      - Data loading & HTTP requests
+KnowledgeGraph_PhysicsIntegration.cpp   - PhysicsSimulator integration
+KnowledgeGraph_RenderIntegration.cpp    - Renderer integration
+KnowledgeGraph_Utilities.cpp            - Helper/utility functions
+KnowledgeGraph_BlueprintAPI.cpp         - Blueprint-callable functions
+```
+
+**Result:** File organization is now much clearer with descriptive names!
 
 ---
 
 ### ⏸️ Step 6b: Remove Old Code
 **Status:** NOT STARTED  
-**Dependencies:** Step 6a (in progress)  
-**Goal:** Delete obsolete implementation files and old code paths
+**Dependencies:** Step 6a (complete)  
+**Goal:** Remove old code paths and legacy implementations
 
 **Tasks:**
-- Delete `KnowledgeGraph2.cpp` (old physics code)
-- Delete `KnowledgeGraph3.cpp` (old main loop code)
-- Delete `KnowledgeGraph5.cpp` (old HTTP/database code)
+- Review KnowledgeGraph_Physics.cpp for old implementations that can be removed
 - Remove old function implementations that are now handled by new components
 - Update function calls to use new component methods exclusively
+- Remove fallback code paths once new components are proven stable
 
 ---
 
@@ -506,7 +527,7 @@ When resuming this refactoring:
 5. **Test incrementally** - Compile and test after each change
 6. **Maintain compatibility** - Don't break existing code until Step 6
 
-**Current state:** Steps 1-4b complete. Step 5 skipped. Step 6a (File Consolidation) in progress - created KnowledgeGraph_Utilities.cpp and KnowledgeGraph_BlueprintAPI.cpp, removed duplicates from old files. Ready to continue with Step 6b (removing old files).
+**Current state:** Steps 1-4b and 6a complete. Step 5 skipped. File consolidation done - created organized files with clear names (KnowledgeGraph_Core, KnowledgeGraph_Physics, KnowledgeGraph_Utilities, KnowledgeGraph_BlueprintAPI). Deleted KnowledgeGraph3.cpp and KnowledgeGraph5.cpp. Ready for Step 6b (removing old code) or Step 6c (final cleanup).
 
 ---
 

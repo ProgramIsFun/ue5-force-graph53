@@ -1,7 +1,7 @@
+// KnowledgeGraph_Core.cpp
+// Core simulation loop and main functions
+
 #include "KnowledgeGraph.h"
-
-
-// Function moved to KnowledgeGraph_Utilities.cpp
 
 void AKnowledgeGraph::post_generate_graph()
 {
@@ -15,7 +15,8 @@ void AKnowledgeGraph::post_generate_graph()
 	if (use_shaders)
 	{
 		pass_parameters_to_shader_management();
-	}else
+	}
+	else
 	{
 		ll("not passing parameters to shader because use_shaders is false. ", true, 2);
 	}
@@ -25,49 +26,21 @@ void AKnowledgeGraph::post_generate_graph()
 	graph_initialized = true;
 }
 
-// prepare() function moved to KnowledgeGraph_DataIntegration.cpp
-
-
-// Function moved to KnowledgeGraph_Utilities.cpp
-
-// Function moved to KnowledgeGraph_Utilities.cpp
-
-// Text size functions moved to KnowledgeGraph_RenderIntegration.cpp
-
-
-void AKnowledgeGraph::increase_text_size_of_all_nodes1112(float size)
-{
-	increase_or_decrease_text_size_of_all_nodes1112(true, size);
-}
-
-void AKnowledgeGraph::decrease_text_size_of_all_nodes1112(float size)
-{
-	increase_or_decrease_text_size_of_all_nodes1112(false, size);
-}
-
-
-
 void AKnowledgeGraph::cpu_calculate()
 {
 	bool log = use_logging;
 
-	// ll("apply forces", log);
 	apply_force();
-
-	// ll("update actor location based on velocity", log);
 	update_position_array_according_to_velocity_array();
-
 }
-
-// New version using PhysicsSimulator - defined in KnowledgeGraph_PhysicsIntegration.cpp
 
 void AKnowledgeGraph::update_position_array(bool log)
 {
 	if (use_shaders)
 	{
 		gpu_get_positions();
-		
-	}else
+	}
+	else
 	{
 		// Use new physics simulator if available, otherwise fall back to old method
 		if (PhysicsSimulator)
@@ -81,12 +54,6 @@ void AKnowledgeGraph::update_position_array(bool log)
 	}
 }
 
-// Function moved to KnowledgeGraph_Utilities.cpp
-
-// Function moved to KnowledgeGraph_Utilities.cpp
-
-// Function moved to KnowledgeGraph_Utilities.cpp
-
 bool AKnowledgeGraph::main_function(float DeltaTime)
 {
 	bool log = use_logging;
@@ -94,7 +61,6 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 	ll("main_function called", log, 0, TEXT("main_function: "));
 
 	update_iterations();
-
 
 	if (is_graph_stabilized(log))
 	{
@@ -115,7 +81,6 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 					update_link_position();
 				}
 			}
-			
 		}
 		
 		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
@@ -130,17 +95,11 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 				update_link_position();
 			}
 		}
-		
-	}else
+	}
+	else
 	{
-
 		update_alpha();
-	
-		// print_out_location_of_the_node();
-
 		update_position_array(log);
-
-		// print_out_location_of_the_node();
 
 		// Use new renderer if available
 		if (Renderer)
@@ -165,11 +124,12 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			}
 		}
 	
-		if (use_shaders){
-	
+		if (use_shaders)
+		{
 			update_parameter_in_shader(DeltaTime);
 		}
 	}
+	
 	if (rotate_to_face_player)
 	{
 		if (Renderer)
@@ -184,7 +144,6 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 	
 	return false;
 }
-
 
 void AKnowledgeGraph::rotate_to_face_player111()
 {
@@ -203,15 +162,17 @@ void AKnowledgeGraph::rotate_to_face_player111()
 				// Create a look-at rotation. The second parameter is the up-vector, adjust if needed.
 				FRotator NewRotation = FRotationMatrix::MakeFromX(ToPlayer).Rotator();
 				all_nodes2[i].textComponent->SetWorldRotation(NewRotation);
-				// TextComponents11111111111111111111[i]->SetWorldRotation(NewRotation);
 			}
 		}
 	}
-
 }
 
+void AKnowledgeGraph::increase_text_size_of_all_nodes1112(float size)
+{
+	increase_or_decrease_text_size_of_all_nodes1112(true, size);
+}
 
-
-// Function moved to KnowledgeGraph_Utilities.cpp
-
-// Function moved to KnowledgeGraph_Utilities.cpp
+void AKnowledgeGraph::decrease_text_size_of_all_nodes1112(float size)
+{
+	increase_or_decrease_text_size_of_all_nodes1112(false, size);
+}

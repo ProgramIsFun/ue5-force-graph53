@@ -153,10 +153,7 @@ public:
 	
 	UFUNCTION(BlueprintNativeEvent, Category = "Pawnttttttttttttttttt")
 	void button_s_pressed_779();
-	void button_s_pressed_779_Implementation()
-	{
-		ll("button_s_pressed_779_Implementation");
-	}
+	// Implementation moved to .cpp file
 
 
 

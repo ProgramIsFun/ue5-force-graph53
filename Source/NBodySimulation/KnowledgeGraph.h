@@ -20,6 +20,7 @@
 #include "GraphConfiguration.h"
 #include "GraphDataManager.h"
 #include "GraphPhysicsSimulator.h"
+#include "GraphRenderer.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -227,6 +228,11 @@ public:
 	void InitializePhysicsSimulator();
 	void cpu_calculate_new(); // New version using PhysicsSimulator
 
+	// Renderer integration
+	void update_node_world_position_according_to_position_array_new();
+	void update_link_position_new();
+	void rotate_to_face_player_new();
+
 
 
 	// New unified configuration struct
@@ -240,6 +246,10 @@ public:
 	// New physics simulator - handles all force calculations
 	UPROPERTY()
 	UGraphPhysicsSimulator* PhysicsSimulator;
+
+	// New renderer - handles all visualization
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rendering")
+	UGraphRenderer* Renderer;
 
 	// Legacy properties - kept for backward compatibility, will be removed in future
 	// These now redirect to Config struct

@@ -61,38 +61,8 @@ bool AKnowledgeGraph::is_graph_stabilized(bool log)
 	return false;
 }
 
-void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
-{
-	for (int i = 0; i < jnodessss; i++)
-	{
-		if (node_use_text_render_components)
-		{
-			all_nodes2[i].textComponent->SetWorldSize(size);
-			// TextComponents11111111111111111111[i]->SetWorldSize(size);
-		}
-	} 
-}
-void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool increase, float size)
-{
-	for (int i = 0; i < jnodessss; i++)
-	{
-		if (node_use_text_render_components)
-		{
-			float current_size = all_nodes2[i].textComponent->WorldSize;
-			// float current_size = TextComponents11111111111111111111[i]->WorldSize;
-			if (increase)
-			{
-				current_size += size;
-			}else
-			{
-				current_size -= size;
-			}
+// Text size functions moved to KnowledgeGraph_RenderIntegration.cpp
 
-			all_nodes2[i].textComponent->SetWorldSize(current_size);
-			// TextComponents11111111111111111111[i]->SetWorldSize(current_size);
-		}
-	}
-}
 
 void AKnowledgeGraph::increase_text_size_of_all_nodes1112(float size)
 {
@@ -181,8 +151,17 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			if (use_predefined_position_should_update_once)
 			{
 				use_predefined_position_should_update_once = false;
-				update_node_world_position_according_to_position_array();
-				update_link_position();
+				// Use new renderer if available
+				if (Renderer)
+				{
+					update_node_world_position_according_to_position_array_new();
+					update_link_position_new();
+				}
+				else
+				{
+					update_node_world_position_according_to_position_array();
+					update_link_position();
+				}
 			}
 			
 		}
@@ -190,7 +169,14 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
 		if (link_use_debug_line)
 		{
-			update_link_position();
+			if (Renderer)
+			{
+				update_link_position_new();
+			}
+			else
+			{
+				update_link_position();
+			}
 		}
 		
 	}else
@@ -204,12 +190,27 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 
 		// print_out_location_of_the_node();
 
-		update_node_world_position_according_to_position_array();
+		// Use new renderer if available
+		if (Renderer)
+		{
+			update_node_world_position_according_to_position_array_new();
+		}
+		else
+		{
+			update_node_world_position_according_to_position_array();
+		}
 
 		if (update_link_before_stabilize)
 		{
 			ll("update link position", log);
-			update_link_position();
+			if (Renderer)
+			{
+				update_link_position_new();
+			}
+			else
+			{
+				update_link_position();
+			}
 		}
 	
 		if (use_shaders){
@@ -219,7 +220,14 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 	}
 	if (rotate_to_face_player)
 	{
-		rotate_to_face_player111();
+		if (Renderer)
+		{
+			rotate_to_face_player_new();
+		}
+		else
+		{
+			rotate_to_face_player111();
+		}
 	}
 	
 	return false;

@@ -307,3 +307,14 @@ void ADefaultPawn2::increase_speed()
 }
 
 
+
+
+void ADefaultPawn2::button_s_pressed_779_Implementation()
+{
+	// Safe implementation - just log
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Button S pressed"));
+	}
+	UE_LOG(LogTemp, Log, TEXT("Button S pressed - button_s_pressed_779_Implementation"));
+}

@@ -43,6 +43,14 @@ void AKnowledgeGraph::BeginPlay()
 	DataManager = NewObject<UGraphDataManager>(this);
 	PhysicsSimulator = NewObject<UGraphPhysicsSimulator>(this);
 	
+	// Create and initialize the renderer (UActorComponent)
+	Renderer = NewObject<UGraphRenderer>(this, UGraphRenderer::StaticClass(), TEXT("GraphRenderer"));
+	if (Renderer)
+	{
+		Renderer->RegisterComponent();
+		Renderer->Initialize(Config, this);
+	}
+	
 	// Bind to data manager's delegate
 	if (DataManager)
 	{

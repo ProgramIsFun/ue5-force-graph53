@@ -1,94 +1,109 @@
-## What is this project?
+# UE5 Force-Directed Graph
 
-A Force-Directed Graph, or Force-Based Graph, is a type of layout commonly used in a variety of application areas: network visualization, large graph visualization, knowledge representation, system management, or mesh visualization.
+An Unreal Engine 5 implementation of force-directed graph visualization, replicating the functionality of the popular [3d-force-graph](https://github.com/vasturiano/3d-force-graph) library.
 
-This contains an implementation of the force directed graph in unreal engine 5.
+![Force-Directed Graph Visualization](https://github.com/user-attachments/assets/4e648745-8ee3-4fc7-9008-fd1d53785711)
 
-replicate the result of the popular library https://github.com/vasturiano/3d-force-graph.
+## Overview
 
-![image](https://github.com/user-attachments/assets/4e648745-8ee3-4fc7-9008-fd1d53785711)
+Force-directed graphs (also known as force-based graphs) are widely used for visualizing complex relationships in various domains:
+- Network visualization
+- Large graph visualization
+- Knowledge representation
+- System management
+- Mesh visualization
 
-## Main reference of this project
+This project brings these capabilities directly into Unreal Engine 5, enabling real-time 3D graph visualization with the power of UE5's rendering pipeline.
 
-Dependency link
+## Architecture
 
-https://vasturiano.github.io/3d-force-graph/example/large-graph/ -> https://github.com/vasturiano/three-forcegraph -> https://github.com/vasturiano/d3-force-3d -> https://github.com/vasturiano/d3-octree
+### Dependency Chain
+```
+vasturiano/3d-force-graph
+  └─ vasturiano/three-forcegraph
+      └─ vasturiano/d3-force-3d
+          └─ vasturiano/d3-octree
+```
 
+[Live Demo](https://vasturiano.github.io/3d-force-graph/example/large-graph/)
 
-## shader
-The shader code is right here  https://github.com/ProgramIsFun/ue5-force-graph53/blob/master/Plugins/NBodySimShader/Source/NBodySim/Private/NBodySimCS.cpp
+### Shader Implementation
+The compute shader code can be found at:
+[NBodySimCS.cpp](https://github.com/ProgramIsFun/ue5-force-graph53/blob/master/Plugins/NBodySimShader/Source/NBodySim/Private/NBodySimCS.cpp)
 
+## Project Status
 
-## To do list
+See the [To-Do List](To_do_list.md) for planned features and improvements.
 
-[a relative link](To_do_list.md)
+## Comparison to UE4 Force Graph
 
-## Reference
+This project is an improved version of [thomaswall/ue4-force-graph](https://github.com/thomaswall/ue4-force-graph).
 
-### https://github.com/thomaswall/ue4-force-graph
+### Improvements
+- **Modern Engine**: Built for Unreal Engine 5 (vs UE 4.24)
+- **Enhanced Physics**: Different implementation of charge force calculations
+- **Bug Fixes**: Corrected link bias calculations and other issues
 
-I regard this as an improved version of https://github.com/thomaswall/ue4-force-graph
+### Trade-offs
+- **Performance**: Custom octree implementation may be slower than UE's built-in spatial data structures
 
-It is improved in the following ways
-1. It is Using the latest version of the unreal engine 5 instead of the unreal engine 4.24
-2. It is using a different implementation of the charge force
-3. It corrects some of the Mistakes such as calculating the bias of the link.
+## Getting Started with Unreal Engine 5
 
-It is worse in the following ways
-1. The implementation of the charge force, which is the many body force, use a custom implementation of the OCtree, Which seems to be slower than the library version of the unreal engine.
+### 1. Understanding Core Classes
 
-## A introduction to unreal engine 5
+**Actor** → **Pawn** → **Character**
 
-1.Characters. Pawns, and Actors: What's the Difference?
+All three are C++ classes with detailed implementations by Epic Games:
 
-They are all CPP classes, which have a very detailed implementation by the epic games in the source code.
+- **Actor**: The base class for all objects in the game world. Use for non-controlled objects like platforms, scenery, or interactive props.
 
-When working with Unreal Engine, you'll often encounter the terms Character, Pawn, and Actor. These classes are fundamental building blocks for creating interactive elements within your game world. Here's a brief overview of each class and how they differ:
+- **Pawn**: A controllable entity that can receive input. Ideal for entities with custom movement logic that don't need the full Character feature set.
 
-In Unreal Engine, choosing between Characters, Pawns, and Actors is an important decision that depends on the needs of your game or project. Each has its own unique use case and capabilities:
+- **Character**: Extends Pawn with built-in movement capabilities (walking, jumping, etc.). Best for player avatars and NPCs requiring complex locomotion.
 
-Characters: Use the Character class when you need an entity that can walk, jump, or have built-in complex movement capabilities. It's useful for player-controlled avatars or NPCs that require dynamic interaction with the game world.
+### 2. Project Structure
 
-Pawns: Pawns are ideal when you need a controllable entity but do not require the full suite of movement capabilities provided by the Character class. Pawns offer a more lightweight and flexible option for entities that need user input but have custom or unconventional forms of movement.
+Source code lives in the `Source/` folder. Unlike some projects that separate headers and implementation files, this project keeps `.h` and `.cpp` files together in the same directory for simplicity.
 
-Actors: Actors are the most general class and should be used for non-controlled objects in your game world. This could range from dynamic objects like moving platforms, to static scenery elements such as trees and buildings. Actors are highly versatile and form the base object for most elements within the game world.
+### 3. Implementation Details
 
-Choosing the right class depends on the functionality you need and how you plan to interact with the object in your game.
+The force-directed graph is implemented as a C++ class inheriting from `Pawn`:
 
-2.Where to put the source code?
+- `KnowledgeGraph.cpp`
+- `KnowledgeGraph.h`
 
-The source code should be put in the source folder of the project. In a lot of complicated projects, they want to separate the header files and the source files Into two different directories in the source folder.
+**Key Functions:**
+- **Constructor/Destructor**: Resource management
+- **BeginPlay()**: Initialization of nodes, links, and forces
+- **Tick()**: Per-frame updates of node and link positions
 
-But in this project, there is no such separations. All the header files and CPP are put in the same folder.
+**Adding to a Level:**
+1. Locate `KnowledgeGraph` in the Content Browser
+2. Drag it into your level viewport
+3. Verify placement in the World Outliner panel
 
-3.How is this project implementing force directed graph work in unreal engine 5?
+![Level Editor Setup](https://github.com/user-attachments/assets/2042450f-0d52-4c6f-97e2-a8dc2973de14)
 
-Basically, it is a cpp class  and it inherits from the Pawns class.
+### 4. Working with Maps
 
-KnowledgeGraph.cpp
+Open different maps by double-clicking map files in the Content Browser.
 
-KnowledgeGraph.h
+### 5. Development Workflow
 
-Usually every actor and all its child's class have a constructor and a destructor, begin play, and tick function.
+**Compilation**: Recompile after any C++ source code changes.
 
-In the beginplay function, we will initialize everything that we need.
+**Rapid Iteration Tip**: Use the `UPROPERTY()` macro to expose member variables to the editor, allowing you to tweak values without recompiling.
 
-In the tick function, we will update the position of the nodes and the links.
+```cpp
+UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Graph")
+float NodeRepulsionStrength = 100.0f;
+```
 
-So how to put this in the map that we want to play? We can drag the KnowledgeGraph From the content browser to the map in the middle. And then you see the actor is in the map, because you can look at the right hand side. There is a level editor. And you can see the actor in the world outliner.
+Learn more about [UPROPERTY macros](https://benui.ca/unreal/uproperty/)
 
-![image](https://github.com/user-attachments/assets/2042450f-0d52-4c6f-97e2-a8dc2973de14)
+## References
 
-4.How to open different maps?
-
-You can open different maps by clicking the file in the content browser.
-
-5.Usual workflow
-
-Every time we modify the source code, we need to recompile the project.
-
-Because sometimes we want to change the default values of some member variables of some class,
-In order to speed up the workflow, we can add a UPROPERTY() macro in front of the member variable.
-
-https://benui.ca/unreal/uproperty/
+- [vasturiano/3d-force-graph](https://github.com/vasturiano/3d-force-graph)
+- [thomaswall/ue4-force-graph](https://github.com/thomaswall/ue4-force-graph)
+- [Unreal Engine UPROPERTY Documentation](https://benui.ca/unreal/uproperty/)
 

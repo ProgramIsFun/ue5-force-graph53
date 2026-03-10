@@ -63,7 +63,7 @@ void AKnowledgeGraph::request_graph_http()
 	// HttpRequest->SetURL("https://jsonplaceholder.typicode.com/todos/1");
 	// HttpRequest->SetURL("localhost:3062/api/v0/return_all_nodes111");
 
-	HttpRequest->SetURL("http://localhost:3062/api/v0/return_all_nodes111");
+	HttpRequest->SetURL("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
 	// HttpRequest->SetContentAsString(OutputString)
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,

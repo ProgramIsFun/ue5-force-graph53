@@ -15,8 +15,9 @@ AKnowledgeGraph::AKnowledgeGraph()
 	PrimaryActorTick.bStartWithTickEnabled = true;
 	PrimaryActorTick.TickGroup = TG_DuringPhysics;
 
-	// Create the data manager
 	DataManager = CreateDefaultSubobject<UGraphDataManager>(TEXT("DataManager"));
+	// Note: DataManager and PhysicsSimulator are created in BeginPlay
+	// because they are UObjects, not components
 }
 
 void AKnowledgeGraph::BeginDestroy()
@@ -37,6 +38,11 @@ void AKnowledgeGraph::BeginPlay()
 {
 	Super::BeginPlay();
 	ClearLogFile();
+	
+	// Create the data manager and physics simulator
+	// (UObjects must be created at runtime, not in constructor)
+	DataManager = NewObject<UGraphDataManager>(this);
+	PhysicsSimulator = NewObject<UGraphPhysicsSimulator>(this);
 	
 	// Bind to data manager's delegate
 	if (DataManager)

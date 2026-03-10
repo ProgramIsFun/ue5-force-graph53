@@ -19,6 +19,9 @@ void AKnowledgeGraph::post_generate_graph()
 	
 	calculate_bias_and_strength_of_links();
 	
+	// Initialize physics simulator
+	InitializePhysicsSimulator();
+	
 	if (use_shaders)
 	{
 		pass_parameters_to_shader_management();
@@ -115,6 +118,8 @@ void AKnowledgeGraph::cpu_calculate()
 
 }
 
+// New version using PhysicsSimulator - defined in KnowledgeGraph_PhysicsIntegration.cpp
+
 void AKnowledgeGraph::update_position_array(bool log)
 {
 	if (use_shaders)
@@ -123,7 +128,15 @@ void AKnowledgeGraph::update_position_array(bool log)
 		
 	}else
 	{
-		cpu_calculate();
+		// Use new physics simulator if available, otherwise fall back to old method
+		if (PhysicsSimulator)
+		{
+			cpu_calculate_new();
+		}
+		else
+		{
+			cpu_calculate();
+		}
 	}
 }
 

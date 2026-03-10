@@ -28,7 +28,8 @@ AKnowledgeGraph (orchestrator)
 | 1 | Configuration Extraction | ✅ COMPLETE | 2 files |
 | 2 | GraphDataManager | ✅ COMPLETE | 2 files |
 | 2b | Integrate GraphDataManager | ✅ COMPLETE | 4 files |
-| 3 | GraphPhysicsSimulator | ⏸️ NOT STARTED | - |
+| 3 | GraphPhysicsSimulator | ✅ COMPLETE | 2 files |
+| 3b | Integrate GraphPhysicsSimulator | ✅ COMPLETE | 3 files |
 | 4 | GraphRenderer | ⏸️ NOT STARTED | - |
 | 5 | GraphInteractionHandler | ⏸️ NOT STARTED | - |
 | 6 | Cleanup & Optimization | ⏸️ NOT STARTED | - |
@@ -162,12 +163,89 @@ Ready to proceed to Step 3 (GraphPhysicsSimulator) to extract force calculation 
 
 ---
 
+### ✅ Step 3: Create GraphPhysicsSimulator
+**Date:** 2026-03-10  
+**Status:** COMPLETE - Compiles and runs  
+**Tested:** Yes
+
+**Changes:**
+- Created `UGraphPhysicsSimulator` class to handle all physics calculations
+- Introduced `FPhysicsParameters` struct for physics configuration
+- Extracted all force calculation code:
+  - Link forces (spring forces between connected nodes)
+  - Charge forces (repulsion between all nodes)
+  - Center forces (keeps graph centered)
+  - Barnes-Hut octree optimization
+  - Brute force fallback
+- Velocity decay and position updates
+- Alpha management (simulation temperature/cooling)
+
+**API Overview:**
+```cpp
+void Initialize(const FGraphConfiguration& Config, const FPhysicsParameters& Params);
+void SimulateStep(float DeltaTime, TArray<FVector>& NodePositions, ...);
+bool IsStabilized() const;
+float GetAlpha() const;
+```
+
+**Benefits:**
+- ~400 lines of physics code isolated
+- Can easily swap physics implementations
+- Parallel processing support
+- Cleaner separation of concerns
+
+**Files Created:**
+- `Source/NBodySimulation/GraphPhysicsSimulator.h`
+- `Source/NBodySimulation/GraphPhysicsSimulator.cpp`
+
+---
+
+### ✅ Step 3b: Integrate GraphPhysicsSimulator
+**Date:** 2026-03-10  
+**Status:** COMPLETE - Compiles and runs  
+**Tested:** Yes
+
+**Changes:**
+- Added `UGraphPhysicsSimulator* PhysicsSimulator` to `AKnowledgeGraph`
+- Created `KnowledgeGraph_PhysicsIntegration.cpp` for integration layer
+- Implemented `InitializePhysicsSimulator()` to set up physics params
+- Implemented `cpu_calculate_new()` to use PhysicsSimulator
+- Updated `post_generate_graph()` to initialize physics
+- Updated `update_position_array()` to use new simulator
+- Fixed UObject creation (use `NewObject` in BeginPlay, not `CreateDefaultSubobject`)
+
+**Integration Strategy:**
+- PhysicsSimulator initialized after graph generation
+- Old `cpu_calculate()` kept as fallback
+- New `cpu_calculate_new()` uses PhysicsSimulator
+- Automatic fallback if simulator is null
+
+**Files Modified:**
+- `Source/NBodySimulation/KnowledgeGraph.h` (added PhysicsSimulator property)
+- `Source/NBodySimulation/KnowledgeGraph.cpp` (BeginPlay creates objects)
+- `Source/NBodySimulation/KnowledgeGraph3.cpp` (initialize and use simulator)
+
+**Files Created:**
+- `Source/NBodySimulation/KnowledgeGraph_PhysicsIntegration.cpp`
+
+**What Works:**
+- All physics calculations now through PhysicsSimulator
+- Barnes-Hut octree optimization
+- Parallel processing
+- Alpha decay and stabilization detection
+- Existing visualization and interaction
+
+**Next Step:**
+Ready to proceed to Step 4 (GraphRenderer) to extract rendering code.
+
+---
+
 ## Pending Steps
 
-### ⏸️ Step 3: Create GraphPhysicsSimulator
+### ⏸️ Step 4: Create GraphRenderer
 **Status:** NOT STARTED  
-**Dependencies:** Step 2b (complete)  
-**Estimated Complexity:** High
+**Dependencies:** Step 3b (complete)  
+**Estimated Complexity:** Medium
 **Goal:** Extract all HTTP, JSON, and database operations
 
 **What to extract:**
@@ -260,7 +338,7 @@ When resuming this refactoring:
 5. **Test incrementally** - Compile and test after each change
 6. **Maintain compatibility** - Don't break existing code until Step 6
 
-**Current state:** Steps 1-2b complete. GraphDataManager is now integrated and working. Ready to begin Step 3 (GraphPhysicsSimulator).
+**Current state:** Steps 1-3b complete. GraphPhysicsSimulator is now integrated and working. Ready to begin Step 4 (GraphRenderer).
 
 ---
 

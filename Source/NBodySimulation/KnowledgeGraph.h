@@ -19,6 +19,7 @@
 #include "Interfaces/IHttpResponse.h"
 #include "GraphConfiguration.h"
 #include "GraphDataManager.h"
+#include "GraphPhysicsSimulator.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -222,6 +223,10 @@ public:
 	UFUNCTION()
 	void OnGraphDataLoadedCallback(bool bSuccess);
 
+	// Physics simulator integration
+	void InitializePhysicsSimulator();
+	void cpu_calculate_new(); // New version using PhysicsSimulator
+
 
 
 	// New unified configuration struct
@@ -231,6 +236,10 @@ public:
 	// New data manager - handles all HTTP/JSON/database operations
 	UPROPERTY()
 	UGraphDataManager* DataManager;
+
+	// New physics simulator - handles all force calculations
+	UPROPERTY()
+	UGraphPhysicsSimulator* PhysicsSimulator;
 
 	// Legacy properties - kept for backward compatibility, will be removed in future
 	// These now redirect to Config struct

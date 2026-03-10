@@ -1,5 +1,16 @@
 // KnowledgeGraph_Core.cpp
-// Core simulation loop and main functions
+// 
+// Core simulation loop and main update functions for the force-directed graph.
+// This file contains the main tick logic that drives the physics simulation,
+// handles stabilization, and coordinates updates between physics and rendering.
+//
+// Key Functions:
+// - main_function(): Main simulation loop called every tick
+// - post_generate_graph(): Initialization after graph generation
+// - cpu_calculate(): Legacy CPU physics calculation (fallback)
+// - update_position_array(): Dispatches to GPU or CPU physics
+//
+// Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph3.cpp
 
 #include "KnowledgeGraph.h"
 

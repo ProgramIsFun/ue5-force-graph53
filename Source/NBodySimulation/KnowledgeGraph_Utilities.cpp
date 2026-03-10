@@ -1,5 +1,16 @@
 // KnowledgeGraph_Utilities.cpp
-// Helper utility functions for KnowledgeGraph
+//
+// Helper utility functions for the KnowledgeGraph system.
+// Contains commonly used helper functions for player location, logging,
+// shader management, and GPU position retrieval.
+//
+// Key Functions:
+// - get_player_location727(): Gets current player position
+// - update_alpha(): Updates simulation cooling parameter
+// - is_graph_stabilized(): Checks if simulation has converged
+// - gpu_get_positions(): Retrieves positions from GPU compute shader
+//
+// Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph2/3.cpp
 
 #include "KnowledgeGraph.h"
 #include "NBodyUtils.h"

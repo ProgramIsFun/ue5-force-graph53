@@ -1,5 +1,16 @@
 // KnowledgeGraph_DataIntegration.cpp
-// Integration layer between KnowledgeGraph and GraphDataManager
+//
+// Integration layer between KnowledgeGraph and GraphDataManager.
+// Handles data loading from JSON files, HTTP endpoints, and auto-generation.
+// Converts between new data structures (FNodeData, FLinkData) and legacy format.
+//
+// Key Functions:
+// - OnGraphDataLoadedCallback(): Async callback when data is loaded
+// - prepare(): Initiates graph data loading based on creation mode
+// - generate_objects_for_node_and_link_new(): Creates visual objects from data
+// - request_graph_http(): Legacy HTTP request functions (kept for compatibility)
+//
+// Part of the KnowledgeGraph refactoring - integrates GraphDataManager component
 
 #include "KnowledgeGraph.h"
 #include "NBodyUtils.h"

@@ -1,5 +1,18 @@
 // KnowledgeGraph_BlueprintAPI.cpp
-// Blueprint-callable functions for user interaction and database operations
+//
+// Blueprint-callable functions for user interaction and database operations.
+// Provides the interface between Blueprints and the graph system for:
+// - Node selection and manipulation
+// - Database CRUD operations (Create, Read, Update, Delete)
+// - Graph reloading and cleanup
+//
+// Key Functions:
+// - select_closest_node_from_player222(): Find nearest node to player
+// - add_node_to_database1115(): Create new node via HTTP
+// - update_position_of_all_nodes_to_database1113(): Sync positions to database
+// - reload_the_whole_graph(): Full graph refresh
+//
+// Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph5.cpp
 
 #include "KnowledgeGraph.h"
 #include "HttpModule.h"

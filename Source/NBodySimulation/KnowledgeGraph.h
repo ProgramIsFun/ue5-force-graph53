@@ -7,7 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
-#include "octreeeeeeeeee3.h"
+#include "NBodyOctree.h"
 #include "utillllllssss.h"
 
 #include "NBodySimModule.h"

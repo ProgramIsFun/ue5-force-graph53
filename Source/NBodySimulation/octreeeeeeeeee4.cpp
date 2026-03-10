@@ -1,4 +1,4 @@
-#include "octreeeeeeeeee3.h"
+#include "NBodyOctree.h"
 
 #include <queue>
 #include <stack>

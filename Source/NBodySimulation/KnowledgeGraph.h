@@ -129,12 +129,18 @@ public:
 	int32 selected_node_index_previous = -1;
 	FString selected_node_name = "";
 	
-	int32 jnodessss;
+	// Total number of nodes in the graph (formerly: jnodessss)
+	int32 TotalNodeCount;
 	
 	TMap<int32, FString> id_to_string;
 	TMap<FString, int32> string_to_id;
-	TArray<Node77> all_nodes2;
-	TArray<Link77> all_links2;
+	
+	// Array of all graph nodes (formerly: all_nodes2)
+	TArray<Node77> GraphNodes;
+	
+	// Array of all graph links/edges (formerly: all_links2)
+	TArray<Link77> GraphLinks;
+	
 	TArray<FVector> predefined_positions;
 
 	
@@ -271,7 +277,9 @@ public:
 	float initialAngle = PI * (3 - sqrt(5));
 	
 	float initialRadius = 10; // Initial radius for spiral node placement - from d3-force
-	float node_use_actor_size = 0.3f; // Visual size multiplier for node actors
+	
+	// Visual size multiplier for node actors (formerly: node_use_actor_size)
+	float NodeActorSize = 0.3f;
 
 
 

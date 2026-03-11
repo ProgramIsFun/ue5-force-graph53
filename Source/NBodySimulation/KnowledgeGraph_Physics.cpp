@@ -25,7 +25,7 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 		MeshComp->RegisterComponent(); // Don't forget to register the component
 
 
-		float sss = node_use_actor_size;  // TODO: This should be moved to Config
+		float sss = NodeActorSize;  // TODO: This should be moved to Config
 		FVector NewScale = FVector(sss, sss, sss);
 		MeshComp->SetWorldScale3D(NewScale);
 
@@ -66,7 +66,7 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int
 		TextComponent->SetupAttachment(RootComponent);
 		TextComponent->SetWorldSize(Config.TextSize);
 		TextComponent->RegisterComponent(); // This is important to initialize the component
-		all_nodes2[index].textComponent = TextComponent;
+		GraphNodes[index].textComponent = TextComponent;
 		// TextComponents11111111111111111111.Add(TextComponent);
 	}
 }
@@ -77,31 +77,31 @@ void AKnowledgeGraph::get_number_of_nodes()
 	{
 		LogMessage("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
 		   TEXT("get_number_of_nodes: "));
-		jnodessss = Config.AutoGenerateNodeCount;
+		TotalNodeCount = Config.AutoGenerateNodeCount;
 	}
 	if (Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
 		if (!JsonObject1.IsValid())
 		{
 			LogMessage("ERROR: JsonObject1 is invalid!", true, 3);
-			jnodessss = 0;
+			TotalNodeCount = 0;
 			precheck_succeed = false;
 			return;
 		}
 		
 		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		jnodessss = jnodes.Num();
+		TotalNodeCount = jnodes.Num();
 		
 		// Safety check for reasonable node count
-		if (jnodessss < 0 || jnodessss > 100000)
+		if (TotalNodeCount < 0 || TotalNodeCount > 100000)
 		{
-			LogMessage("ERROR: Invalid node count: " + FString::FromInt(jnodessss), true, 3);
-			jnodessss = 0;
+			LogMessage("ERROR: Invalid node count: " + FString::FromInt(TotalNodeCount), true, 3);
+			TotalNodeCount = 0;
 			precheck_succeed = false;
 			return;
 		}
 		
-		LogMessage("Loaded node count from JSON: " + FString::FromInt(jnodessss), true, 0);
+		LogMessage("Loaded node count from JSON: " + FString::FromInt(TotalNodeCount), true, 0);
 	}
 }
 
@@ -112,7 +112,7 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 	bool log = false;
 	
 	TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-	for (int32 i = 0; i < jnodessss; i++)
+	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
 		auto jobj = jnodes[i]->AsObject();
 		FString jid;
@@ -135,13 +135,13 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 
 void AKnowledgeGraph::miscellaneous()
 {
-	all_links2.SetNumUninitialized(jnodessss-1);
+	GraphLinks.SetNumUninitialized(TotalNodeCount-1);
 
 	bool log = false;
 	// Edge creation loop
 	if (!Config.bConnectToAdjacentNodeOnly)
 	{
-		for (int32 i = 1; i < jnodessss; i++)
+		for (int32 i = 1; i < TotalNodeCount; i++)
 		{
 			int jid = i - 1;
 			int jsource = i; // Ensures jsource is always valid within the index range
@@ -154,7 +154,7 @@ void AKnowledgeGraph::miscellaneous()
 	else
 	{
 		LogMessage("Randomly connected is disabled    will always connect to the previous node. ", log);
-		for (int32 i = 1; i < jnodessss; i++)
+		for (int32 i = 1; i < TotalNodeCount; i++)
 		{
 			int jid = i - 1;
 			int jsource = i; // Ensures jsource is always valid within the index range
@@ -169,26 +169,26 @@ void AKnowledgeGraph::miscellaneous()
 void AKnowledgeGraph::set_array_lengths()
 {
 	// Safety check to prevent memory allocation crashes
-	if (jnodessss <= 0 || jnodessss > 100000)
+	if (TotalNodeCount <= 0 || TotalNodeCount > 100000)
 	{
-		LogMessage("ERROR: Invalid jnodessss value: " + FString::FromInt(jnodessss) + ". Refusing to allocate arrays.", true, 3);
+		LogMessage("ERROR: Invalid TotalNodeCount value: " + FString::FromInt(TotalNodeCount) + ". Refusing to allocate arrays.", true, 3);
 		precheck_succeed = false;
 		return;
 	}
 	
-	LogMessage("Setting array lengths for " + FString::FromInt(jnodessss) + " nodes", true, 0);
+	LogMessage("Setting array lengths for " + FString::FromInt(TotalNodeCount) + " nodes", true, 0);
 	
-	nodePositions.SetNumUninitialized(jnodessss);
-	nodeVelocities.SetNumUninitialized(jnodessss);
-	all_nodes2.SetNumUninitialized(jnodessss);
+	nodePositions.SetNumUninitialized(TotalNodeCount);
+	nodeVelocities.SetNumUninitialized(TotalNodeCount);
+	GraphNodes.SetNumUninitialized(TotalNodeCount);
 	
 	if (Config.bUseGPUShaders)
 	{
-		SimParameters.Bodies.SetNumUninitialized(jnodessss);
+		SimParameters.Bodies.SetNumUninitialized(TotalNodeCount);
 	}
 	if (Config.bUseInstancedStaticMesh)
 	{
-		BodyTransforms.SetNumUninitialized(jnodessss);
+		BodyTransforms.SetNumUninitialized(TotalNodeCount);
 	}
 }
 
@@ -213,7 +213,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	bool log = true;
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
-		for (int32 i = 0; i < jnodessss; i++)
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			if (Config.bUseTextRenderComponents)
 			{
@@ -227,7 +227,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	else
 	{
 		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		for (int32 i = 0; i < jnodessss; i++)
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			auto jobj = jnodes[i]->AsObject();
 			if (Config.bUseTextRenderComponents)
@@ -255,7 +255,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				generate_text_render_component_and_attach(name,i);
 			}
 		}
-		LogMessage("Number of node generated: " + FString::FromInt(jnodessss), log);
+		LogMessage("Number of node generated: " + FString::FromInt(TotalNodeCount), log);
 
 
 
@@ -265,7 +265,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 
 		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
 		LogMessage("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
-		all_links2.SetNumUninitialized(jedges.Num());
+		GraphLinks.SetNumUninitialized(jedges.Num());
 
 
 		for (int32 i = 0; i < jedges.Num(); i++)
@@ -328,7 +328,7 @@ void AKnowledgeGraph::extracting_property_list_and_store()
 void AKnowledgeGraph::deal_with_predefined_location()
 {
 	bool log=Config.bEnableLogging;
-	predefined_positions.SetNumUninitialized(jnodessss);
+	predefined_positions.SetNumUninitialized(TotalNodeCount);
 
 	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
@@ -336,7 +336,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 		// and set the position of the nodes to the retrieved position.
 		// This is done by setting the nodePositions array to the retrieved position
 		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		for (int32 i = 0; i < jnodessss; i++)
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			auto jobj = jnodes[i]->AsObject();
 			FVector jlocation;
@@ -380,13 +380,13 @@ void AKnowledgeGraph::deal_with_predefined_location()
 			FVector center = GetActorLocation();
 			FVector aggregation = FVector(0, 0, 0);
 
-			for (int32 i = 0; i < jnodessss; i++)
+			for (int32 i = 0; i < TotalNodeCount; i++)
 			{
 				aggregation += predefined_positions[i];
 			}
 
-			aggregation /= jnodessss;
-			for (int32 i = 0; i < jnodessss; i++)
+			aggregation /= TotalNodeCount;
+			for (int32 i = 0; i < TotalNodeCount; i++)
 			{
 				predefined_positions[i] -= (aggregation - center);
 			}
@@ -450,7 +450,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 	// link forces
 	// After loop, the velocity of all notes have been altered a little bit because of the link force already. 
 	int32 Index = 0;
-	for (auto& link : all_links2)
+	for (auto& link : GraphLinks)
 	{
 		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index), log);
 
@@ -515,7 +515,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 
 
 		OctreeData2->AddAll1(
-			all_nodes2,
+			GraphNodes,
 			nodePositions);
 
 		OctreeData2->AccumulateStrengthAndComputeCenterOfMass();
@@ -528,7 +528,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		if (!Config.bUseParallelProcessing)
 		{
 			int32 Index = 0;
-			for (auto& node : all_nodes2)
+			for (auto& node : GraphNodes)
 			{
 				LogMessage("--------------------------------------", log);
 				LogMessage(
@@ -553,7 +553,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		}
 		else
 		{
-			ParallelFor(all_nodes2.Num(), [&](int32 Index)
+			ParallelFor(GraphNodes.Num(), [&](int32 Index)
 			{
 				TraverseBFS(OctreeData2,
 				            SampleCallback, alpha, Index, nodePositions, nodeVelocities);
@@ -570,14 +570,14 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		{
 			// Brute force
 			int32 Index = 0;
-			for (auto& node : all_nodes2)
+			for (auto& node : GraphNodes)
 			{
 				auto kn = node.node;
 
 
 				int32 Index2 = 0;
 
-				for (auto& node2 : all_nodes2)
+				for (auto& node2 : GraphNodes)
 				{
 					auto kn2 = node2.node;
 					if (kn != kn2)
@@ -603,13 +603,13 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		}
 		else
 		{
-			ParallelFor(all_nodes2.Num(), [&](int32 Index)
+			ParallelFor(GraphNodes.Num(), [&](int32 Index)
 			{
-				auto node = all_nodes2[Index];
+				auto node = GraphNodes[Index];
 
 
 				int32 Index2 = 0;
-				for (auto& node2 : all_nodes2)
+				for (auto& node2 : GraphNodes)
 				{
 					auto kn2 = node2.node;
 					if (node.node != kn2)
@@ -665,7 +665,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 
 
 	int32 Index = 0;
-	for (auto& node : all_nodes2)
+	for (auto& node : GraphNodes)
 	{
 		// aggregation += node.Value->GetActorLocation();
 		aggregation += nodePositions[
@@ -676,7 +676,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 	}
 
 	Index = 0;
-	for (auto& node : all_nodes2)
+	for (auto& node : GraphNodes)
 	{
 		nodePositions[
 				Index
@@ -684,7 +684,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 			nodePositions[
 				Index
 			] - (
-				aggregation / all_nodes2.Num() - center
+				aggregation / GraphNodes.Num() - center
 			) * 1;
 		// node.Value->SetActorLocation(
 		// 	node.Value->GetActorLocation() - (aggregation / all_nodes.Num() - center) * 1
@@ -702,7 +702,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 	if (!Config.bUseParallelProcessing)
 	{
 		int32 Index = 0;
-		for (auto& node : all_nodes2)
+		for (auto& node : GraphNodes)
 		{
 			auto kn = node.node;
 
@@ -734,7 +734,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 	{
 		// Assertion failed: ComponentsThatNeedEndOfFrameUpdate_OnGameThread.IsValidIndex(ArrayIndex) [File:D:\build\++UE5\Sync\Engine\Source\Runtime\Engine\Private\LevelTick.cpp] [Line: 872]
 
-		ParallelFor(all_nodes2.Num(), [&](int32 Index)
+		ParallelFor(GraphNodes.Num(), [&](int32 Index)
 		{
 			nodeVelocities[Index] *= velocityDecay;
 			nodePositions[Index] = nodePositions[Index] + nodeVelocities[Index];
@@ -744,7 +744,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 
 void AKnowledgeGraph::update_link_position()
 {
-	for (auto& link : all_links2)
+	for (auto& link : GraphLinks)
 	{
 		FVector Location1 = nodePositions[link.source];
 		FVector Location2 = nodePositions[link.target];
@@ -856,7 +856,7 @@ void AKnowledgeGraph::initialize_node_position()
 	if (!Config.bUseParallelProcessing)
 	{
 		for (
-			int32 index = 0; index < jnodessss; index++
+			int32 index = 0; index < TotalNodeCount; index++
 		)
 		{
 			initialize_node_position_individual(
@@ -866,7 +866,7 @@ void AKnowledgeGraph::initialize_node_position()
 	else
 	{
 		ParallelFor(
-			jnodessss, [&](int32 index)
+			TotalNodeCount, [&](int32 index)
 			{
 				initialize_node_position_individual(
 					index);
@@ -1014,7 +1014,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 		if (Config.bUseTextRenderComponents)
 		{
-			all_nodes2[i].textComponent->SetWorldLocation(NewPosition);
+			GraphNodes[i].textComponent->SetWorldLocation(NewPosition);
 			// TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
 			
 		}
@@ -1035,8 +1035,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	// DO NOT MODIFY - based on d3-force implementation
 	
 	bool log = false;
-	float n = all_nodes2.Num();
-	float m = all_links2.Num();
+	float n = GraphNodes.Num();
+	float m = GraphLinks.Num();
 
 	std::map<int32, int32> Nodeconnection;
 
@@ -1057,7 +1057,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		Linkinout.SetNumUninitialized(m2);
 	}
 
-	for (auto& link : all_links2)
+	for (auto& link : GraphLinks)
 	{
 		Nodeconnection[link.source] += 1;
 		Nodeconnection[link.target] += 1;
@@ -1073,7 +1073,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	if (!Config.bUseGPUShaders)
 	{
 		int i = 0;
-		for (auto& link : all_links2)
+		for (auto& link : GraphLinks)
 		{
 			int s1 = Nodeconnection[link.source];
 			int s2 = Nodeconnection[link.target];
@@ -1320,5 +1320,5 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 	link.strength = 1; // Will be recalculated based on node degree
 	link.distance = edgeDistance; // Default 30 from d3-force
 
-	all_links2[id] = link;
+	GraphLinks[id] = link;
 }

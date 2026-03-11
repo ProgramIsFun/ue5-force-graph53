@@ -32,8 +32,8 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	const TArray<FNodeData>& LoadedNodes = DataManager->GetNodes();
 	const TArray<FLinkData>& LoadedLinks = DataManager->GetLinks();
 
-	jnodessss = LoadedNodes.Num();
-	LogMessage("Loaded " + FString::FromInt(jnodessss) + " nodes from DataManager", true, 0);
+	TotalNodeCount = LoadedNodes.Num();
+	LogMessage("Loaded " + FString::FromInt(TotalNodeCount) + " nodes from DataManager", true, 0);
 
 	// Build ID mappings (for backward compatibility)
 	id_to_string.Empty();
@@ -50,8 +50,8 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	// Copy predefined positions if available
 	if (Config.bUsePredefinedLocation)
 	{
-		predefined_positions.SetNum(jnodessss);
-		for (int32 i = 0; i < jnodessss; i++)
+		predefined_positions.SetNum(TotalNodeCount);
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			predefined_positions[i] = LoadedNodes[i].Position;
 		}
@@ -62,13 +62,13 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 			FVector center = GetActorLocation();
 			FVector aggregation = FVector(0, 0, 0);
 
-			for (int32 i = 0; i < jnodessss; i++)
+			for (int32 i = 0; i < TotalNodeCount; i++)
 			{
 				aggregation += predefined_positions[i];
 			}
 
-			aggregation /= jnodessss;
-			for (int32 i = 0; i < jnodessss; i++)
+			aggregation /= TotalNodeCount;
+			for (int32 i = 0; i < TotalNodeCount; i++)
 			{
 				predefined_positions[i] -= (aggregation - center);
 			}
@@ -87,7 +87,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	
 	// Copy links to old format and create their meshes
 	// LoadedLinks already declared at the top of the function
-	all_links2.SetNum(LoadedLinks.Num());
+	GraphLinks.SetNum(LoadedLinks.Num());
 	
 	for (int32 i = 0; i < LoadedLinks.Num(); i++)
 	{
@@ -113,7 +113,7 @@ void AKnowledgeGraph::prepare()
 	{
 		// Auto-generate mode - don't load data, just set up arrays
 		LogMessage("Auto-generate mode", true, 0);
-		jnodessss = Config.AutoGenerateNodeCount;
+		TotalNodeCount = Config.AutoGenerateNodeCount;
 		
 		initialize_arrays();
 		miscellaneous(); // Creates the links
@@ -162,7 +162,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		// Auto-generate mode - create simple text labels
-		for (int32 i = 0; i < jnodessss; i++)
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			if (Config.bUseTextRenderComponents)
 			{
@@ -176,7 +176,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 		// Use DataManager data
 		const TArray<FNodeData>& Nodes = DataManager->GetNodes();
 		
-		for (int32 i = 0; i < jnodessss; i++)
+		for (int32 i = 0; i < TotalNodeCount; i++)
 		{
 			if (Config.bUseTextRenderComponents)
 			{
@@ -188,8 +188,8 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 				generate_text_render_component_and_attach(name, i);
 			}
 		}
-		LogMessage("Number of nodes generated: " + FString::FromInt(jnodessss), log);
-		LogMessage("Number of links: " + FString::FromInt(all_links2.Num()), log);
+		LogMessage("Number of nodes generated: " + FString::FromInt(TotalNodeCount), log);
+		LogMessage("Number of links: " + FString::FromInt(GraphLinks.Num()), log);
 	}
 	
 	return false;

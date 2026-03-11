@@ -1,4 +1,4 @@
-﻿// Refactored from utillllllssss.cpp in commit cfe5a2e49166b9a584b865688086bef641dc2862
+// Refactored from utillllllssss.cpp in commit cfe5a2e49166b9a584b865688086bef641dc2862
 #include "NBodyUtils.h"
 #include <fstream>
 

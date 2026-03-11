@@ -172,7 +172,7 @@ void AKnowledgeGraph::rotate_to_face_player111()
 				ToPlayer.Normalize();
 				// Create a look-at rotation. The second parameter is the up-vector, adjust if needed.
 				FRotator NewRotation = FRotationMatrix::MakeFromX(ToPlayer).Rotator();
-				all_nodes2[i].textComponent->SetWorldRotation(NewRotation);
+				GraphNodes[i].textComponent->SetWorldRotation(NewRotation);
 			}
 		}
 	}

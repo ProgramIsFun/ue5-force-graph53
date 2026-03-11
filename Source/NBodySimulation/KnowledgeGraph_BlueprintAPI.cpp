@@ -137,7 +137,7 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
 	Writer->WriteArrayStart();
 
-	for (int32 i = 0; i < jnodessss; i++)
+	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
 		auto string_id = id_to_string[i];
 		
@@ -182,17 +182,17 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 void AKnowledgeGraph::clean_up_objects()
 {
 	// For every node
-	for (int32 i = 0; i < jnodessss; i++)
+	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
 		// Remove the text render component
 		if (Config.bUseTextRenderComponents)
 		{
-			if (all_nodes2[i].textComponent && all_nodes2[i].textComponent->IsRegistered())
+			if (GraphNodes[i].textComponent && GraphNodes[i].textComponent->IsRegistered())
 			{
-				all_nodes2[i].textComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-				all_nodes2[i].textComponent->UnregisterComponent();
-				all_nodes2[i].textComponent->DestroyComponent();
-				all_nodes2[i].textComponent = nullptr;
+				GraphNodes[i].textComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+				GraphNodes[i].textComponent->UnregisterComponent();
+				GraphNodes[i].textComponent->DestroyComponent();
+				GraphNodes[i].textComponent = nullptr;
 			}
 		}
 	}
@@ -203,14 +203,14 @@ void AKnowledgeGraph::clean_up_objects()
 	}
 
 	// For each link
-	for (int32 i = 0; i < all_links2.Num(); i++)
+	for (int32 i = 0; i < GraphLinks.Num(); i++)
 	{
-		if (all_links2[i].edgeMesh && all_links2[i].edgeMesh->IsRegistered())
+		if (GraphLinks[i].edgeMesh && GraphLinks[i].edgeMesh->IsRegistered())
 		{
-			all_links2[i].edgeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-			all_links2[i].edgeMesh->UnregisterComponent();
-			all_links2[i].edgeMesh->DestroyComponent();
-			all_links2[i].edgeMesh = nullptr;
+			GraphLinks[i].edgeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			GraphLinks[i].edgeMesh->UnregisterComponent();
+			GraphLinks[i].edgeMesh->DestroyComponent();
+			GraphLinks[i].edgeMesh = nullptr;
 		}
 	}
 }

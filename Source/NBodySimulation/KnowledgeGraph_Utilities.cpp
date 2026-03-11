@@ -84,7 +84,7 @@ void AKnowledgeGraph::pass_parameters_to_shader_management()
 	SimParameters.ViewportWidth = 8000.0;
 	SimParameters.CameraAspectRatio = 1.777778;
 	SimParameters.GravityConstant = 1000.0;
-	SimParameters.NumBodies = jnodessss;
+	SimParameters.NumBodies = TotalNodeCount;
 	SimParameters.alphaS = 1;
 	SimParameters.shaderdebug = static_cast<unsigned int>(Config.ShaderDebugLevel);
 	FNBodySimModule::Get().BeginRendering();

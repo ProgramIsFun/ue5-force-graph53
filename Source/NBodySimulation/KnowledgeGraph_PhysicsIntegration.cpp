@@ -47,8 +47,8 @@ void AKnowledgeGraph::cpu_calculate_new()
 		GetWorld()->GetDeltaSeconds(),
 		nodePositions,
 		nodeVelocities,
-		all_nodes2,
-		all_links2
+		GraphNodes,
+		GraphLinks
 	);
 
 	// Sync alpha back to main class (for compatibility)

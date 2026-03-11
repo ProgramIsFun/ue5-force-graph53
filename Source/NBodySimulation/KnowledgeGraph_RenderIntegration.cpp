@@ -15,7 +15,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array_new
 		return;
 	}
 
-	Renderer->UpdateNodePositions(nodePositions, all_nodes2);
+	Renderer->UpdateNodePositions(nodePositions, GraphNodes);
 }
 
 void AKnowledgeGraph::update_link_position_new()
@@ -27,7 +27,7 @@ void AKnowledgeGraph::update_link_position_new()
 		return;
 	}
 
-	Renderer->UpdateLinkPositions(all_links2, nodePositions, GetWorld());
+	Renderer->UpdateLinkPositions(GraphLinks, nodePositions, GetWorld());
 }
 
 void AKnowledgeGraph::rotate_to_face_player_new()
@@ -40,7 +40,7 @@ void AKnowledgeGraph::rotate_to_face_player_new()
 	}
 
 	FVector PlayerLocation = get_player_location727();
-	Renderer->RotateTextToFacePlayer(nodePositions, all_nodes2, PlayerLocation);
+	Renderer->RotateTextToFacePlayer(nodePositions, GraphNodes, PlayerLocation);
 }
 
 // Text size functions using Renderer
@@ -48,16 +48,16 @@ void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
 {
 	if (Renderer)
 	{
-		Renderer->SetTextSize(size, all_nodes2);
+		Renderer->SetTextSize(size, GraphNodes);
 	}
 	else
 	{
 		// Fallback to old method
-		for (int i = 0; i < jnodessss; i++)
+		for (int i = 0; i < TotalNodeCount; i++)
 		{
 			if (Config.bUseTextRenderComponents)
 			{
-				all_nodes2[i].textComponent->SetWorldSize(size);
+				GraphNodes[i].textComponent->SetWorldSize(size);
 			}
 		}
 	}
@@ -69,17 +69,17 @@ void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool incre
 	
 	if (Renderer)
 	{
-		Renderer->AdjustTextSize(delta, all_nodes2);
+		Renderer->AdjustTextSize(delta, GraphNodes);
 	}
 	else
 	{
 		// Fallback to old method
-		for (int i = 0; i < jnodessss; i++)
+		for (int i = 0; i < TotalNodeCount; i++)
 		{
 			if (Config.bUseTextRenderComponents)
 			{
-				float current_size = all_nodes2[i].textComponent->WorldSize;
-				all_nodes2[i].textComponent->SetWorldSize(current_size + delta);
+				float current_size = GraphNodes[i].textComponent->WorldSize;
+				GraphNodes[i].textComponent->SetWorldSize(current_size + delta);
 			}
 		}
 	}

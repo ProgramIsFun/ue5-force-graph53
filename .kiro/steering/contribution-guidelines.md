@@ -42,3 +42,16 @@ This project uses a modular architecture with split implementation files:
 - `KnowledgeGraph_Utilities.cpp` - Helper functions
 
 When adding functionality, place it in the appropriate module file.
+
+## Command Execution
+
+This project uses **Windows CMD** (not PowerShell) for command execution.
+
+When executing commands, use CMD syntax:
+- List files: `dir`
+- Remove file: `del file.txt`
+- Remove directory: `rmdir /s /q dir`
+- Copy file: `copy source.txt destination.txt`
+- Create directory: `mkdir dir`
+- View file content: `type file.txt`
+- Command separator: `&` (not `&&` or `;`)

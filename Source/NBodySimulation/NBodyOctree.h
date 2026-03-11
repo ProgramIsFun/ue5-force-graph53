@@ -1,4 +1,11 @@
 // Refactored from octreeeeeeeeee3.h in commit cfe5a2e49166b9a584b865688086bef641dc2862
+// Octree spatial data structure for Barnes-Hut algorithm
+// Reference: Barnes & Hut (1986) - "A hierarchical O(N log N) force-calculation algorithm"
+//
+// An octree divides 3D space into nested cubic cells (octants).
+// Each node can have up to 8 children representing the 8 octants.
+// This enables efficient spatial queries for force calculations.
+
 #pragma once
 
 #include <functional>
@@ -10,47 +17,50 @@
 
 class Node77;
 
+/**
+ * Point data stored in octree leaf nodes
+ * Represents a single graph node's position in 3D space
+ */
 struct PointData
 {
-	// FVector Position;
-	// FVector Velocity;
+	int32 nodeid;        // Index of the node in the graph
+	FVector Position;    // 3D position of the node
+	PointData* Next = nullptr;  // Linked list for multiple points in same cell
 
-	// AKnowledgeNode* Node;
-	int32 nodeid;
-	FVector Position;
-	PointData* Next = nullptr;
-
-	PointData(
-		// FVector position = FVector(),
-		// FVector velocity = FVector()
-		// AKnowledgeNode* node = nullptr
-	int32 nodeid,
-	FVector position
-		)
-		:
-	// Position(position),
-	// Velocity(velocity)
-	nodeid(nodeid),
-	Position(position)
+	PointData(int32 nodeid, FVector position)
+		: nodeid(nodeid), Position(position)
 	{
 	}
-
-	// Optionally add methods that manipulate the point data if needed
 };
 
+/**
+ * Octree node for Barnes-Hut spatial subdivision
+ * 
+ * Each node represents a cubic region of 3D space.
+ * Internal nodes have 8 children (octants).
+ * Leaf nodes contain point data.
+ * 
+ * For Barnes-Hut algorithm, each node stores:
+ * - CenterOfMass: weighted average position of all contained points
+ * - Strength: total charge/mass of all contained points
+ * - TotalDataPoints: number of points in this subtree
+ * 
+ * These aggregated values allow treating distant clusters as single bodies.
+ */
 struct OctreeNode
 {
+	// Octree structure
 	bool isCenterSet = false;
-	FVector Center;
-	FVector Extent;
-	TArray<OctreeNode*> Children;
-	PointData* Data = nullptr;
+	FVector Center;                    // Center point of this cubic cell
+	FVector Extent;                    // Half-size of the cube in each dimension
+	TArray<OctreeNode*> Children;      // 8 children (octants), nullptr if leaf
+	PointData* Data = nullptr;         // Point data (only in leaf nodes)
 
-	FVector CenterOfMass;
-	int32 TotalDataPoints = 0;
-	float Strength;
+	// Barnes-Hut aggregated values
+	FVector CenterOfMass;              // Weighted average position of all points in subtree
+	int32 TotalDataPoints = 0;         // Number of points in this subtree
+	float Strength;                    // Total charge/mass of all points in subtree
 	bool StrengthSet = false;
-	// double TotalWeight;
 
 
 	// default to be zero vector.  

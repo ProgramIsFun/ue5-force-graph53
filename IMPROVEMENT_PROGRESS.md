@@ -19,7 +19,7 @@ This is a systematic cleanup and improvement effort following the successful ref
 | 3 | Clean up Content folder clutter | ⏸️ REQUIRES EDITOR | MEDIUM | Content folder |
 | 4 | Implement TODO database operations | ⏸️ NOT STARTED | MEDIUM | GraphDataManager, BlueprintAPI |
 | 5 | Fix inconsistent naming conventions | ✅ COMPLETE | MEDIUM | 22 files |
-| 6 | Add inline documentation for complex math | ⏸️ NOT STARTED | LOW | Physics files |
+| 6 | Add inline documentation for complex math | ✅ COMPLETE | LOW | 4 files |
 | 7 | Remove commented code from Build.cs | ✅ COMPLETE | LOW | Build.cs |
 | 8 | Add error handling improvements | ⏸️ NOT STARTED | MEDIUM | DataManager, HTTP |
 | 9 | Document hard-coded magic numbers | ✅ COMPLETE | LOW | 3 files |
@@ -340,22 +340,104 @@ float NodeActorSize = 0.3f;
 
 ## Task 6: Add Inline Documentation for Complex Math
 
-**Status:** ⏸️ NOT STARTED  
+**Status:** ✅ COMPLETE  
+**Started:** 2026-03-10  
+**Completed:** 2026-03-10  
 **Priority:** LOW  
 **Goal:** Document mathematical algorithms and formulas
 
-### Areas Needing Documentation
+### Documentation Added
 
-1. **Golden Angle Calculation**
-   ```cpp
-   float initialAngle = PI * (3 - sqrt(5)); // Needs explanation
-   ```
+Comprehensive inline documentation has been added to all complex physics and mathematical algorithms.
 
-2. **Barnes-Hut Algorithm** - Add comments explaining the octree optimization
+**Files Modified:**
+- `Source/NBodySimulation/GraphPhysicsSimulator.cpp` - Main physics simulation
+- `Source/NBodySimulation/NBodyOctree.h` - Octree data structure
+- `Source/NBodySimulation/NBodyOctreeImpl.cpp` - Octree implementation
 
-3. **Force Calculations** - Document the physics formulas used
+### Key Areas Documented
 
-4. **Alpha Decay** - Explain the cooling schedule
+**1. Velocity Verlet Integration**
+- Main simulation loop explained step-by-step
+- Process: check stabilization → update alpha → apply forces → decay velocities → update positions
+- Reference to d3-force implementation
+
+**2. Link Forces (Spring Forces)**
+- Formula: `force = (distance - idealDistance) / distance * alpha * strength`
+- Explanation of bias distribution between source and target nodes
+- How spring forces pull connected nodes toward ideal distance
+
+**3. Charge Forces (Many-Body Repulsion)**
+- Inverse square law: `force = direction * strength * alpha / distance²`
+- Explanation of negative strength for repulsion
+- Prevention of singularities when nodes are too close
+
+**4. Barnes-Hut Octree Algorithm**
+- Complete explanation of O(n log n) optimization
+- How octree divides 3D space into nested cubic cells
+- Approximation criterion using theta parameter
+- Center of mass and strength aggregation
+- When to use approximation vs exact calculation
+
+**5. Brute Force Algorithm**
+- O(n²) complexity explanation
+- When to use (small graphs <1000 nodes)
+- Comparison with Barnes-Hut approach
+
+**6. Center Force**
+- How it prevents graph drift
+- Calculation of center of mass
+- Direct position modification (unlike other forces)
+
+**7. Octree Data Structure**
+- Purpose: spatial subdivision for efficient queries
+- Structure: 8 children per node (octants)
+- Aggregated values: center of mass, total strength, point count
+- How distant clusters are treated as single bodies
+
+**8. Octree Construction**
+- Bounding box calculation
+- Cover() function to expand bounds
+- AddAll1() to insert all nodes
+
+### Documentation Style
+
+All documentation follows these principles:
+- Function-level comments explaining purpose and algorithm
+- Inline comments for complex calculations
+- References to d3-force and Barnes-Hut papers
+- Formula explanations with context
+- Complexity analysis (O(n²) vs O(n log n))
+- Parameter descriptions
+- Return value explanations
+
+### Benefits Achieved
+
+- ✅ Complex algorithms now understandable
+- ✅ References to academic papers and d3-force
+- ✅ Formula explanations with context
+- ✅ Helps future maintainers understand the physics
+- ✅ Makes codebase more accessible to contributors
+- ✅ Documents the "why" not just the "what"
+- ✅ Zero code changes - pure documentation
+
+### Example Documentation
+
+```cpp
+/**
+ * Calculate charge forces using Barnes-Hut octree optimization
+ * Reference: Barnes & Hut (1986)
+ * 
+ * The Barnes-Hut algorithm reduces complexity from O(n²) to O(n log n) by:
+ * 1. Building an octree spatial data structure
+ * 2. Grouping distant nodes into clusters
+ * 3. Approximating clusters as single bodies with center of mass
+ * 
+ * For each node, the algorithm traverses the octree and decides:
+ * - If octree cell is far enough: treat entire cell as single body
+ * - If octree cell is too close: recurse into child cells
+ */
+```
 
 ---
 
@@ -504,5 +586,5 @@ All physics constants and magic numbers now have comprehensive documentation com
 ---
 
 **Last Updated:** 2026-03-10  
-**Current Focus:** Code quality improvements  
-**Completed Tasks:** 5/10 (Tasks 1, 2, 5, 7, 9 complete; Task 3 requires Unreal Editor)
+**Current Focus:** Code quality and documentation  
+**Completed Tasks:** 6/10 (Tasks 1, 2, 5, 6, 7, 9 complete; Task 3 requires Unreal Editor)

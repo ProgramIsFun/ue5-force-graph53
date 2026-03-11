@@ -48,7 +48,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	}
 
 	// Copy predefined positions if available
-	if (use_predefined_location)
+	if (Config.bUsePredefinedLocation)
 	{
 		predefined_positions.SetNum(jnodessss);
 		for (int32 i = 0; i < jnodessss; i++)
@@ -57,7 +57,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 		}
 
 		// Center to current actor if needed
-		if (use_predefined_locationand_then_center_to_current_actor)
+		if (Config.bCenterPredefinedLocationToActor)
 		{
 			FVector center = GetActorLocation();
 			FVector aggregation = FVector(0, 0, 0);
@@ -113,7 +113,7 @@ void AKnowledgeGraph::prepare()
 	{
 		// Auto-generate mode - don't load data, just set up arrays
 		ll("Auto-generate mode", true, 0);
-		jnodessss = jnodes1;
+		jnodessss = Config.AutoGenerateNodeCount;
 		
 		initialize_arrays();
 		miscellaneous(); // Creates the links
@@ -143,10 +143,10 @@ void AKnowledgeGraph::prepare()
 		}
 
 		// Request data - callback will be triggered when done
-		DataManager->RequestGraphData(Mode, use_json_file_index, fileIndexToPath);
+		DataManager->RequestGraphData(Mode, Config.JsonFileIndex, fileIndexToPath);
 	}
 
-	if (use_predefined_location)
+	if (Config.bUsePredefinedLocation)
 	{
 		// Predefined locations could be regarded as stable
 		alpha = 0;
@@ -164,7 +164,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 		// Auto-generate mode - create simple text labels
 		for (int32 i = 0; i < jnodessss; i++)
 		{
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				FString name = "Sample Text : " + FString::FromInt(i);
 				generate_text_render_component_and_attach(name, i);
@@ -178,7 +178,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 		
 		for (int32 i = 0; i < jnodessss; i++)
 		{
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				FString name = Nodes[i].Name;
 				if (name.IsEmpty())
@@ -211,7 +211,7 @@ void AKnowledgeGraph::request_a_graph()
 		{
 			ll("cgm is json", true, 0, TEXT("YourFunction: "));
 			const FString JsonFilePath = FPaths::ProjectContentDir() + "/data/state/" + fileIndexToPath[
-				use_json_file_index];
+				Config.JsonFileIndex];
 			FString JsonString;
 			FFileHelper::LoadFileToString(JsonString, *JsonFilePath);
 			JsonObject1 = MakeShareable(new FJsonObject());

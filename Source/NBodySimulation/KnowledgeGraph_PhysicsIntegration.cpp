@@ -25,7 +25,7 @@ void AKnowledgeGraph::InitializePhysicsSimulator()
 	PhysicsParams.DistanceMin = distancemin;
 	PhysicsParams.DistanceMax = distancemax;
 	PhysicsParams.InitialRadius = initialRadius;
-	PhysicsParams.UniversalGraphScale = universal_graph_scale;
+	PhysicsParams.UniversalGraphScale = Config.UniversalGraphScale;
 
 	PhysicsSimulator->Initialize(Config, PhysicsParams);
 	

@@ -23,13 +23,13 @@ void AKnowledgeGraph::post_generate_graph()
 	// Initialize physics simulator
 	InitializePhysicsSimulator();
 	
-	if (use_shaders)
+	if (Config.bUseGPUShaders)
 	{
 		pass_parameters_to_shader_management();
 	}
 	else
 	{
-		ll("not passing parameters to shader because use_shaders is false. ", true, 2);
+		ll("not passing parameters to shader because Config.bUseGPUShaders is false. ", true, 2);
 	}
 	
 	ll("Graph is generated. Now setting initialized to true.  ", true, 2);
@@ -39,7 +39,7 @@ void AKnowledgeGraph::post_generate_graph()
 
 void AKnowledgeGraph::cpu_calculate()
 {
-	bool log = use_logging;
+	bool log = Config.bEnableLogging;
 
 	apply_force();
 	update_position_array_according_to_velocity_array();
@@ -47,7 +47,7 @@ void AKnowledgeGraph::cpu_calculate()
 
 void AKnowledgeGraph::update_position_array(bool log)
 {
-	if (use_shaders)
+	if (Config.bUseGPUShaders)
 	{
 		gpu_get_positions();
 	}
@@ -67,7 +67,7 @@ void AKnowledgeGraph::update_position_array(bool log)
 
 bool AKnowledgeGraph::main_function(float DeltaTime)
 {
-	bool log = use_logging;
+	bool log = Config.bEnableLogging;
 
 	ll("main_function called", log, 0, TEXT("main_function: "));
 
@@ -75,7 +75,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 
 	if (is_graph_stabilized(log))
 	{
-		if (use_predefined_location)
+		if (Config.bUsePredefinedLocation)
 		{
 			if (use_predefined_position_should_update_once)
 			{
@@ -95,7 +95,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 		}
 		
 		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
-		if (link_use_debug_line)
+		if (Config.bUseLinkDebugLine)
 		{
 			if (Renderer)
 			{
@@ -135,13 +135,13 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			}
 		}
 	
-		if (use_shaders)
+		if (Config.bUseGPUShaders)
 		{
 			update_parameter_in_shader(DeltaTime);
 		}
 	}
 	
-	if (rotate_to_face_player)
+	if (Config.bRotateTextToFacePlayer)
 	{
 		if (Renderer)
 		{
@@ -163,9 +163,9 @@ void AKnowledgeGraph::rotate_to_face_player111()
 	for (int i = 0; i < nodePositions.Num(); i++)
 	{
 		FVector NewPosition = nodePositions[i];
-		if (node_use_text_render_components)
+		if (Config.bUseTextRenderComponents)
 		{
-			if (rotate_to_face_player)
+			if (Config.bRotateTextToFacePlayer)
 			{
 				// Compute the direction from the text component to the player.
 				FVector ToPlayer = PlayerLocation - NewPosition;

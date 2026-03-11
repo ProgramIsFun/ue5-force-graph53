@@ -62,7 +62,7 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	ll("tick is called. ", use_logging, 2);
+	ll("tick is called. ", Config.bEnableLogging, 2);
 	if (!precheck_succeed)
 	{
 		ll("Prechecks failed! requested to end game", true, 2);
@@ -84,11 +84,11 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 			
 		}else
 		{
-			ll("Graph is initialized. We have enough data to move on.  ", use_logging, 2);
+			ll("Graph is initialized. We have enough data to move on.  ", Config.bEnableLogging, 2);
 			if(iterationsf<10)
 			{
 				ll("The reason of this section is because the first few frames seems "
-			 "to be of sink between the gpu and the cpu. ", use_logging, 2); 
+			 "to be of sink between the gpu and the cpu. ", Config.bEnableLogging, 2); 
 				iterationsf+=1;
 				return;
 			}

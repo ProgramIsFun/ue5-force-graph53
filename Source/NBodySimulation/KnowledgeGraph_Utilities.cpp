@@ -86,7 +86,7 @@ void AKnowledgeGraph::pass_parameters_to_shader_management()
 	SimParameters.GravityConstant = 1000.0;
 	SimParameters.NumBodies = jnodessss;
 	SimParameters.alphaS = 1;
-	SimParameters.shaderdebug = static_cast<unsigned int>(use_shaders_debug);
+	SimParameters.shaderdebug = static_cast<unsigned int>(Config.ShaderDebugLevel);
 	FNBodySimModule::Get().BeginRendering();
 	FNBodySimModule::Get().InitWithParameters(SimParameters);
 }
@@ -108,16 +108,16 @@ void AKnowledgeGraph::gpu_get_positions()
 	{
 		ll("Size is same. Bodies (" +
 		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
-		   ")", use_logging, 2);
+		   ")", Config.bEnableLogging, 2);
 	}
 
 	TArray<float> alphas = FNBodySimModule::Get().GetComputedAlphas();
-	ll("alpha: " + FString::SanitizeFloat(alphas[0]), use_logging, 2);
-	ll("alpha1: " + FString::SanitizeFloat(alphas[1]), use_logging, 2);
+	ll("alpha: " + FString::SanitizeFloat(alphas[0]), Config.bEnableLogging, 2);
+	ll("alpha1: " + FString::SanitizeFloat(alphas[1]), Config.bEnableLogging, 2);
 
 	if (iterations == 1)
 	{
-		ll("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", use_logging, 2);
+		ll("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
 		GPUvalid = false;
 		return;
 	}

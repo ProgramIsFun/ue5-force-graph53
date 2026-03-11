@@ -185,7 +185,7 @@ void AKnowledgeGraph::clean_up_objects()
 	for (int32 i = 0; i < jnodessss; i++)
 	{
 		// Remove the text render component
-		if (node_use_text_render_components)
+		if (Config.bUseTextRenderComponents)
 		{
 			if (all_nodes2[i].textComponent && all_nodes2[i].textComponent->IsRegistered())
 			{
@@ -197,7 +197,7 @@ void AKnowledgeGraph::clean_up_objects()
 		}
 	}
 	
-	if (node_use_instance_static_mesh)
+	if (Config.bUseInstancedStaticMesh)
 	{
 		InstancedStaticMeshComponent->ClearInstances();
 	}

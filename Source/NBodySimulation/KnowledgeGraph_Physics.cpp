@@ -25,7 +25,7 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 		MeshComp->RegisterComponent(); // Don't forget to register the component
 
 
-		float sss = node_use_actor_size;
+		float sss = node_use_actor_size;  // TODO: This should be moved to Config
 		FVector NewScale = FVector(sss, sss, sss);
 		MeshComp->SetWorldScale3D(NewScale);
 
@@ -64,7 +64,7 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int
 	{
 		TextComponent->SetText(FText::FromString(name));
 		TextComponent->SetupAttachment(RootComponent);
-		TextComponent->SetWorldSize(text_size);
+		TextComponent->SetWorldSize(Config.TextSize);
 		TextComponent->RegisterComponent(); // This is important to initialize the component
 		all_nodes2[index].textComponent = TextComponent;
 		// TextComponents11111111111111111111.Add(TextComponent);
@@ -75,9 +75,9 @@ void AKnowledgeGraph::get_number_of_nodes()
 {
 	if (cgm == CGM::GENERATE)
 	{
-		ll("Generating graph automatically. Number of nodes: " + FString::FromInt(jnodes1), true, 0,
+		ll("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
 		   TEXT("get_number_of_nodes: "));
-		jnodessss = jnodes1;
+		jnodessss = Config.AutoGenerateNodeCount;
 	}
 	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
 	{
@@ -139,7 +139,7 @@ void AKnowledgeGraph::miscellaneous()
 
 	bool log = false;
 	// Edge creation loop
-	if (!connect_to_previous)
+	if (!Config.bConnectToAdjacentNodeOnly)
 	{
 		for (int32 i = 1; i < jnodessss; i++)
 		{
@@ -182,11 +182,11 @@ void AKnowledgeGraph::set_array_lengths()
 	nodeVelocities.SetNumUninitialized(jnodessss);
 	all_nodes2.SetNumUninitialized(jnodessss);
 	
-	if (use_shaders)
+	if (Config.bUseGPUShaders)
 	{
 		SimParameters.Bodies.SetNumUninitialized(jnodessss);
 	}
-	if (node_use_instance_static_mesh)
+	if (Config.bUseInstancedStaticMesh)
 	{
 		BodyTransforms.SetNumUninitialized(jnodessss);
 	}
@@ -215,7 +215,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	{
 		for (int32 i = 0; i < jnodessss; i++)
 		{
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				FString name;
 				name = "Sample Text : " + FString::FromInt(i);
@@ -230,7 +230,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 		for (int32 i = 0; i < jnodessss; i++)
 		{
 			auto jobj = jnodes[i]->AsObject();
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				FString name;
 				try
@@ -327,7 +327,7 @@ void AKnowledgeGraph::extracting_property_list_and_store()
 
 void AKnowledgeGraph::deal_with_predefined_location()
 {
-	bool log=use_logging;
+	bool log=Config.bEnableLogging;
 	predefined_positions.SetNumUninitialized(jnodessss);
 
 	if (cgm == CGM::DATABASE)
@@ -375,7 +375,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 		}
 
 
-		if (use_predefined_locationand_then_center_to_current_actor)
+		if (Config.bCenterPredefinedLocationToActor)
 		{
 			FVector center = GetActorLocation();
 			FVector aggregation = FVector(0, 0, 0);
@@ -429,7 +429,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 		return;
 	}
 
-	if (use_predefined_location)
+	if (Config.bUsePredefinedLocation)
 	{	
 		deal_with_predefined_location();
 	}else
@@ -481,7 +481,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		// ll("l: " + FString::SanitizeFloat(l), log);
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
-		l = (l - link.distance * universal_graph_scale) /
+		l = (l - link.distance * Config.UniversalGraphScale) /
 			l
 			* alpha
 			* link.strength;
@@ -507,7 +507,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 	bool log2 = false;
 
 
-	if (!cpu_many_body_use_brute_force)
+	if (!Config.bUseBruteForceForManyBody)
 	{
 		//
 		OctreeData2 = new OctreeNode(
@@ -525,7 +525,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		ll("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeData2->Strength), log);
 
 
-		if (!cpu_use_parallel)
+		if (!Config.bUseParallelProcessing)
 		{
 			int32 Index = 0;
 			for (auto& node : all_nodes2)
@@ -566,7 +566,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 	}
 	else
 	{
-		if (!cpu_use_parallel)
+		if (!Config.bUseParallelProcessing)
 		{
 			// Brute force
 			int32 Index = 0;
@@ -622,7 +622,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 						{
 							l = sqrt(distancemin * l);
 						}
-						nodeVelocities[Index] += dir * nodeStrength * alpha * universal_graph_scale / l;
+						nodeVelocities[Index] += dir * nodeStrength * alpha * Config.UniversalGraphScale / l;
 						// kn->velocity += dir * nodeStrength * alpha / l; 
 					}
 					Index2++;
@@ -699,7 +699,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 
 void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 {
-	if (!cpu_use_parallel)
+	if (!Config.bUseParallelProcessing)
 	{
 		int32 Index = 0;
 		for (auto& node : all_nodes2)
@@ -750,7 +750,7 @@ void AKnowledgeGraph::update_link_position()
 		FVector Location2 = nodePositions[link.target];
 
 
-		if (link_use_static_mesh)
+		if (Config.bUseLinkStaticMesh)
 		{
 			auto l = link.edgeMesh;
 
@@ -772,9 +772,9 @@ void AKnowledgeGraph::update_link_position()
 
 			l->SetWorldScale3D(
 				FVector(
-					link_use_static_mesh_thickness,
-					link_use_static_mesh_thickness,
-					link_use_static_mesh_length_fine_tune * CylinderHeight)
+					Config.LinkThickness,
+					Config.LinkThickness,
+					Config.LinkLengthFineTune * CylinderHeight)
 			);
 			l->SetWorldRotation(
 				Rotation
@@ -810,7 +810,7 @@ void AKnowledgeGraph::apply_force()
 	// In the following for loop, In the first few loop, the velocity is 0. 
 
 
-	if (cpu_linkc)
+	if (Config.bCalculateLinkForce)
 	{
 		ll("Ready to calculate link.--------------------------------------", log);
 		calculate_link_force_and_update_velocity();
@@ -822,7 +822,7 @@ void AKnowledgeGraph::apply_force()
 	}
 
 
-	if (cpu_manybody)
+	if (Config.bCalculateManyBodyForce)
 	{
 		ll("Ready to calculate charge.--------------------------------------", log);
 
@@ -848,12 +848,12 @@ void AKnowledgeGraph::apply_force()
 
 void AKnowledgeGraph::initialize_node_position()
 {
-	if (initialize_using_actor_location)
+	if (Config.bInitializeUsingActorLocation)
 	{
 		current_own_position = GetActorLocation();
 	}
 
-	if (!cpu_use_parallel)
+	if (!Config.bUseParallelProcessing)
 	{
 		for (
 			int32 index = 0; index < jnodessss; index++
@@ -874,7 +874,7 @@ void AKnowledgeGraph::initialize_node_position()
 		);
 	}
 
-	if (node_use_instance_static_mesh)
+	if (Config.bUseInstancedStaticMesh)
 	{
 		InstancedStaticMeshComponent->AddInstances(BodyTransforms, false);
 	}
@@ -884,7 +884,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 {
 	FVector init_pos;
 
-	if (use_predefined_location)
+	if (Config.bUsePredefinedLocation)
 	{
 		init_pos = predefined_positions[index];
 	}
@@ -920,7 +920,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		{
 			// 1D: Positions along X axis
 			init_pos = FVector(
-				radius * universal_graph_scale,
+				radius * Config.UniversalGraphScale,
 				0,
 				0);
 		}
@@ -928,8 +928,8 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		{
 			// 2D: Circular distribution
 			init_pos = FVector(
-				radius * cos(rollAngle) * universal_graph_scale,
-				radius * sin(rollAngle) * universal_graph_scale,
+				radius * cos(rollAngle) * Config.UniversalGraphScale,
+				radius * sin(rollAngle) * Config.UniversalGraphScale,
 				0
 			);
 		}
@@ -937,13 +937,13 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		{
 			// 3D: Spherical distribution
 			init_pos = FVector(
-				radius * sin(rollAngle) * cos(yawAngle) * universal_graph_scale,
-				radius * cos(rollAngle) * universal_graph_scale,
-				radius * sin(rollAngle) * sin(yawAngle) * universal_graph_scale
+				radius * sin(rollAngle) * cos(yawAngle) * Config.UniversalGraphScale,
+				radius * cos(rollAngle) * Config.UniversalGraphScale,
+				radius * sin(rollAngle) * sin(yawAngle) * Config.UniversalGraphScale
 			);
 		}
 
-		if (initialize_using_actor_location)
+		if (Config.bInitializeUsingActorLocation)
 		{
 			init_pos += current_own_position;
 		}
@@ -953,9 +953,9 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 
 	ll("index: " + FString::FromInt(index) + " init_pos: " + init_pos.ToString());
 
-	if (node_use_instance_static_mesh)
+	if (Config.bUseInstancedStaticMesh)
 	{
-		float s = node_use_instance_static_mesh_size;
+		float s = Config.InstancedMeshSize;
 		FTransform MeshTransform(
 			FRotator(),
 			init_pos,
@@ -964,7 +964,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		BodyTransforms[index] = MeshTransform;
 	}
 
-	if (use_shaders)
+	if (Config.bUseGPUShaders)
 	{
 		FVector3f RandomVelocity
 		{
@@ -988,7 +988,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 
 void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 {
-	if (use_shaders && !GPUvalid)
+	if (Config.bUseGPUShaders && !GPUvalid)
 	{
 		return;
 	}
@@ -999,12 +999,12 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 		FVector NewPosition = nodePositions[i];
 
 		
-		if (node_use_instance_static_mesh)
+		if (Config.bUseInstancedStaticMesh)
 		{
 			BodyTransforms[i].SetTranslation(NewPosition);
 		}
 
-		if (node_use_text_render_components)
+		if (Config.bUseTextRenderComponents)
 		{
 			all_nodes2[i].textComponent->SetWorldLocation(NewPosition);
 			// TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
@@ -1012,7 +1012,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 		}
 	}
 
-	if (node_use_instance_static_mesh)
+	if (Config.bUseInstancedStaticMesh)
 	{
 		InstancedStaticMeshComponent->BatchUpdateInstancesTransforms(0, BodyTransforms, false, true);
 	}
@@ -1030,7 +1030,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	std::map<int, std::vector<int>> connectin;
 
 
-	if (use_shaders)
+	if (Config.bUseGPUShaders)
 	{
 		int m2 = m * 2;
 		SimParameters.NumLinks = m2;
@@ -1048,7 +1048,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		Nodeconnection[link.source] += 1;
 		Nodeconnection[link.target] += 1;
 
-		if (use_shaders)
+		if (Config.bUseGPUShaders)
 		{
 			connectout[link.source].push_back(link.target);
 			connectin[link.target].push_back(link.source);
@@ -1056,7 +1056,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	}
 
 
-	if (!use_shaders)
+	if (!Config.bUseGPUShaders)
 	{
 		int i = 0;
 		for (auto& link : all_links2)
@@ -1273,7 +1273,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 	
 
 
-	if (link_use_static_mesh)
+	if (Config.bUseLinkStaticMesh)
 	{
 		UStaticMeshComponent* CylinderMesh;
 		// Dynamically create the mesh component and attach it
@@ -1289,7 +1289,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 		CylinderMesh->SetWorldScale3D(FVector(1, 1, 1));
 
 		CylinderMesh->SetStaticMesh(
-			link_use_static_mesh_mesh
+			Config.LinkMesh
 		);
 
 		CylinderMesh->SetMaterial(0, CylinderMaterial);

@@ -55,7 +55,7 @@ void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
 		// Fallback to old method
 		for (int i = 0; i < jnodessss; i++)
 		{
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				all_nodes2[i].textComponent->SetWorldSize(size);
 			}
@@ -76,7 +76,7 @@ void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool incre
 		// Fallback to old method
 		for (int i = 0; i < jnodessss; i++)
 		{
-			if (node_use_text_render_components)
+			if (Config.bUseTextRenderComponents)
 			{
 				float current_size = all_nodes2[i].textComponent->WorldSize;
 				all_nodes2[i].textComponent->SetWorldSize(current_size + delta);

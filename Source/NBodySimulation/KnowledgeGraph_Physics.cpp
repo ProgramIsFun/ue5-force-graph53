@@ -40,7 +40,7 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 				)
 			);
 		}
-		CubeMesh = SelectedMesh1111111111111;
+		CubeMesh = Config.NodeMesh;
 		if (CubeMesh)
 		{
 			MeshComp->SetStaticMesh(CubeMesh);
@@ -73,13 +73,13 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int
 
 void AKnowledgeGraph::get_number_of_nodes()
 {
-	if (cgm == CGM::GENERATE)
+	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		ll("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
 		   TEXT("get_number_of_nodes: "));
 		jnodessss = Config.AutoGenerateNodeCount;
 	}
-	if (cgm == CGM::JSON || cgm == CGM::DATABASE)
+	if (Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
 		if (!JsonObject1.IsValid())
 		{
@@ -117,11 +117,11 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 		auto jobj = jnodes[i]->AsObject();
 		FString jid;
 
-		if (cgm == CGM::JSON)
+		if (Config.CreationMode == EGraphCreationMode::FromJson)
 		{
 			jid = jobj->GetStringField("id");
 		}
-		if (cgm == CGM::DATABASE)
+		if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 		{
 			jid = jobj->GetStringField("user_generate_id_7577777777");
 		}
@@ -211,7 +211,7 @@ void AKnowledgeGraph::initialize_arrays()
 bool AKnowledgeGraph::generate_objects_for_node_and_link()
 {
 	bool log = true;
-	if (cgm == CGM::GENERATE)
+	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		for (int32 i = 0; i < jnodessss; i++)
 		{
@@ -330,7 +330,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 	bool log=Config.bEnableLogging;
 	predefined_positions.SetNumUninitialized(jnodessss);
 
-	if (cgm == CGM::DATABASE)
+	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
 		// Retrieve the position of the nodes from the database
 		// and set the position of the nodes to the retrieved position.
@@ -404,7 +404,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 	get_number_of_nodes();
 
 	if (
-		cgm == CGM::JSON || cgm == CGM::DATABASE
+		Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase
 	)
 	{
 		ll("creating one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
@@ -416,7 +416,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 	
 	initialize_arrays();
 	
-	if (cgm == CGM::DATABASE)
+	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
 		extracting_property_list_and_store();
 	}else
@@ -780,7 +780,7 @@ void AKnowledgeGraph::update_link_position()
 				Rotation
 			);
 		}
-		if (link_use_debug_line)
+		if (Config.bUseLinkDebugLine)
 		{
 			UWorld* World = GetWorld();
 			if (!World)
@@ -818,7 +818,7 @@ void AKnowledgeGraph::apply_force()
 	}
 	else
 	{
-		ll("cpu_linkc is disabled. ", log);
+		ll("Config.bCalculateLinkForce is disabled. ", log);
 	}
 
 
@@ -831,7 +831,7 @@ void AKnowledgeGraph::apply_force()
 	}
 	else
 	{
-		ll("cpu_manybody is disabled. ", log);
+		ll("Config.bCalculateManyBodyForce is disabled. ", log);
 	}
 
 
@@ -1292,7 +1292,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 			Config.LinkMesh
 		);
 
-		CylinderMesh->SetMaterial(0, CylinderMaterial);
+		CylinderMesh->SetMaterial(0, Config.LinkMaterial);
 
 		
 		link.edgeMesh = CylinderMesh;

@@ -109,7 +109,7 @@ void AKnowledgeGraph::prepare()
 {
 	ll("prepare() called - using new DataManager", true, 0);
 
-	if (cgm == CGM::GENERATE)
+	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		// Auto-generate mode - don't load data, just set up arrays
 		ll("Auto-generate mode", true, 0);
@@ -133,11 +133,11 @@ void AKnowledgeGraph::prepare()
 		
 		// Convert old enum to new enum
 		EGraphCreationMode Mode = EGraphCreationMode::AutoGenerate;
-		if (cgm == CGM::JSON)
+		if (Config.CreationMode == EGraphCreationMode::FromJson)
 		{
 			Mode = EGraphCreationMode::FromJson;
 		}
-		else if (cgm == CGM::DATABASE)
+		else if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 		{
 			Mode = EGraphCreationMode::FromDatabase;
 		}
@@ -159,7 +159,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 {
 	bool log = true;
 	
-	if (cgm == CGM::GENERATE)
+	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		// Auto-generate mode - create simple text labels
 		for (int32 i = 0; i < jnodessss; i++)
@@ -200,16 +200,16 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 
 void AKnowledgeGraph::request_a_graph()
 {
-	if (cgm == CGM::DATABASE)
+	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
-		ll("cgm is database via HTTP. ", true, 0, TEXT("YourFunction: "));
+		ll("CreationMode is database via HTTP. ", true, 0, TEXT("YourFunction: "));
 		request_graph_http();
 	}
 	else
 	{
-		if (cgm==CGM::JSON)
+		if (Config.CreationMode == EGraphCreationMode::FromJson)
 		{
-			ll("cgm is json", true, 0, TEXT("YourFunction: "));
+			ll("CreationMode is json", true, 0, TEXT("YourFunction: "));
 			const FString JsonFilePath = FPaths::ProjectContentDir() + "/data/state/" + fileIndexToPath[
 				Config.JsonFileIndex];
 			FString JsonString;
@@ -231,7 +231,7 @@ void AKnowledgeGraph::request_a_graph()
 			}
 		}else
 		{
-			ll("cgm is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
+			ll("CreationMode is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
 		}
 		default_generate_graph_method();
 	}

@@ -122,7 +122,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			update_node_world_position_according_to_position_array();
 		}
 
-		if (update_link_before_stabilize)
+		if (Config.bUpdateLinkBeforeStabilize)
 		{
 			ll("update link position", log);
 			if (Renderer)

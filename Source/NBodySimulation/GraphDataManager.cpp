@@ -33,38 +33,70 @@ void UGraphDataManager::RequestGraphData(EGraphCreationMode Mode, int32 JsonFile
 
 void UGraphDataManager::RequestFromDatabase()
 {
+	// Reset retry count for new request
+	HttpRetryCount = 0;
+	PendingRequestMode = EGraphCreationMode::FromDatabase;
+	
 	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
 	HttpRequest->SetVerb("GET");
 	HttpRequest->SetHeader("Content-Type", "application/json");
 	HttpRequest->SetURL("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
+	
+	// Set timeout (30 seconds)
+	HttpRequest->SetTimeout(30.0f);
 	
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,
 		&UGraphDataManager::OnDatabaseRequestComplete
 	);
 	
-	HttpRequest->ProcessRequest();
-	LogMessage("HTTP request sent to database", 0);
+	if (!HttpRequest->ProcessRequest())
+	{
+		LogMessage("Failed to initiate HTTP request", 2);
+		OnGraphDataLoaded.Broadcast(false);
+		return;
+	}
+	
+	LogMessage("HTTP request sent to database (attempt " + FString::FromInt(HttpRetryCount + 1) + "/" + FString::FromInt(MaxHttpRetries) + ")", 0);
 }
 
 void UGraphDataManager::RequestFromJsonFile(int32 FileIndex, const TMap<int32, FString>& FileIndexToPath)
 {
+	// Validate file index
 	if (!FileIndexToPath.Contains(FileIndex))
 	{
-		LogMessage("Invalid file index: " + FString::FromInt(FileIndex), 2);
+		LogMessage("Invalid file index: " + FString::FromInt(FileIndex) + ". Available indices: " + FString::FromInt(FileIndexToPath.Num()), 2);
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
 
 	const FString JsonFilePath = FPaths::ProjectContentDir() + "/data/state/" + FileIndexToPath[FileIndex];
-	FString JsonString;
-
-	if (!FFileHelper::LoadFileToString(JsonString, *JsonFilePath))
+	
+	// Check if file exists
+	if (!FPaths::FileExists(JsonFilePath))
 	{
-		LogMessage("Failed to load JSON file: " + JsonFilePath, 2);
+		LogMessage("JSON file does not exist: " + JsonFilePath, 2);
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
+	
+	FString JsonString;
+	if (!FFileHelper::LoadFileToString(JsonString, *JsonFilePath))
+	{
+		LogMessage("Failed to read JSON file: " + JsonFilePath + ". Check file permissions.", 2);
+		OnGraphDataLoaded.Broadcast(false);
+		return;
+	}
+
+	// Validate JSON is not empty
+	if (JsonString.IsEmpty())
+	{
+		LogMessage("JSON file is empty: " + JsonFilePath, 2);
+		OnGraphDataLoaded.Broadcast(false);
+		return;
+	}
+
+	LogMessage("Loaded JSON file (" + FString::FromInt(JsonString.Len()) + " characters): " + JsonFilePath, 0);
 
 	if (ParseJsonData(JsonString))
 	{
@@ -73,73 +105,182 @@ void UGraphDataManager::RequestFromJsonFile(int32 FileIndex, const TMap<int32, F
 	}
 	else
 	{
-		LogMessage("Failed to parse JSON file", 2);
+		LogMessage("Failed to parse JSON file. Check JSON syntax and structure.", 2);
 		OnGraphDataLoaded.Broadcast(false);
 	}
 }
 
 void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
+	// Check for basic failure
 	if (!bWasSuccessful || !Response.IsValid())
 	{
+		// Retry logic
+		if (HttpRetryCount < MaxHttpRetries - 1)
+		{
+			HttpRetryCount++;
+			LogMessage("Request failed, retrying in " + FString::SanitizeFloat(HttpRetryDelaySeconds) + " seconds... (attempt " + 
+				FString::FromInt(HttpRetryCount + 1) + "/" + FString::FromInt(MaxHttpRetries) + ")", 1);
+			
+			// Schedule retry using timer
+			if (GetWorld())
+			{
+				GetWorld()->GetTimerManager().SetTimer(
+					RetryTimerHandle,
+					this,
+					&UGraphDataManager::RetryDatabaseRequest,
+					HttpRetryDelaySeconds,
+					false
+				);
+			}
+			return;
+		}
+		else
+		{
+			LogMessage("Request failed after " + FString::FromInt(MaxHttpRetries) + " attempts. Giving up.", 2);
+			HandleRequestError(Request, Response);
+			OnGraphDataLoaded.Broadcast(false);
+			return;
+		}
+	}
+
+	// Check HTTP status code
+	const int32 ResponseCode = Response->GetResponseCode();
+	if (ResponseCode < 200 || ResponseCode >= 300)
+	{
+		LogMessage("HTTP request returned error code: " + FString::FromInt(ResponseCode) + " - " + GetHttpErrorDescription(ResponseCode), 2);
 		HandleRequestError(Request, Response);
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
 
+	// Validate content type
 	const FString ContentType = Response->GetContentType();
-	if (ContentType != "application/json" && ContentType != "application/json; charset=utf-8")
+	if (!ContentType.Contains("application/json"))
 	{
 		LogMessage("Response was not in JSON format. Received: " + ContentType, 2);
+		LogMessage("Response preview: " + Response->GetContentAsString().Left(200), 2);
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
 
-	if (ParseJsonData(Response->GetContentAsString()))
+	// Validate response is not empty
+	const FString ResponseContent = Response->GetContentAsString();
+	if (ResponseContent.IsEmpty())
+	{
+		LogMessage("Received empty response from server", 2);
+		OnGraphDataLoaded.Broadcast(false);
+		return;
+	}
+
+	LogMessage("Received response (" + FString::FromInt(ResponseContent.Len()) + " characters)", 0);
+
+	// Parse and validate JSON
+	if (ParseJsonData(ResponseContent))
 	{
 		LogMessage("Successfully loaded graph from database", 0);
+		HttpRetryCount = 0; // Reset retry count on success
 		OnGraphDataLoaded.Broadcast(true);
 	}
 	else
 	{
-		LogMessage("Failed to parse JSON from database", 2);
+		LogMessage("Failed to parse JSON from database. Check server response format.", 2);
 		OnGraphDataLoaded.Broadcast(false);
 	}
 }
 
 bool UGraphDataManager::ParseJsonData(const FString& JsonString)
 {
-	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonString);
-	
-	if (!FJsonSerializer::Deserialize(JsonReader, CachedJsonObject) || !CachedJsonObject.IsValid())
+	// Validate input
+	if (JsonString.IsEmpty())
 	{
+		LogMessage("Cannot parse empty JSON string", 2);
 		return false;
 	}
 
+	TSharedRef<TJsonReader<TCHAR>> JsonReader = TJsonReaderFactory<TCHAR>::Create(JsonString);
+	
+	if (!FJsonSerializer::Deserialize(JsonReader, CachedJsonObject))
+	{
+		LogMessage("JSON deserialization failed. Invalid JSON syntax.", 2);
+		return false;
+	}
+	
+	if (!CachedJsonObject.IsValid())
+	{
+		LogMessage("JSON object is invalid after deserialization", 2);
+		return false;
+	}
+
+	// Validate JSON structure
+	if (!ValidateJsonStructure(CachedJsonObject))
+	{
+		LogMessage("JSON structure validation failed", 2);
+		return false;
+	}
+
+	// Extract data with validation
 	ExtractNodesFromJson(CachedJsonObject);
 	ExtractLinksFromJson(CachedJsonObject);
 	ExtractNodeProperties(CachedJsonObject);
 	BuildIdMappings();
 
+	// Final validation
+	if (Nodes.Num() == 0)
+	{
+		LogMessage("Warning: No nodes were extracted from JSON", 1);
+	}
+
+	LogMessage("Parsed JSON successfully: " + FString::FromInt(Nodes.Num()) + " nodes, " + FString::FromInt(Links.Num()) + " links", 0);
 	return true;
 }
 
 void UGraphDataManager::ExtractNodesFromJson(const TSharedPtr<FJsonObject>& JsonObject)
 {
+	if (!JsonObject.IsValid())
+	{
+		LogMessage("Cannot extract nodes from invalid JSON object", 2);
+		return;
+	}
+
 	if (!JsonObject->HasField("nodes"))
 	{
 		LogMessage("JSON does not contain 'nodes' field", 1);
 		return;
 	}
 
-	TArray<TSharedPtr<FJsonValue>> JsonNodes = JsonObject->GetArrayField("nodes");
+	const TArray<TSharedPtr<FJsonValue>>* JsonNodesPtr = nullptr;
+	if (!JsonObject->TryGetArrayField("nodes", JsonNodesPtr) || !JsonNodesPtr)
+	{
+		LogMessage("Failed to get 'nodes' array from JSON", 2);
+		return;
+	}
+
+	const TArray<TSharedPtr<FJsonValue>>& JsonNodes = *JsonNodesPtr;
 	Nodes.Reserve(JsonNodes.Num());
 
+	int32 ValidNodeCount = 0;
 	for (int32 i = 0; i < JsonNodes.Num(); i++)
 	{
+		if (!JsonNodes[i].IsValid())
+		{
+			LogMessage("Skipping invalid node at index " + FString::FromInt(i), 1);
+			continue;
+		}
+
 		TSharedPtr<FJsonObject> NodeObj = JsonNodes[i]->AsObject();
 		if (!NodeObj.IsValid())
+		{
+			LogMessage("Skipping node at index " + FString::FromInt(i) + " - not a valid object", 1);
 			continue;
+		}
+
+		// Validate node data
+		if (!ValidateNodeData(NodeObj, i))
+		{
+			LogMessage("Skipping node at index " + FString::FromInt(i) + " - validation failed", 1);
+			continue;
+		}
 
 		FNodeData NodeData(i, "");
 
@@ -151,6 +292,11 @@ void UGraphDataManager::ExtractNodesFromJson(const TSharedPtr<FJsonObject>& Json
 		else if (NodeObj->HasField("id"))
 		{
 			NodeData.StringId = NodeObj->GetStringField("id");
+		}
+		else
+		{
+			LogMessage("Warning: Node at index " + FString::FromInt(i) + " has no ID field", 1);
+			NodeData.StringId = "node_" + FString::FromInt(i); // Generate fallback ID
 		}
 
 		// Try to get name
@@ -164,6 +310,10 @@ void UGraphDataManager::ExtractNodesFromJson(const TSharedPtr<FJsonObject>& Json
 			{
 				NodeData.Name = "e" + NodeData.Name.Mid(Prefix.Len());
 			}
+		}
+		else
+		{
+			NodeData.Name = "Node " + FString::FromInt(i); // Fallback name
 		}
 
 		// Try to get predefined location
@@ -179,9 +329,10 @@ void UGraphDataManager::ExtractNodesFromJson(const TSharedPtr<FJsonObject>& Json
 		}
 
 		Nodes.Add(NodeData);
+		ValidNodeCount++;
 	}
 
-	LogMessage("Extracted " + FString::FromInt(Nodes.Num()) + " nodes from JSON", 0);
+	LogMessage("Extracted " + FString::FromInt(ValidNodeCount) + " valid nodes from " + FString::FromInt(JsonNodes.Num()) + " total", 0);
 }
 
 void UGraphDataManager::ExtractLinksFromJson(const TSharedPtr<FJsonObject>& JsonObject)
@@ -435,23 +586,154 @@ void UGraphDataManager::HandleRequestError(FHttpRequestPtr Request, FHttpRespons
 
 	if (!Response.IsValid())
 	{
-		LogMessage("No response received", 3);
+		LogMessage("No response received - possible causes:", 3);
+		LogMessage("  - Server is not running", 3);
+		LogMessage("  - Network connectivity issue", 3);
+		LogMessage("  - Firewall blocking connection", 3);
+		LogMessage("  - Request timeout", 3);
 	}
 	else
 	{
-		LogMessage("HTTP Status Code: " + FString::FromInt(Response->GetResponseCode()), 3);
-		LogMessage("Response Content: " + Response->GetContentAsString(), 3);
+		const int32 ResponseCode = Response->GetResponseCode();
+		LogMessage("HTTP Status Code: " + FString::FromInt(ResponseCode) + " - " + GetHttpErrorDescription(ResponseCode), 3);
+		
+		const FString ResponseContent = Response->GetContentAsString();
+		if (!ResponseContent.IsEmpty())
+		{
+			LogMessage("Response Content (first 500 chars): " + ResponseContent.Left(500), 3);
+		}
+		else
+		{
+			LogMessage("Response body is empty", 3);
+		}
 	}
 
 	if (Request.IsValid())
 	{
-		LogMessage("HTTP Verb: " + Request->GetVerb(), 3);
-		LogMessage("Requested URL: " + Request->GetURL(), 3);
+		LogMessage("Request Details:", 3);
+		LogMessage("  HTTP Verb: " + Request->GetVerb(), 3);
+		LogMessage("  URL: " + Request->GetURL(), 3);
+		
+		const TArray<FString> Headers = Request->GetAllHeaders();
+		if (Headers.Num() > 0)
+		{
+			LogMessage("  Headers: " + FString::FromInt(Headers.Num()) + " total", 3);
+		}
+	}
+}
+
+void UGraphDataManager::RetryDatabaseRequest()
+{
+	LogMessage("Retrying database request...", 0);
+	RequestFromDatabase();
+}
+
+bool UGraphDataManager::ValidateJsonStructure(const TSharedPtr<FJsonObject>& JsonObject) const
+{
+	if (!JsonObject.IsValid())
+	{
+		LogMessage("JSON object is null", 2);
+		return false;
 	}
 
-	if (Response.IsValid() && Response->GetResponseCode() == -1)
+	// Check for required fields
+	if (!JsonObject->HasField("nodes"))
 	{
-		LogMessage("Network connectivity issue or endpoint is down", 3);
+		LogMessage("JSON missing required field: 'nodes'", 2);
+		return false;
+	}
+
+	// Validate nodes is an array
+	const TArray<TSharedPtr<FJsonValue>>* NodesArray = nullptr;
+	if (!JsonObject->TryGetArrayField("nodes", NodesArray))
+	{
+		LogMessage("'nodes' field is not an array", 2);
+		return false;
+	}
+
+	// Links field is optional, but if present, must be an array
+	if (JsonObject->HasField("links"))
+	{
+		const TArray<TSharedPtr<FJsonValue>>* LinksArray = nullptr;
+		if (!JsonObject->TryGetArrayField("links", LinksArray))
+		{
+			LogMessage("'links' field exists but is not an array", 1);
+		}
+	}
+
+	return true;
+}
+
+bool UGraphDataManager::ValidateNodeData(const TSharedPtr<FJsonObject>& NodeObj, int32 NodeIndex) const
+{
+	if (!NodeObj.IsValid())
+	{
+		return false;
+	}
+
+	// Node should have at least an ID or name
+	const bool bHasId = NodeObj->HasField("id") || NodeObj->HasField("user_generate_id_7577777777");
+	const bool bHasName = NodeObj->HasField("name");
+
+	if (!bHasId && !bHasName)
+	{
+		LogMessage("Node at index " + FString::FromInt(NodeIndex) + " has neither ID nor name", 1);
+		return false;
+	}
+
+	return true;
+}
+
+bool UGraphDataManager::ValidateLinkData(const TSharedPtr<FJsonObject>& LinkObj, int32 LinkIndex) const
+{
+	if (!LinkObj.IsValid())
+	{
+		return false;
+	}
+
+	// Link must have source and target
+	if (!LinkObj->HasField("source") || !LinkObj->HasField("target"))
+	{
+		LogMessage("Link at index " + FString::FromInt(LinkIndex) + " missing source or target", 1);
+		return false;
+	}
+
+	return true;
+}
+
+FString UGraphDataManager::GetHttpErrorDescription(int32 ResponseCode) const
+{
+	switch (ResponseCode)
+	{
+	case -1:
+		return "Network Error (connection failed or timeout)";
+	case 400:
+		return "Bad Request (invalid request format)";
+	case 401:
+		return "Unauthorized (authentication required)";
+	case 403:
+		return "Forbidden (access denied)";
+	case 404:
+		return "Not Found (endpoint does not exist)";
+	case 500:
+		return "Internal Server Error";
+	case 502:
+		return "Bad Gateway (server is down or unreachable)";
+	case 503:
+		return "Service Unavailable (server is overloaded)";
+	case 504:
+		return "Gateway Timeout (server took too long to respond)";
+	default:
+		if (ResponseCode >= 200 && ResponseCode < 300)
+			return "Success";
+		else if (ResponseCode >= 300 && ResponseCode < 400)
+			return "Redirection";
+		else if (ResponseCode >= 400 && ResponseCode < 500)
+			return "Client Error";
+		else if (ResponseCode >= 500)
+			return "Server Error";
+		else
+			return "Unknown Status";
 	}
 }
 

@@ -128,23 +128,39 @@ private:
 	// Cached JSON object from last request
 	TSharedPtr<FJsonObject> CachedJsonObject;
 
+	// Retry logic for HTTP requests
+	int32 HttpRetryCount = 0;
+	static constexpr int32 MaxHttpRetries = 3;
+	static constexpr float HttpRetryDelaySeconds = 2.0f;
+	FTimerHandle RetryTimerHandle;
+	EGraphCreationMode PendingRequestMode = EGraphCreationMode::AutoGenerate;
+
 	// HTTP request handlers
 	void RequestFromDatabase();
 	void RequestFromJsonFile(int32 FileIndex, const TMap<int32, FString>& FileIndexToPath);
 	void OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 	void OnAddNodeRequestComplete(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	
+	// Retry logic
+	void RetryDatabaseRequest();
 
 	// JSON parsing
 	bool ParseJsonData(const FString& JsonString);
 	void ExtractNodesFromJson(const TSharedPtr<FJsonObject>& JsonObject);
 	void ExtractLinksFromJson(const TSharedPtr<FJsonObject>& JsonObject);
 	void ExtractNodeProperties(const TSharedPtr<FJsonObject>& JsonObject);
+	
+	// JSON validation
+	bool ValidateJsonStructure(const TSharedPtr<FJsonObject>& JsonObject) const;
+	bool ValidateNodeData(const TSharedPtr<FJsonObject>& NodeObj, int32 NodeIndex) const;
+	bool ValidateLinkData(const TSharedPtr<FJsonObject>& LinkObj, int32 LinkIndex) const;
 
 	// ID mapping helpers
 	void BuildIdMappings();
 
 	// Error handling
 	void HandleRequestError(FHttpRequestPtr Request, FHttpResponsePtr Response);
+	FString GetHttpErrorDescription(int32 ResponseCode) const;
 
 	// Logging helper
 	void LogMessage(const FString& Message, int32 Severity = 0) const;

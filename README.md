@@ -33,7 +33,12 @@ The compute shader code can be found at:
 
 ## Project Status
 
-⚠️ **Active Refactoring in Progress** - The `KnowledgeGraph` class is currently being refactored into smaller, maintainable components. See [REFACTORING_PROGRESS.md](REFACTORING_PROGRESS.md) for current status and details.
+⚠️ **Active Development** - This project is under active development with ongoing improvements and refactoring.
+
+### Current Work
+- [CONFIG_MIGRATION_SUMMARY.md](CONFIG_MIGRATION_SUMMARY.md) - Configuration system migration progress
+- [ARRAY_BOUNDS_FIX.md](ARRAY_BOUNDS_FIX.md) - Array bounds checking improvements
+- [CLEANUP_COMPLETE.md](CLEANUP_COMPLETE.md) - Code cleanup documentation
 
 See the [To-Do List](To_do_list.md) for planned features and improvements.
 

@@ -47,8 +47,8 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 		}
 		else
 		{
-			ll("CubeMesh failed", true, 2);
-			qq();
+			LogMessage("CubeMesh failed", true, 2);
+			QuitGame();
 			return true;
 		}
 	}
@@ -75,7 +75,7 @@ void AKnowledgeGraph::get_number_of_nodes()
 {
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
-		ll("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
+		LogMessage("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
 		   TEXT("get_number_of_nodes: "));
 		jnodessss = Config.AutoGenerateNodeCount;
 	}
@@ -83,7 +83,7 @@ void AKnowledgeGraph::get_number_of_nodes()
 	{
 		if (!JsonObject1.IsValid())
 		{
-			ll("ERROR: JsonObject1 is invalid!", true, 3);
+			LogMessage("ERROR: JsonObject1 is invalid!", true, 3);
 			jnodessss = 0;
 			precheck_succeed = false;
 			return;
@@ -95,13 +95,13 @@ void AKnowledgeGraph::get_number_of_nodes()
 		// Safety check for reasonable node count
 		if (jnodessss < 0 || jnodessss > 100000)
 		{
-			ll("ERROR: Invalid node count: " + FString::FromInt(jnodessss), true, 3);
+			LogMessage("ERROR: Invalid node count: " + FString::FromInt(jnodessss), true, 3);
 			jnodessss = 0;
 			precheck_succeed = false;
 			return;
 		}
 		
-		ll("Loaded node count from JSON: " + FString::FromInt(jnodessss), true, 0);
+		LogMessage("Loaded node count from JSON: " + FString::FromInt(jnodessss), true, 0);
 	}
 }
 
@@ -127,7 +127,7 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 		}
 
 
-		ll("jid: " + jid, log);
+		LogMessage("jid: " + jid, log);
 		string_to_id.Emplace(jid, i);
 		id_to_string.Emplace(i, jid);
 	}
@@ -153,7 +153,7 @@ void AKnowledgeGraph::miscellaneous()
 	}
 	else
 	{
-		ll("Randomly connected is disabled    will always connect to the previous node. ", log);
+		LogMessage("Randomly connected is disabled    will always connect to the previous node. ", log);
 		for (int32 i = 1; i < jnodessss; i++)
 		{
 			int jid = i - 1;
@@ -171,12 +171,12 @@ void AKnowledgeGraph::set_array_lengths()
 	// Safety check to prevent memory allocation crashes
 	if (jnodessss <= 0 || jnodessss > 100000)
 	{
-		ll("ERROR: Invalid jnodessss value: " + FString::FromInt(jnodessss) + ". Refusing to allocate arrays.", true, 3);
+		LogMessage("ERROR: Invalid jnodessss value: " + FString::FromInt(jnodessss) + ". Refusing to allocate arrays.", true, 3);
 		precheck_succeed = false;
 		return;
 	}
 	
-	ll("Setting array lengths for " + FString::FromInt(jnodessss) + " nodes", true, 0);
+	LogMessage("Setting array lengths for " + FString::FromInt(jnodessss) + " nodes", true, 0);
 	
 	nodePositions.SetNumUninitialized(jnodessss);
 	nodeVelocities.SetNumUninitialized(jnodessss);
@@ -255,7 +255,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				generate_text_render_component_and_attach(name,i);
 			}
 		}
-		ll("Number of node generated: " + FString::FromInt(jnodessss), log);
+		LogMessage("Number of node generated: " + FString::FromInt(jnodessss), log);
 
 
 
@@ -264,7 +264,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 
 
 		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
-		ll("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
+		LogMessage("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
 		all_links2.SetNumUninitialized(jedges.Num());
 
 
@@ -276,11 +276,11 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 			FString jtargetS = jobj->GetStringField("target");
 			int jsource = string_to_id[jsourceS];
 			int jtarget = string_to_id[jtargetS];
-			// ll("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
+			// LogMessage("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
 			add_edge(i, jsource, jtarget);
 		}
 
-		ll("Number of link generated: " + FString::FromInt(jedges.Num()), log);
+		LogMessage("Number of link generated: " + FString::FromInt(jedges.Num()), log);
 	}
 	return false;
 }
@@ -359,7 +359,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 			else
 			{
 				// Send a warning to the client. 
-				ll("location does not exist", log);
+				LogMessage("location does not exist", log);
 
 				// Handle cases where location coordinates do not exist
 				// For example, assigning a default value or logging an error
@@ -367,7 +367,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 			}
 
 
-			ll("location111111111111111: " + jlocation.ToString(), log);
+			LogMessage("location111111111111111: " + jlocation.ToString(), log);
 
 			// int id111 = string_to_id[jid];
 			// predefined_positions[id111] = jlocation;
@@ -394,7 +394,7 @@ void AKnowledgeGraph::deal_with_predefined_location()
 	}
 	else
 	{
-		ll("predefined_location location feature is only available for using database.  ", log);
+		LogMessage("predefined_location location feature is only available for using database.  ", log);
 	}
 }
 
@@ -407,11 +407,11 @@ void AKnowledgeGraph::default_generate_graph_method()
 		Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase
 	)
 	{
-		ll("creating one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
+		LogMessage("creating one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
 		create_one_to_one_mapping();
 	}else
 	{
-		ll("auto generate graph, no need to create one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
+		LogMessage("auto generate graph, no need to create one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
 	}
 	
 	initialize_arrays();
@@ -434,10 +434,10 @@ void AKnowledgeGraph::default_generate_graph_method()
 		deal_with_predefined_location();
 	}else
 	{
-		ll("not using predefined location", true, 0, TEXT("default_generate_graph_method: "));
+		LogMessage("not using predefined location", true, 0, TEXT("default_generate_graph_method: "));
 	}
 
-	ll("post generate graph", true, 0, TEXT("default_generate_graph_method: "));
+	LogMessage("post generate graph", true, 0, TEXT("default_generate_graph_method: "));
 	post_generate_graph();
 }
 
@@ -452,7 +452,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 	int32 Index = 0;
 	for (auto& link : all_links2)
 	{
-		ll("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index), log);
+		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index), log);
 
 		FVector source_pos = nodePositions[link.source];
 		FVector source_velocity = nodeVelocities[link.source];
@@ -462,24 +462,24 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 		FVector new_v = target_pos + target_velocity - source_pos - source_velocity;
 
 
-		ll("new_v: " + new_v.ToString(), log);
-		ll("target_pos- source_pos: " + (target_pos - source_pos).ToString(), log);
+		LogMessage("new_v: " + new_v.ToString(), log);
+		LogMessage("target_pos- source_pos: " + (target_pos - source_pos).ToString(), log);
 		if (false)
 		{
 			if (new_v.IsNearlyZero())
 			{
 				new_v = Jiggle(new_v, 1e-6f);
 			}
-			ll("GIGGLE is enabled............", log);
+			LogMessage("GIGGLE is enabled............", log);
 		}
-		ll("GIGGLE is disabled............"
+		LogMessage("GIGGLE is disabled............"
 		   "...................................................  "
 		   ""
 		   "Remember to turn it back on. ", log);
 
 		float l = new_v.Size();
 
-		// ll("l: " + FString::SanitizeFloat(l), log);
+		// LogMessage("l: " + FString::SanitizeFloat(l), log);
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
 		l = (l - link.distance * Config.UniversalGraphScale) /
 			l
@@ -487,15 +487,15 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 			* link.strength;
 		new_v *= l;
 
-		ll("before update nodeVelocities", log);
-		ll("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
-		ll("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
+		LogMessage("before update nodeVelocities", log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
 		nodeVelocities[link.target] -= new_v * (link.bias);
 		nodeVelocities[link.source] += new_v * (1 - link.bias);
 
-		ll("after update nodeVelocities", log);
-		ll("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
-		ll("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
+		LogMessage("after update nodeVelocities", log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
 
 		Index++;
 	}
@@ -520,9 +520,9 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 
 		OctreeData2->AccumulateStrengthAndComputeCenterOfMass();
 
-		// lll("tttttttttttttttttttttttt");
-		ll("!!!OctreeData2->CenterOfMass: " + OctreeData2->CenterOfMass.ToString(), log);
-		ll("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeData2->Strength), log);
+		// LogAlways("tttttttttttttttttttttttt");
+		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeData2->CenterOfMass.ToString(), log);
+		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeData2->Strength), log);
 
 
 		if (!Config.bUseParallelProcessing)
@@ -530,8 +530,8 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 			int32 Index = 0;
 			for (auto& node : all_nodes2)
 			{
-				ll("--------------------------------------", log);
-				ll(
+				LogMessage("--------------------------------------", log);
+				LogMessage(
 					"Traverse the tree And calculate velocity on this Actor Kn, nodekey: -"
 					+
 					FString::FromInt(
@@ -547,7 +547,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 				            nodePositions,
 				            nodeVelocities
 				);
-				ll("Finished traversing the tree based on this Actor Kn. ", log);
+				LogMessage("Finished traversing the tree based on this Actor Kn. ", log);
 				Index++;
 			}
 		}
@@ -561,7 +561,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		}
 
 
-		ll("Finished traversing, now we can delete the tree. ", log);
+		LogMessage("Finished traversing, now we can delete the tree. ", log);
 		delete OctreeData2;
 	}
 	else
@@ -693,7 +693,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 	}
 
 
-	ll("Ignoring the update position step for now in the center force. ");
+	LogMessage("Ignoring the update position step for now in the center force. ");
 }
 
 
@@ -812,32 +812,32 @@ void AKnowledgeGraph::apply_force()
 
 	if (Config.bCalculateLinkForce)
 	{
-		ll("Ready to calculate link.--------------------------------------", log);
+		LogMessage("Ready to calculate link.--------------------------------------", log);
 		calculate_link_force_and_update_velocity();
-		ll("Finish calculating link.--------------------------------------", log);
+		LogMessage("Finish calculating link.--------------------------------------", log);
 	}
 	else
 	{
-		ll("Config.bCalculateLinkForce is disabled. ", log);
+		LogMessage("Config.bCalculateLinkForce is disabled. ", log);
 	}
 
 
 	if (Config.bCalculateManyBodyForce)
 	{
-		ll("Ready to calculate charge.--------------------------------------", log);
+		LogMessage("Ready to calculate charge.--------------------------------------", log);
 
 		calculate_charge_force_and_update_velocity();
-		ll("Finish calculating charge.--------------------------------------", log);
+		LogMessage("Finish calculating charge.--------------------------------------", log);
 	}
 	else
 	{
-		ll("Config.bCalculateManyBodyForce is disabled. ", log);
+		LogMessage("Config.bCalculateManyBodyForce is disabled. ", log);
 	}
 
 
 	if (true)
 	{
-		ll("centre force is disabled for debugging. ", log);
+		LogMessage("centre force is disabled for debugging. ", log);
 	}
 	else
 	{
@@ -951,7 +951,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 
 	nodePositions[index] = init_pos;
 
-	ll("index: " + FString::FromInt(index) + " init_pos: " + init_pos.ToString());
+	LogMessage("index: " + FString::FromInt(index) + " init_pos: " + init_pos.ToString());
 
 	if (Config.bUseInstancedStaticMesh)
 	{
@@ -1072,9 +1072,9 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			// Better have a check because strength is set to 1 when it is initialized. 
 			link.strength = 1.0 / fmin(s1,
 			                           s2);
-			ll("i: " + FString::FromInt(i), log);
-			ll("link.bias: " + FString::SanitizeFloat(link.bias), log);
-			ll("link.strength: " + FString::SanitizeFloat(link.strength), log);
+			LogMessage("i: " + FString::FromInt(i), log);
+			LogMessage("link.bias: " + FString::SanitizeFloat(link.bias), log);
+			LogMessage("link.strength: " + FString::SanitizeFloat(link.strength), log);
 			i++;
 		}
 	}
@@ -1083,29 +1083,29 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		int32 Index = 0;
 		for (int i = 0; i < n; i++)
 		{
-			ll("i: " + FString::FromInt(i), log);
+			LogMessage("i: " + FString::FromInt(i), log);
 
 			int outcount = connectout[i].size();
 			int incount = connectin[i].size();
 
-			ll("outcount: " + FString::FromInt(outcount), log);
-			ll("incount: " + FString::FromInt(incount), log);
+			LogMessage("outcount: " + FString::FromInt(outcount), log);
+			LogMessage("incount: " + FString::FromInt(incount), log);
 
 			int totalcount = Nodeconnection[i];
 
 			if (totalcount != outcount + incount)
 			{
-				ll("totalcount!=outcount+incount", true, 2);
-				qq();
+				LogMessage("totalcount!=outcount+incount", true, 2);
+				QuitGame();
 			}
 
 
 			LinkOffsets[i] = Index;
 
-			ll("LinkOffsets[i]: " + FString::FromInt(LinkOffsets[i]), log);
+			LogMessage("LinkOffsets[i]: " + FString::FromInt(LinkOffsets[i]), log);
 
 			LinkCounts[i] = Nodeconnection[i];
-			ll("LinkCounts[i]: " + FString::FromInt(LinkCounts[i]), log);
+			LogMessage("LinkCounts[i]: " + FString::FromInt(LinkCounts[i]), log);
 
 			for (int j = 0; j < outcount; j++)
 			{
@@ -1156,42 +1156,42 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		{
 			ConcatenatedString += FString::Printf(TEXT("%d "), Number);
 		}
-		ll("LinkOffsets: " + ConcatenatedString, log);
+		LogMessage("LinkOffsets: " + ConcatenatedString, log);
 
 		ConcatenatedString = "";
 		for (int32 Number : LinkCounts)
 		{
 			ConcatenatedString += FString::Printf(TEXT("%d "), Number);
 		}
-		ll("LinkCounts: " + ConcatenatedString, log);
+		LogMessage("LinkCounts: " + ConcatenatedString, log);
 
 		ConcatenatedString = "";
 		for (int32 Number : LinkIndices)
 		{
 			ConcatenatedString += FString::Printf(TEXT("%d "), Number);
 		}
-		ll("LinkIndices: " + ConcatenatedString, log);
+		LogMessage("LinkIndices: " + ConcatenatedString, log);
 
 		ConcatenatedString = "";
 		for (float Number : LinkStrengths)
 		{
 			ConcatenatedString += FString::Printf(TEXT("%f "), Number);
 		}
-		ll("LinkStrengths: " + ConcatenatedString, log);
+		LogMessage("LinkStrengths: " + ConcatenatedString, log);
 
 		ConcatenatedString = "";
 		for (float Number : LinkBiases)
 		{
 			ConcatenatedString += FString::Printf(TEXT("%f "), Number);
 		}
-		ll("LinkBiases: " + ConcatenatedString, log);
+		LogMessage("LinkBiases: " + ConcatenatedString, log);
 
 		ConcatenatedString = "";
 		for (int32 Number : Linkinout)
 		{
 			ConcatenatedString += FString::Printf(TEXT("%d "), Number);
 		}
-		ll("Linkinout: " + ConcatenatedString, log);
+		LogMessage("Linkinout: " + ConcatenatedString, log);
 
 
 		SimParameters.LinkOffsets = LinkOffsets;
@@ -1224,10 +1224,10 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 		}
 		else
 		{
-			ll("generate_actor_for_a_link failed to load class", true, 2);
-			qq();
+			LogMessage("generate_actor_for_a_link failed to load class", true, 2);
+			QuitGame();
 			return true;
-			ll("error loading classsssssssssssssssssssssss");
+			LogMessage("error loading classsssssssssssssssssssssss");
 			e = GetWorld()->SpawnActor<AKnowledgeEdge>(
 				AKnowledgeEdge::StaticClass()
 			);

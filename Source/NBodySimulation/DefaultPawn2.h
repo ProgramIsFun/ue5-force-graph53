@@ -142,11 +142,11 @@ public:
 
 
 	
-	void ll(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
+	void LogMessage(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		if(1)
 		{
-			ll2(StringToLog, LOG, SeverityLevel, Prefix);
+			LogMessageInternal(StringToLog, LOG, SeverityLevel, Prefix);
 		}
 	}
 	

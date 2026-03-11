@@ -46,12 +46,12 @@ void AKnowledgeGraph::select_closest_node_from_player222()
 	{
 		selected_node_index = closest_node_index;
 		selected_node_name = id_to_string[closest_node_index];
-		lp("The closest node index is: " + FString::FromInt(closest_node_index) + 
+		LogToScreen("The closest node index is: " + FString::FromInt(closest_node_index) + 
 		   " with a distance of: " + FString::SanitizeFloat(min_distance), true, 2);
 	}
 	else
 	{
-		lp("Could not find the closest node.", true, 2);
+		LogToScreen("Could not find the closest node.", true, 2);
 	}
 }
 
@@ -86,7 +86,7 @@ void AKnowledgeGraph::add_node_to_database1115httpCompleted(
 {
 	if(bWasSuccessful && Response->GetResponseCode() == 200)
 	{
-		lp("print_out_everything: " + Response->GetContentAsString(), true, 2);
+		LogToScreen("print_out_everything: " + Response->GetContentAsString(), true, 2);
 
 		TSharedPtr<FJsonObject> JsonObject;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
@@ -94,14 +94,14 @@ void AKnowledgeGraph::add_node_to_database1115httpCompleted(
 		if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 		{
 			FString id = JsonObject->GetStringField("id");
-			lp("id7: " + id, true, 2);
+			LogToScreen("id7: " + id, true, 2);
 			FString name = JsonObject->GetStringField("name");
 			FVector player_location = get_player_location727();
 			late_add_node(name, id, player_location);
 		}
 		else
 		{
-			lp("Failed to parse JSON response", true, 2);
+			LogToScreen("Failed to parse JSON response", true, 2);
 		}
 	}
 	else
@@ -130,7 +130,7 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 {
 	bool log = true;
 
-	ll("222222222update_position_of_all_nodes_to_database1113 called", log, 0, TEXT("update_position_of_all_nodes_to_database1113: "));
+	LogMessage("222222222update_position_of_all_nodes_to_database1113 called", log, 0, TEXT("update_position_of_all_nodes_to_database1113: "));
 	
 	// Create a JSON writer and JSON Array
 	FString OutputString;
@@ -167,12 +167,12 @@ void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
 	{
 		if(bWasSuccessful)
 		{
-			ll2("Successfully sent JSON to server.", true, 2);
+			LogMessageInternal("Successfully sent JSON to server.", true, 2);
 			GLog->Log(Response->GetContentAsString());
 		}
 		else
 		{
-			ll2("Failed to send JSON.", true, 2);
+			LogMessageInternal("Failed to send JSON.", true, 2);
 		}
 	});
 

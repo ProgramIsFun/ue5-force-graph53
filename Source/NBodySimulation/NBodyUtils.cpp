@@ -46,7 +46,7 @@ void ClearLogFile() {
 
 
 
-void lll(const FString& TextToWrite)
+void LogAlways(const FString& TextToWrite)
 {
 	bool nologgggggggg = false;
 
@@ -83,7 +83,7 @@ void lll(const FString& TextToWrite)
 }
 
 
-void ll2(const FString& StringToLog, bool LOG, int SeverityLevel, const FString& Prefix)
+void LogMessageInternal(const FString& StringToLog, bool LOG, int SeverityLevel, const FString& Prefix)
 {
 	bool nologgggggggg = false;
 
@@ -134,7 +134,7 @@ void ll2(const FString& StringToLog, bool LOG, int SeverityLevel, const FString&
 
 	if (1)
 	{
-		lll(StringToLog);
+		LogAlways(StringToLog);
 	}
 	
 }

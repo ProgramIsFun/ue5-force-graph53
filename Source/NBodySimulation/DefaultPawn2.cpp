@@ -236,7 +236,7 @@ void ADefaultPawn2::MoveForward(float Val)
 
 
 			// One is the fault I modified it here.
-			// ll2("val111111111: " + FString::SanitizeFloat(Val),true,2);
+			// LogMessageInternal("val111111111: " + FString::SanitizeFloat(Val),true,2);
 			float Val2 = Val * speed_forward;
 			
 			// transform to world space and add it
@@ -263,7 +263,7 @@ void ADefaultPawn2::TurnAtRate(float Rate)
 	{
 		// calculate delta for this frame from the rate information
 		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-		// ll("TurnAtRate11"+FString::SanitizeFloat(Rate)
+		// LogMessage("TurnAtRate11"+FString::SanitizeFloat(Rate)
 			// ,true,2);
 
 	}
@@ -275,7 +275,7 @@ void ADefaultPawn2::LookUpAtRate2(float Rate)
 	{
 		// calculate delta for this frame from the rate information
 		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
-		// ll("LookUpAtRate2"+FString::SanitizeFloat(Rate)
+		// LogMessage("LookUpAtRate2"+FString::SanitizeFloat(Rate)
 		// 	,true,2);
 	}
 	
@@ -298,11 +298,11 @@ UPawnMovementComponent* ADefaultPawn2::GetMovementComponent() const
 
 void ADefaultPawn2::increase_speed()
 {
-	// ll("increase_speed"+FString::SanitizeFloat(speed_forward)
+	// LogMessage("increase_speed"+FString::SanitizeFloat(speed_forward)
 	// 	,true,2);
 	speed_forward += 0.1f;
 	
-	ll("increase_speed"+FString::SanitizeFloat(speed_forward)
+	LogMessage("increase_speed"+FString::SanitizeFloat(speed_forward)
 		,true,2);
 }
 

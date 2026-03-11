@@ -10,7 +10,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array_new
 {
 	if (!Renderer)
 	{
-		ll("Renderer is null, falling back to old method", true, 1);
+		LogMessage("Renderer is null, falling back to old method", true, 1);
 		update_node_world_position_according_to_position_array();
 		return;
 	}
@@ -22,7 +22,7 @@ void AKnowledgeGraph::update_link_position_new()
 {
 	if (!Renderer)
 	{
-		ll("Renderer is null, falling back to old method", true, 1);
+		LogMessage("Renderer is null, falling back to old method", true, 1);
 		update_link_position();
 		return;
 	}
@@ -34,7 +34,7 @@ void AKnowledgeGraph::rotate_to_face_player_new()
 {
 	if (!Renderer)
 	{
-		ll("Renderer is null, falling back to old method", true, 1);
+		LogMessage("Renderer is null, falling back to old method", true, 1);
 		rotate_to_face_player111();
 		return;
 	}

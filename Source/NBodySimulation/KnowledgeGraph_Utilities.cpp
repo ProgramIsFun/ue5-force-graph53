@@ -34,34 +34,34 @@ FVector AKnowledgeGraph::get_location_of_somewhere_in_front_of_player727()
 void AKnowledgeGraph::print_out_location_of_the_node()
 {
 	bool log = true;
-	ll("Before update. ", log);
-	ll("first element. " + nodePositions[0].ToString(), log);
-	ll("second element. " + nodePositions[1].ToString(), log);
-	ll("third element. " + nodePositions[2].ToString(), log);
+	LogMessage("Before update. ", log);
+	LogMessage("first element. " + nodePositions[0].ToString(), log);
+	LogMessage("second element. " + nodePositions[1].ToString(), log);
+	LogMessage("third element. " + nodePositions[2].ToString(), log);
 }
 
 void AKnowledgeGraph::update_iterations()
 {
 	bool log = false;
 	iterations += 1;
-	ll("TICK----------------------------------------------------------------------------"
+	LogMessage("TICK----------------------------------------------------------------------------"
 	   "----------------------------------------------------------------------------", log);
-	ll("iterations: " + FString::FromInt(iterations), log);
+	LogMessage("iterations: " + FString::FromInt(iterations), log);
 }
 
 void AKnowledgeGraph::update_alpha()
 {
 	bool log = true;
 	alpha += (alphaTarget - alpha) * alphaDecay; //need to restart this if want to keep moving
-	ll("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(alpha), log);
+	LogMessage("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(alpha), log);
 }
 
 bool AKnowledgeGraph::is_graph_stabilized(bool log)
 {
-	// ll("alpha Before update: " + FString::SanitizeFloat(alpha), log);
+	// LogMessage("alpha Before update: " + FString::SanitizeFloat(alpha), log);
 	if (alpha < alphaMin)
 	{
-		ll("alpha is less than alphaMin", log);
+		LogMessage("alpha is less than alphaMin", log);
 		FNBodySimModule::Get().EndRendering();
 		// update_link_position();
 		return true;
@@ -97,7 +97,7 @@ void AKnowledgeGraph::gpu_get_positions()
 	TArray<FVector3f> GPUOutputPositions = FNBodySimModule::Get().GetComputedPositions();
 	if (GPUOutputPositions.Num() != SimParameters.Bodies.Num())
 	{
-		ll("Size differ. Bodies (" +
+		LogMessage("Size differ. Bodies (" +
 		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
 		   ")", true, 2);
 
@@ -106,18 +106,18 @@ void AKnowledgeGraph::gpu_get_positions()
 	}
 	else
 	{
-		ll("Size is same. Bodies (" +
+		LogMessage("Size is same. Bodies (" +
 		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
 		   ")", Config.bEnableLogging, 2);
 	}
 
 	TArray<float> alphas = FNBodySimModule::Get().GetComputedAlphas();
-	ll("alpha: " + FString::SanitizeFloat(alphas[0]), Config.bEnableLogging, 2);
-	ll("alpha1: " + FString::SanitizeFloat(alphas[1]), Config.bEnableLogging, 2);
+	LogMessage("alpha: " + FString::SanitizeFloat(alphas[0]), Config.bEnableLogging, 2);
+	LogMessage("alpha1: " + FString::SanitizeFloat(alphas[1]), Config.bEnableLogging, 2);
 
 	if (iterations == 1)
 	{
-		ll("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
+		LogMessage("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
 		GPUvalid = false;
 		return;
 	}

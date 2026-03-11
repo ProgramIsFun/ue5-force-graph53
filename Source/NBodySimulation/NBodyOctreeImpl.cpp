@@ -27,7 +27,7 @@ void OctreeNode::PrintData() const
 	{
 		if (Data->nodeid)
 		{
-			ll2
+			LogMessageInternal
 			("77777777777777Data: " + FString::FromInt(Data->nodeid));
 		}
 	}

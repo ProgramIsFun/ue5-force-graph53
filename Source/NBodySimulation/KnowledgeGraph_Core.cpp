@@ -29,10 +29,10 @@ void AKnowledgeGraph::post_generate_graph()
 	}
 	else
 	{
-		ll("not passing parameters to shader because Config.bUseGPUShaders is false. ", true, 2);
+		LogMessage("not passing parameters to shader because Config.bUseGPUShaders is false. ", true, 2);
 	}
 	
-	ll("Graph is generated. Now setting initialized to true.  ", true, 2);
+	LogMessage("Graph is generated. Now setting initialized to true.  ", true, 2);
 	graph_requesting = false;
 	graph_initialized = true;
 }
@@ -69,7 +69,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 {
 	bool log = Config.bEnableLogging;
 
-	ll("main_function called", log, 0, TEXT("main_function: "));
+	LogMessage("main_function called", log, 0, TEXT("main_function: "));
 
 	update_iterations();
 
@@ -124,7 +124,7 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 
 		if (Config.bUpdateLinkBeforeStabilize)
 		{
-			ll("update link position", log);
+			LogMessage("update link position", log);
 			if (Renderer)
 			{
 				update_link_position_new();

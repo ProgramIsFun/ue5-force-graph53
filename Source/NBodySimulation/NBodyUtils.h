@@ -27,11 +27,10 @@
 
 
 void ClearLogFile();
-// void lll(const std::string& text);
-void lll(const FString& TextToWrite);
+void LogAlways(const FString& TextToWrite);
 
 
-void ll2(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]")
+void LogMessageInternal(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]")
 	 // bool file= false
 );
 

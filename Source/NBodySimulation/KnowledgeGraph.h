@@ -289,31 +289,31 @@ public:
 		(this->*function)(std::forward<Args>(args)...);
 		double EndTime = FPlatformTime::Seconds();
 		double ElapsedTime = EndTime - StartTime;
-		lll("Elapsed time For " + FString(functionName) + ": " + FString::SanitizeFloat(ElapsedTime) + " seconds");
+		LogAlways("Elapsed time For " + FString(functionName) + ": " + FString::SanitizeFloat(ElapsedTime) + " seconds");
 		return ElapsedTime;
 	}
-	void qq()
+	void QuitGame()
 	{
-		ll("received qq to quit the game", true, 2);
+		LogMessage("received QuitGame to quit the game", true, 2);
 		// This doesn't block the game thread. It just sent a request to end the game. 
 		UKismetSystemLibrary::QuitGame(GetWorld(), GetWorld()->GetFirstPlayerController(), EQuitPreference::Quit,
 		                               false);
 	}
-	void s()
+	void StopRendering()
 	{
 		FNBodySimModule::Get().EndRendering();
 	}
-	void ll(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
+	void LogMessage(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		if(Config.bEnableLogging)
 		{
-			ll2(StringToLog, LOG, SeverityLevel, Prefix);
+			LogMessageInternal(StringToLog, LOG, SeverityLevel, Prefix);
 		}else
 		{
 			// Do nothing possibly for performance
 		}
 	}
-	void lp(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
+	void LogToScreen(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, StringToLog);
 	}

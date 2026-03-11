@@ -17,11 +17,11 @@
 
 void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 {
-	ll("OnGraphDataLoadedCallback called with success: " + FString(bSuccess ? "true" : "false"), true, 0);
+	LogMessage("OnGraphDataLoadedCallback called with success: " + FString(bSuccess ? "true" : "false"), true, 0);
 
 	if (!bSuccess)
 	{
-		ll("Failed to load graph data!", true, 2);
+		LogMessage("Failed to load graph data!", true, 2);
 		precheck_succeed = false;
 		return;
 	}
@@ -33,7 +33,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	const TArray<FLinkData>& LoadedLinks = DataManager->GetLinks();
 
 	jnodessss = LoadedNodes.Num();
-	ll("Loaded " + FString::FromInt(jnodessss) + " nodes from DataManager", true, 0);
+	LogMessage("Loaded " + FString::FromInt(jnodessss) + " nodes from DataManager", true, 0);
 
 	// Build ID mappings (for backward compatibility)
 	id_to_string.Empty();
@@ -100,19 +100,19 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 		return;
 	}
 
-	ll("post generate graph", true, 0);
+	LogMessage("post generate graph", true, 0);
 	post_generate_graph();
 }
 
 // Updated prepare() function to use DataManager
 void AKnowledgeGraph::prepare()
 {
-	ll("prepare() called - using new DataManager", true, 0);
+	LogMessage("prepare() called - using new DataManager", true, 0);
 
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		// Auto-generate mode - don't load data, just set up arrays
-		ll("Auto-generate mode", true, 0);
+		LogMessage("Auto-generate mode", true, 0);
 		jnodessss = Config.AutoGenerateNodeCount;
 		
 		initialize_arrays();
@@ -123,13 +123,13 @@ void AKnowledgeGraph::prepare()
 			return;
 		}
 
-		ll("post generate graph", true, 0);
+		LogMessage("post generate graph", true, 0);
 		post_generate_graph();
 	}
 	else
 	{
 		// Use DataManager to load from JSON or Database
-		ll("Loading graph via DataManager", true, 0);
+		LogMessage("Loading graph via DataManager", true, 0);
 		
 		// Convert old enum to new enum
 		EGraphCreationMode Mode = EGraphCreationMode::AutoGenerate;
@@ -188,8 +188,8 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 				generate_text_render_component_and_attach(name, i);
 			}
 		}
-		ll("Number of nodes generated: " + FString::FromInt(jnodessss), log);
-		ll("Number of links: " + FString::FromInt(all_links2.Num()), log);
+		LogMessage("Number of nodes generated: " + FString::FromInt(jnodessss), log);
+		LogMessage("Number of links: " + FString::FromInt(all_links2.Num()), log);
 	}
 	
 	return false;
@@ -202,14 +202,14 @@ void AKnowledgeGraph::request_a_graph()
 {
 	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
-		ll("CreationMode is database via HTTP. ", true, 0, TEXT("YourFunction: "));
+		LogMessage("CreationMode is database via HTTP. ", true, 0, TEXT("YourFunction: "));
 		request_graph_http();
 	}
 	else
 	{
 		if (Config.CreationMode == EGraphCreationMode::FromJson)
 		{
-			ll("CreationMode is json", true, 0, TEXT("YourFunction: "));
+			LogMessage("CreationMode is json", true, 0, TEXT("YourFunction: "));
 			const FString JsonFilePath = FPaths::ProjectContentDir() + "/data/state/" + fileIndexToPath[
 				Config.JsonFileIndex];
 			FString JsonString;
@@ -226,12 +226,12 @@ void AKnowledgeGraph::request_a_graph()
 			else
 			{
 				precheck_succeed = false;
-				ll("Failed to deserialize JSON. ", true, 2);
+				LogMessage("Failed to deserialize JSON. ", true, 2);
 				return;
 			}
 		}else
 		{
-			ll("CreationMode is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
+			LogMessage("CreationMode is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
 		}
 		default_generate_graph_method();
 	}
@@ -253,16 +253,16 @@ void AKnowledgeGraph::request_graph_http()
 		&AKnowledgeGraph::request_graph_httpCompleted
 	);
 	HttpRequest->ProcessRequest();
-	ll("YourFunction called", true, 0, TEXT("YourFunction: "));
+	LogMessage("YourFunction called", true, 0, TEXT("YourFunction: "));
 }
 
 void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	bool log = true;
-	ll("request_graph_httpCompleted called", log, 0, TEXT("request_graph_httpCompleted: "));
+	LogMessage("request_graph_httpCompleted called", log, 0, TEXT("request_graph_httpCompleted: "));
 	if (bWasSuccessful)
 	{
-		ll("Request was successful", log, 0, TEXT("request_graph_httpCompleted: "));
+		LogMessage("Request was successful", log, 0, TEXT("request_graph_httpCompleted: "));
 		if (
 			Response->GetContentType() == "application/json" ||
 			Response->GetContentType() == "application/json; charset=utf-8"
@@ -276,18 +276,18 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 			if (FJsonSerializer::Deserialize(JsonReader, JsonObject1) &&
 				JsonObject1.IsValid())
 			{
-				ll("Successfully parsed JSON.", log, 0, TEXT("request_graph_httpCompleted: "));
+				LogMessage("Successfully parsed JSON.", log, 0, TEXT("request_graph_httpCompleted: "));
 				default_generate_graph_method();
 			}
 			else
 			{
-				ll("Failed to parse JSON.", true, 2);
+				LogMessage("Failed to parse JSON.", true, 2);
 			}
 		}
 		else
 		{
-			ll("Response was not in JSON format.", true, 2);
-			ll(FString::Printf(TEXT("Received Content-Type: %s"), *Response->GetContentType()), true, 2);
+			LogMessage("Response was not in JSON format.", true, 2);
+			LogMessage(FString::Printf(TEXT("Received Content-Type: %s"), *Response->GetContentType()), true, 2);
 		}
 	}
 	else
@@ -299,23 +299,23 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 void AKnowledgeGraph::debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response)
 {
 	precheck_succeed = false;
-	ll("Request failed", true, 2);
+	LogMessage("Request failed", true, 2);
 
 	if (!Response.IsValid())
 	{
-		ll("No response was received.", true, 3);
+		LogMessage("No response was received.", true, 3);
 	}
 	else
 	{
-		ll(FString::Printf(TEXT("HTTP Status Code: %d"), Response->GetResponseCode()), true, 3);
-		ll(FString::Printf(TEXT("Response Content: %s"), *Response->GetContentAsString()), true, 3);
+		LogMessage(FString::Printf(TEXT("HTTP Status Code: %d"), Response->GetResponseCode()), true, 3);
+		LogMessage(FString::Printf(TEXT("Response Content: %s"), *Response->GetContentAsString()), true, 3);
 	}
 
-	ll(FString::Printf(TEXT("HTTP Verb: %s"), *Request->GetVerb()), true, 3);
-	ll(FString::Printf(TEXT("Requested URL: %s"), *Request->GetURL()), true, 3);
+	LogMessage(FString::Printf(TEXT("HTTP Verb: %s"), *Request->GetVerb()), true, 3);
+	LogMessage(FString::Printf(TEXT("Requested URL: %s"), *Request->GetURL()), true, 3);
 
 	if (Response->GetResponseCode() == -1)
 	{
-		ll("Could be a network connectivity issue or the endpoint might be down.", true, 3);
+		LogMessage("Could be a network connectivity issue or the endpoint might be down.", true, 3);
 	}
 }

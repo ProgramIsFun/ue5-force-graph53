@@ -9,7 +9,7 @@ void AKnowledgeGraph::InitializePhysicsSimulator()
 {
 	if (!PhysicsSimulator)
 	{
-		ll("PhysicsSimulator is null!", true, 2);
+		LogMessage("PhysicsSimulator is null!", true, 2);
 		return;
 	}
 
@@ -29,7 +29,7 @@ void AKnowledgeGraph::InitializePhysicsSimulator()
 
 	PhysicsSimulator->Initialize(Config, PhysicsParams);
 	
-	ll("PhysicsSimulator initialized", true, 0);
+	LogMessage("PhysicsSimulator initialized", true, 0);
 }
 
 // New CPU calculate using PhysicsSimulator
@@ -37,7 +37,7 @@ void AKnowledgeGraph::cpu_calculate_new()
 {
 	if (!PhysicsSimulator)
 	{
-		ll("PhysicsSimulator is null, falling back to old method", true, 1);
+		LogMessage("PhysicsSimulator is null, falling back to old method", true, 1);
 		cpu_calculate();
 		return;
 	}

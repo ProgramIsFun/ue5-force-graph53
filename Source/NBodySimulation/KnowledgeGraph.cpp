@@ -3,7 +3,7 @@
 #include "NBodyUtils.h"
 AKnowledgeGraph::~AKnowledgeGraph()
 {
-	ll("AKnowledgeGraph::~AKnowledgeGraph", true, 2);
+	LogMessage("AKnowledgeGraph::~AKnowledgeGraph", true, 2);
 }
 AKnowledgeGraph::AKnowledgeGraph()
 	: Super()
@@ -21,15 +21,15 @@ AKnowledgeGraph::AKnowledgeGraph()
 
 void AKnowledgeGraph::BeginDestroy()
 {
-	ll("AKnowledgeGraph::BeginDestroy", true, 2);
+	LogMessage("AKnowledgeGraph::BeginDestroy", true, 2);
 	FNBodySimModule::Get().EndRendering();
 	Super::BeginDestroy();
 }
 
 void AKnowledgeGraph::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	ll("AKnowledgeGraph::EndPlay", true, 2);
-	ll("EndPlayReason: " + FString::FromInt((int)EndPlayReason), true, 2);
+	LogMessage("AKnowledgeGraph::EndPlay", true, 2);
+	LogMessage("EndPlayReason: " + FString::FromInt((int)EndPlayReason), true, 2);
 	Super::EndPlay(EndPlayReason);
 }
 
@@ -62,11 +62,11 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	ll("tick is called. ", Config.bEnableLogging, 2);
+	LogMessage("tick is called. ", Config.bEnableLogging, 2);
 	if (!precheck_succeed)
 	{
-		ll("Prechecks failed! requested to end game", true, 2);
-		qq();
+		LogMessage("Prechecks failed! requested to end game", true, 2);
+		QuitGame();
 		
 	}else
 	{
@@ -74,20 +74,20 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		{
 			if (graph_requesting)
 			{
-				ll("Graph is requested but not initialized. ", true, 2);
+				LogMessage("Graph is requested but not initialized. ", true, 2);
 			}else
 			{
-				ll("Graph is not initialized and also not requested. We need to request a graph. ", true, 2);
+				LogMessage("Graph is not initialized and also not requested. We need to request a graph. ", true, 2);
 				graph_requesting = true;
 				prepare();
 			}
 			
 		}else
 		{
-			ll("Graph is initialized. We have enough data to move on.  ", Config.bEnableLogging, 2);
+			LogMessage("Graph is initialized. We have enough data to move on.  ", Config.bEnableLogging, 2);
 			if(iterationsf<10)
 			{
-				ll("The reason of this section is because the first few frames seems "
+				LogMessage("The reason of this section is because the first few frames seems "
 			 "to be of sink between the gpu and the cpu. ", Config.bEnableLogging, 2); 
 				iterationsf+=1;
 				return;

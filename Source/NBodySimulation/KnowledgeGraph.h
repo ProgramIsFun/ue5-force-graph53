@@ -248,38 +248,10 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Rendering")
 	UGraphRenderer* Renderer;
 
-	// Physics simulation parameters
-	// Reference: d3-force (https://github.com/d3/d3-force)
-	// These values are based on d3-force's velocity Verlet integration implementation
-	// DO NOT MODIFY unless you understand the physics implications
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-	float alpha = 1; // Simulation "temperature" - decreases over time to stabilize the graph
-	
+	// Runtime iteration tracking (not in Config because it changes every frame)
 	int iterationsf = 0;
 	float iterations = 0;
-	
-	float alphaMin = 0.001; // Minimum alpha threshold - simulation stops when alpha reaches this value
-	
-	// Alpha decay rate - controls cooling schedule (300 iterations to reach alphaMin from 1.0)
-	// Formula from d3-force: 1 - pow(alphaMin, 1 / numIterations)
-	float alphaDecay = 1 - FMath::Pow(alphaMin, 1.0 / 300);
-	
-	float edgeDistance = 30; // Default link distance - from d3-force default
-	float nodeStrength = -60; // Charge force strength (negative = repulsion) - from d3-force default
-	float distancemin = 1; // Minimum distance for force calculations to prevent singularities
-	float distancemax = 10000000; // Maximum distance for force calculations
-	float alphaTarget = 0; // Target alpha value (0 = fully stabilized)
-	float velocityDecay = 0.6; // Velocity damping factor (0.6 = 40% velocity retained per tick) - from d3-force
-	
-	// Golden angle for initial node positioning (137.5 degrees in radians)
-	// This creates an optimal spiral distribution - from d3-force
-	float initialAngle = PI * (3 - sqrt(5));
-	
-	float initialRadius = 10; // Initial radius for spiral node placement - from d3-force
-	
-	// Visual size multiplier for node actors (formerly: node_use_actor_size)
-	float NodeActorSize = 0.3f;
+
 
 
 

@@ -25,7 +25,7 @@ bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
 		MeshComp->RegisterComponent(); // Don't forget to register the component
 
 
-		float sss = NodeActorSize;  // TODO: This should be moved to Config
+		float sss = Config.NodeActorSize;
 		FVector NewScale = FVector(sss, sss, sss);
 		MeshComp->SetWorldScale3D(NewScale);
 
@@ -483,7 +483,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
 		l = (l - link.distance * Config.UniversalGraphScale) /
 			l
-			* alpha
+			* Config.Alpha
 			* link.strength;
 		new_v *= l;
 
@@ -541,7 +541,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 
 				TraverseBFS(OctreeData2,
 				            SampleCallback,
-				            alpha,
+				            Config.Alpha,
 				            Index
 				            ,
 				            nodePositions,
@@ -556,7 +556,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 			ParallelFor(GraphNodes.Num(), [&](int32 Index)
 			{
 				TraverseBFS(OctreeData2,
-				            SampleCallback, alpha, Index, nodePositions, nodeVelocities);
+				            SampleCallback, Config.Alpha, Index, nodePositions, nodeVelocities);
 			});
 		}
 
@@ -587,11 +587,11 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 							Index2] - nodePositions[Index];
 
 						float l = dir.Size() * dir.Size();
-						if (l < distancemin)
+						if (l < Config.DistanceMin)
 						{
-							l = sqrt(distancemin * l);
+							l = sqrt(Config.DistanceMin * l);
 						}
-						nodeVelocities[Index] += dir * nodeStrength * alpha / l;
+						nodeVelocities[Index] += dir * Config.NodeStrength * Config.Alpha / l;
 						// kn->velocity += dir * nodeStrength * alpha / l; 
 					}
 					Index2++;
@@ -618,11 +618,11 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 						FVector dir = nodePositions[Index2] - nodePositions[Index];
 
 						float l = dir.Size() * dir.Size();
-						if (l < distancemin)
+						if (l < Config.DistanceMin)
 						{
-							l = sqrt(distancemin * l);
+							l = sqrt(Config.DistanceMin * l);
 						}
-						nodeVelocities[Index] += dir * nodeStrength * alpha * Config.UniversalGraphScale / l;
+						nodeVelocities[Index] += dir * Config.NodeStrength * Config.Alpha * Config.UniversalGraphScale / l;
 						// kn->velocity += dir * nodeStrength * alpha / l; 
 					}
 					Index2++;
@@ -708,7 +708,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 
 			nodeVelocities[
 				Index
-			] *= velocityDecay;
+			] *= Config.VelocityDecay;
 			// kn->velocity *= velocityDecay;
 
 			// FVector NewLocation = kn->GetActorLocation() + kn->velocity;
@@ -736,7 +736,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 
 		ParallelFor(GraphNodes.Num(), [&](int32 Index)
 		{
-			nodeVelocities[Index] *= velocityDecay;
+			nodeVelocities[Index] *= Config.VelocityDecay;
 			nodePositions[Index] = nodePositions[Index] + nodeVelocities[Index];
 		});
 	}
@@ -900,20 +900,20 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 		int nDim = 3;
 		if (nDim > 2)
 		{
-			radius = initialRadius * cbrt(0.5f + index);
+			radius = Config.InitialRadius * cbrt(0.5f + index);
 		}
 		else if (nDim > 1)
 		{
-			radius = initialRadius * sqrt(0.5f + index);
+			radius = Config.InitialRadius * sqrt(0.5f + index);
 		}
 		else
 		{
-			radius = initialRadius * index;
+			radius = Config.InitialRadius * index;
 		}
 
 		// Golden angle (137.5 degrees in radians) for optimal spiral distribution
 		// DO NOT MODIFY - this is the mathematical golden angle from d3-force
-		float initialAngleRoll = PI * (3 - sqrt(5)); // Roll angle
+		float initialAngleRoll = Config.InitialAngle; // Roll angle
 
 		// Yaw angle for 3D spherical distribution
 		// DO NOT MODIFY - from d3-force 3D implementation
@@ -1318,7 +1318,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 	// Default link properties from d3-force
 	// DO NOT MODIFY - these are reference values from d3-force
 	link.strength = 1; // Will be recalculated based on node degree
-	link.distance = edgeDistance; // Default 30 from d3-force
+	link.distance = Config.EdgeDistance; // Default 30 from d3-force
 
 	GraphLinks[id] = link;
 }

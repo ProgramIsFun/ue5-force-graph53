@@ -15,6 +15,13 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array_new
 		return;
 	}
 
+	// Safety check: Ensure arrays are initialized
+	if (nodePositions.Num() == 0 || GraphNodes.Num() == 0)
+	{
+		LogMessage("Arrays not initialized, skipping node position update", true, 1);
+		return;
+	}
+
 	Renderer->UpdateNodePositions(nodePositions, GraphNodes);
 }
 
@@ -27,6 +34,13 @@ void AKnowledgeGraph::update_link_position_new()
 		return;
 	}
 
+	// Safety check: Ensure arrays are initialized
+	if (GraphLinks.Num() == 0 || nodePositions.Num() == 0)
+	{
+		LogMessage("Arrays not initialized, skipping link position update", true, 1);
+		return;
+	}
+
 	Renderer->UpdateLinkPositions(GraphLinks, nodePositions, GetWorld());
 }
 
@@ -36,6 +50,12 @@ void AKnowledgeGraph::rotate_to_face_player_new()
 	{
 		LogMessage("Renderer is null, falling back to old method", true, 1);
 		rotate_to_face_player111();
+		return;
+	}
+
+	// Safety check: Ensure arrays are initialized
+	if (nodePositions.Num() == 0 || GraphNodes.Num() == 0)
+	{
 		return;
 	}
 

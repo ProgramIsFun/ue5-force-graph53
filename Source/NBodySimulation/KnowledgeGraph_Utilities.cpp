@@ -52,14 +52,14 @@ void AKnowledgeGraph::update_iterations()
 void AKnowledgeGraph::update_alpha()
 {
 	bool log = true;
-	alpha += (alphaTarget - alpha) * alphaDecay; //need to restart this if want to keep moving
-	LogMessage("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(alpha), log);
+	Config.Alpha += (Config.AlphaTarget - Config.Alpha) * Config.AlphaDecay; //need to restart this if want to keep moving
+	LogMessage("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(Config.Alpha), log);
 }
 
 bool AKnowledgeGraph::is_graph_stabilized(bool log)
 {
-	// LogMessage("alpha Before update: " + FString::SanitizeFloat(alpha), log);
-	if (alpha < alphaMin)
+	// LogMessage("alpha Before update: " + FString::SanitizeFloat(Config.Alpha), log);
+	if (Config.Alpha < Config.AlphaMin)
 	{
 		LogMessage("alpha is less than alphaMin", log);
 		FNBodySimModule::Get().EndRendering();
@@ -75,7 +75,7 @@ void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
 	{
 		float kkkkkkkkk = 1;
 		SimParameters.DeltaTime = kkkkkkkkk;
-		FNBodySimModule::Get().UpdateDeltaTime(kkkkkkkkk, alpha);
+		FNBodySimModule::Get().UpdateDeltaTime(kkkkkkkkk, Config.Alpha);
 	}
 }
 

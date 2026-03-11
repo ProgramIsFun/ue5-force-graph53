@@ -149,7 +149,7 @@ void AKnowledgeGraph::prepare()
 	if (Config.bUsePredefinedLocation)
 	{
 		// Predefined locations could be regarded as stable
-		alpha = 0;
+		Config.Alpha = 0;
 	}
 }
 

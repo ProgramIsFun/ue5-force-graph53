@@ -13,18 +13,18 @@ void AKnowledgeGraph::InitializePhysicsSimulator()
 		return;
 	}
 
-	// Build physics parameters from current settings
+	// Build physics parameters from Config
 	FPhysicsParameters PhysicsParams;
-	PhysicsParams.Alpha = alpha;
-	PhysicsParams.AlphaMin = alphaMin;
-	PhysicsParams.AlphaTarget = alphaTarget;
-	PhysicsParams.AlphaDecay = alphaDecay;
-	PhysicsParams.EdgeDistance = edgeDistance;
-	PhysicsParams.NodeStrength = nodeStrength;
-	PhysicsParams.VelocityDecay = velocityDecay;
-	PhysicsParams.DistanceMin = distancemin;
-	PhysicsParams.DistanceMax = distancemax;
-	PhysicsParams.InitialRadius = initialRadius;
+	PhysicsParams.Alpha = Config.Alpha;
+	PhysicsParams.AlphaMin = Config.AlphaMin;
+	PhysicsParams.AlphaTarget = Config.AlphaTarget;
+	PhysicsParams.AlphaDecay = Config.AlphaDecay;
+	PhysicsParams.EdgeDistance = Config.EdgeDistance;
+	PhysicsParams.NodeStrength = Config.NodeStrength;
+	PhysicsParams.VelocityDecay = Config.VelocityDecay;
+	PhysicsParams.DistanceMin = Config.DistanceMin;
+	PhysicsParams.DistanceMax = Config.DistanceMax;
+	PhysicsParams.InitialRadius = Config.InitialRadius;
 	PhysicsParams.UniversalGraphScale = Config.UniversalGraphScale;
 
 	PhysicsSimulator->Initialize(Config, PhysicsParams);
@@ -42,6 +42,15 @@ void AKnowledgeGraph::cpu_calculate_new()
 		return;
 	}
 
+	// Safety check: Ensure arrays are initialized before simulation
+	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
+	{
+		LogMessage("Arrays not initialized yet (nodePositions: " + FString::FromInt(nodePositions.Num()) + 
+		          ", nodeVelocities: " + FString::FromInt(nodeVelocities.Num()) + 
+		          ", GraphNodes: " + FString::FromInt(GraphNodes.Num()) + "), skipping physics step", true, 1);
+		return;
+	}
+
 	// Run one simulation step
 	PhysicsSimulator->SimulateStep(
 		GetWorld()->GetDeltaSeconds(),
@@ -51,6 +60,6 @@ void AKnowledgeGraph::cpu_calculate_new()
 		GraphLinks
 	);
 
-	// Sync alpha back to main class (for compatibility)
-	alpha = PhysicsSimulator->GetAlpha();
+	// Sync alpha back to Config (for compatibility and UI display)
+	Config.Alpha = PhysicsSimulator->GetAlpha();
 }

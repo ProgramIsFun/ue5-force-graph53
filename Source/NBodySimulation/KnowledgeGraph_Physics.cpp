@@ -882,6 +882,11 @@ void AKnowledgeGraph::initialize_node_position()
 
 void AKnowledgeGraph::initialize_node_position_individual(int index)
 {
+	// Fibonacci/golden angle spiral distribution for initial node positions
+	// Reference: d3-force initial positioning algorithm (https://github.com/d3/d3-force)
+	// This creates an evenly distributed spiral pattern that minimizes initial overlaps
+	// DO NOT MODIFY - based on d3-force implementation
+	
 	FVector init_pos;
 
 	if (Config.bUsePredefinedLocation)
@@ -906,9 +911,12 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 			radius = initialRadius * index;
 		}
 
+		// Golden angle (137.5 degrees in radians) for optimal spiral distribution
+		// DO NOT MODIFY - this is the mathematical golden angle from d3-force
 		float initialAngleRoll = PI * (3 - sqrt(5)); // Roll angle
 
-		// Following will be Math.PI * 20 / (9 + Math.sqrt(221));
+		// Yaw angle for 3D spherical distribution
+		// DO NOT MODIFY - from d3-force 3D implementation
 		float initialAngleYaw = PI * 20 / (9 + sqrt(221)); // Yaw angle if needed (3D)
 
 
@@ -1020,6 +1028,12 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 
 void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 {
+	// Calculate link bias and strength based on node degree (number of connections)
+	// Reference: d3-force link force implementation (https://github.com/d3/d3-force)
+	// Bias: determines how force is distributed between source and target nodes
+	// Strength: inversely proportional to node degree (highly connected nodes have weaker individual links)
+	// DO NOT MODIFY - based on d3-force implementation
+	
 	bool log = false;
 	float n = all_nodes2.Num();
 	float m = all_links2.Num();
@@ -1065,11 +1079,17 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			int s2 = Nodeconnection[link.target];
 
 			float ttttttttttt = s1 + s2;
+			
+			// Bias: ratio of source degree to total degree (source + target)
+			// This determines how the link force is distributed between nodes
+			// DO NOT MODIFY - from d3-force
 			float bias = s1 / ttttttttttt;
 
 			link.bias = bias;
 
-			// Better have a check because strength is set to 1 when it is initialized. 
+			// Strength: 1 / min(source_degree, target_degree)
+			// This prevents highly connected nodes from dominating the layout
+			// DO NOT MODIFY - from d3-force
 			link.strength = 1.0 / fmin(s1,
 			                           s2);
 			LogMessage("i: " + FString::FromInt(i), log);
@@ -1268,10 +1288,7 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 
 void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 {
-	
 	Link77 link = Link77(source, target);
-	
-
 
 	if (Config.bUseLinkStaticMesh)
 	{
@@ -1298,9 +1315,10 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 		link.edgeMesh = CylinderMesh;
 	}
 
-	link.strength = 1;
-	link.distance = edgeDistance;
-
+	// Default link properties from d3-force
+	// DO NOT MODIFY - these are reference values from d3-force
+	link.strength = 1; // Will be recalculated based on node degree
+	link.distance = edgeDistance; // Default 30 from d3-force
 
 	all_links2[id] = link;
 }

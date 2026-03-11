@@ -13,6 +13,10 @@ void UGraphPhysicsSimulator::Initialize(const FGraphConfiguration& InConfig, con
 	Iterations = 0;
 
 	// Calculate alpha decay based on alpha min
+	// Reference: d3-force (https://github.com/d3/d3-force)
+	// Formula: 1 - pow(alphaMin, 1 / numIterations)
+	// This creates a cooling schedule that reaches alphaMin after ~300 iterations
+	// DO NOT MODIFY - based on d3-force's velocity Verlet integration
 	PhysicsParams.AlphaDecay = 1.0f - FMath::Pow(PhysicsParams.AlphaMin, 1.0f / 300.0f);
 	
 	LogMessage("GraphPhysicsSimulator initialized");
@@ -215,6 +219,10 @@ void UGraphPhysicsSimulator::CalculateCenterForce(
 
 void UGraphPhysicsSimulator::UpdateVelocitiesWithDecay(TArray<FVector>& NodeVelocities)
 {
+	// Apply velocity decay (damping) to prevent oscillation and help stabilize the simulation
+	// Reference: d3-force velocity Verlet integration
+	// Default decay of 0.6 means 40% of velocity is retained per tick
+	// DO NOT MODIFY - based on d3-force implementation
 	if (Config.bUseParallelProcessing)
 	{
 		ParallelFor(NodeVelocities.Num(), [&](int32 Index)
@@ -253,6 +261,11 @@ void UGraphPhysicsSimulator::UpdatePositionsFromVelocities(
 
 void UGraphPhysicsSimulator::UpdateAlpha()
 {
+	// Update alpha (cooling schedule)
+	// Reference: d3-force alpha decay implementation
+	// Alpha gradually decreases from 1.0 to alphaMin, slowing down node movement over time
+	// This creates a "simulated annealing" effect for graph stabilization
+	// DO NOT MODIFY - based on d3-force's velocity Verlet integration
 	PhysicsParams.Alpha += (PhysicsParams.AlphaTarget - PhysicsParams.Alpha) * PhysicsParams.AlphaDecay;
 }
 

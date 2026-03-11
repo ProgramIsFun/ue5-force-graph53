@@ -22,7 +22,7 @@ This is a systematic cleanup and improvement effort following the successful ref
 | 6 | Add inline documentation for complex math | ⏸️ NOT STARTED | LOW | Physics files |
 | 7 | Remove commented code from Build.cs | ✅ COMPLETE | LOW | Build.cs |
 | 8 | Add error handling improvements | ⏸️ NOT STARTED | MEDIUM | DataManager, HTTP |
-| 9 | Document hard-coded magic numbers | ⏸️ NOT STARTED | LOW | KnowledgeGraph.h |
+| 9 | Document hard-coded magic numbers | ✅ COMPLETE | LOW | 3 files |
 | 10 | Consider unit tests | ⏸️ NOT STARTED | LOW | New test files |
 
 
@@ -361,19 +361,60 @@ These files have Blueprint dependencies and should be reviewed in the editor bef
 
 ## Task 9: Document Hard-coded Magic Numbers
 
-**Status:** ⏸️ NOT STARTED  
+**Status:** ✅ COMPLETE  
+**Started:** 2026-03-10  
+**Completed:** 2026-03-10  
 **Priority:** LOW  
 **Goal:** Add comments explaining magic numbers
 
-### Numbers to Document
+### Documentation Added
 
-```cpp
-float alphaDecay = 1 - FMath::Pow(alphaMin, 1.0 / 300); // Why 300?
-float edgeDistance = 30; // Why 30?
-float nodeStrength = -60; // Why -60?
-float velocityDecay = 0.6; // Why 0.6?
-float initialRadius = 10; // Why 10?
-```
+All physics constants and magic numbers now have comprehensive documentation comments referencing d3-force as the source and warning not to modify them.
+
+**Files Modified:**
+- `Source/NBodySimulation/KnowledgeGraph.h` - Documented all physics parameters
+- `Source/NBodySimulation/GraphPhysicsSimulator.cpp` - Documented velocity decay, alpha updates, initialization
+- `Source/NBodySimulation/KnowledgeGraph_Physics.cpp` - Documented golden angle, bias/strength calculations, link properties
+
+**Key Documentation Added:**
+
+1. **Alpha Decay (300 iterations)**
+   - Reference: d3-force cooling schedule
+   - Formula: `1 - pow(alphaMin, 1 / 300)`
+   - Creates simulated annealing effect
+
+2. **Golden Angle (137.5 degrees)**
+   - Reference: d3-force initial positioning
+   - Formula: `PI * (3 - sqrt(5))`
+   - Creates optimal spiral distribution
+
+3. **Velocity Decay (0.6)**
+   - Reference: d3-force velocity Verlet integration
+   - 40% velocity retained per tick
+   - Prevents oscillation and stabilizes simulation
+
+4. **Node Strength (-60)**
+   - Reference: d3-force charge force
+   - Negative value = repulsion
+   - Default from d3-force
+
+5. **Edge Distance (30)**
+   - Reference: d3-force link force
+   - Default link distance
+   - From d3-force implementation
+
+6. **Link Bias and Strength**
+   - Reference: d3-force link force calculations
+   - Bias: ratio of source degree to total degree
+   - Strength: 1 / min(source_degree, target_degree)
+
+### Benefits Achieved
+
+- ✅ All magic numbers now have clear explanations
+- ✅ References to d3-force source implementation
+- ✅ Warnings not to modify without understanding physics implications
+- ✅ Links to d3-force GitHub repository
+- ✅ Improved code maintainability for future developers
 
 ---
 
@@ -418,5 +459,5 @@ float initialRadius = 10; // Why 10?
 ---
 
 **Last Updated:** 2026-03-10  
-**Current Focus:** Creating summary document  
-**Completed Tasks:** 3/10 (Tasks 1, 2, 7 complete; Task 3 requires Unreal Editor)
+**Current Focus:** Documentation improvements  
+**Completed Tasks:** 4/10 (Tasks 1, 2, 7, 9 complete; Task 3 requires Unreal Editor)

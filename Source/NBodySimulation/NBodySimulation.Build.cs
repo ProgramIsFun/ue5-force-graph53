@@ -11,7 +11,8 @@ public class NBodySimulation : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-				"NBodySimulation"
+				"NBodySimulation",
+				"NBodySimulation/GraphSystem"
 			}
 		);
 

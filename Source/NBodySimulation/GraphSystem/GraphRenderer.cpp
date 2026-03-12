@@ -71,6 +71,7 @@ void UGraphRenderer::InitializeNodeVisuals(
 	}
 }
 
+
 void UGraphRenderer::UpdateNodePositions(
 	const TArray<FVector>& NodePositions,
 	const TArray<Node77>& Nodes)

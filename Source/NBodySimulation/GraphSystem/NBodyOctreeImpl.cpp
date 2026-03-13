@@ -129,7 +129,7 @@ bool OctreeNode::check_contain_data_or_not()
  * @param nodePositions - Current positions of all nodes
  */
 void OctreeNode::AddAll1(
-	TArray<Node77> all_nodes,
+	TArray<GraphNode> all_nodes,
 	TArray<FVector> nodePositions
 )
 {

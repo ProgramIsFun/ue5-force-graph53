@@ -10,8 +10,8 @@
 
 // Forward declarations
 struct OctreeNode;
-class Node77;
-class Link77;
+class GraphNode;
+class GraphLink;
 
 /**
  * Physics simulation parameters
@@ -75,8 +75,8 @@ public:
 		float DeltaTime,
 		TArray<FVector>& NodePositions,
 		TArray<FVector>& NodeVelocities,
-		const TArray<Node77>& Nodes,
-		const TArray<Link77>& Links
+		const TArray<GraphNode>& Nodes,
+		const TArray<GraphLink>& Links
 	);
 
 	// Check if simulation has stabilized
@@ -101,25 +101,25 @@ private:
 	void CalculateLinkForces(
 		TArray<FVector>& NodeVelocities,
 		const TArray<FVector>& NodePositions,
-		const TArray<Link77>& Links
+		const TArray<GraphLink>& Links
 	);
 
 	void CalculateChargeForces(
 		TArray<FVector>& NodeVelocities,
 		const TArray<FVector>& NodePositions,
-		const TArray<Node77>& Nodes
+		const TArray<GraphNode>& Nodes
 	);
 
 	void CalculateChargeForcesOctree(
 		TArray<FVector>& NodeVelocities,
 		const TArray<FVector>& NodePositions,
-		const TArray<Node77>& Nodes
+		const TArray<GraphNode>& Nodes
 	);
 
 	void CalculateChargeForcesBruteForce(
 		TArray<FVector>& NodeVelocities,
 		const TArray<FVector>& NodePositions,
-		const TArray<Node77>& Nodes
+		const TArray<GraphNode>& Nodes
 	);
 
 	void CalculateCenterForce(

@@ -2,7 +2,7 @@
 // Implementation of graph visualization
 
 #include "GraphRenderer.h"
-#include "KnowledgeGraph.h" // For Node77, Link77
+#include "KnowledgeGraph.h" // For GraphNode, GraphLink
 #include "DrawDebugHelpers.h"
 
 UGraphRenderer::UGraphRenderer()
@@ -42,7 +42,7 @@ void UGraphRenderer::Initialize(const FGraphConfiguration& InConfig, AActor* InO
 
 void UGraphRenderer::InitializeNodeVisuals(
 	int32 NodeCount,
-	TArray<Node77>& Nodes,
+	TArray<GraphNode>& Nodes,
 	const TArray<FVector>& InitialPositions)
 {
 	if (Config.bUseInstancedStaticMesh && InstancedMeshComponent && Config.NodeMesh)
@@ -74,7 +74,7 @@ void UGraphRenderer::InitializeNodeVisuals(
 
 void UGraphRenderer::UpdateNodePositions(
 	const TArray<FVector>& NodePositions,
-	const TArray<Node77>& Nodes)
+	const TArray<GraphNode>& Nodes)
 {
 	// Update instanced mesh positions
 	if (Config.bUseInstancedStaticMesh && InstancedMeshComponent)
@@ -107,7 +107,7 @@ void UGraphRenderer::UpdateNodePositions(
 
 void UGraphRenderer::RotateTextToFacePlayer(
 	const TArray<FVector>& NodePositions,
-	const TArray<Node77>& Nodes,
+	const TArray<GraphNode>& Nodes,
 	const FVector& PlayerLocation)
 {
 	if (!Config.bUseTextRenderComponents || !Config.bRotateTextToFacePlayer)
@@ -128,7 +128,7 @@ void UGraphRenderer::RotateTextToFacePlayer(
 }
 
 void UGraphRenderer::InitializeLinkVisuals(
-	TArray<Link77>& Links,
+	TArray<GraphLink>& Links,
 	UStaticMesh* LinkMesh,
 	UMaterialInterface* LinkMaterial)
 {
@@ -167,11 +167,11 @@ void UGraphRenderer::InitializeLinkVisuals(
 }
 
 void UGraphRenderer::UpdateLinkPositions(
-	const TArray<Link77>& Links,
+	const TArray<GraphLink>& Links,
 	const TArray<FVector>& NodePositions,
 	UWorld* World)
 {
-	for (const Link77& Link : Links)
+	for (const GraphLink& Link : Links)
 	{
 		const FVector Location1 = NodePositions[Link.source];
 		const FVector Location2 = NodePositions[Link.target];
@@ -209,14 +209,14 @@ void UGraphRenderer::UpdateLinkPositions(
 	}
 }
 
-void UGraphRenderer::SetTextSize(float Size, const TArray<Node77>& Nodes)
+void UGraphRenderer::SetTextSize(float Size, const TArray<GraphNode>& Nodes)
 {
 	if (!Config.bUseTextRenderComponents)
 	{
 		return;
 	}
 
-	for (const Node77& Node : Nodes)
+	for (const GraphNode& Node : Nodes)
 	{
 		if (Node.textComponent)
 		{
@@ -225,14 +225,14 @@ void UGraphRenderer::SetTextSize(float Size, const TArray<Node77>& Nodes)
 	}
 }
 
-void UGraphRenderer::AdjustTextSize(float Delta, const TArray<Node77>& Nodes)
+void UGraphRenderer::AdjustTextSize(float Delta, const TArray<GraphNode>& Nodes)
 {
 	if (!Config.bUseTextRenderComponents)
 	{
 		return;
 	}
 
-	for (const Node77& Node : Nodes)
+	for (const GraphNode& Node : Nodes)
 	{
 		if (Node.textComponent)
 		{
@@ -242,12 +242,12 @@ void UGraphRenderer::AdjustTextSize(float Delta, const TArray<Node77>& Nodes)
 	}
 }
 
-void UGraphRenderer::ClearAllVisuals(TArray<Node77>& Nodes, TArray<Link77>& Links)
+void UGraphRenderer::ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>& Links)
 {
 	// Clear text components
 	if (Config.bUseTextRenderComponents)
 	{
-		for (Node77& Node : Nodes)
+		for (GraphNode& Node : Nodes)
 		{
 			if (Node.textComponent && Node.textComponent->IsRegistered())
 			{
@@ -266,7 +266,7 @@ void UGraphRenderer::ClearAllVisuals(TArray<Node77>& Nodes, TArray<Link77>& Link
 	}
 
 	// Clear link meshes
-	for (Link77& Link : Links)
+	for (GraphLink& Link : Links)
 	{
 		if (Link.edgeMesh && Link.edgeMesh->IsRegistered())
 		{
@@ -280,7 +280,7 @@ void UGraphRenderer::ClearAllVisuals(TArray<Node77>& Nodes, TArray<Link77>& Link
 	LogMessage("Cleared all visuals");
 }
 
-void UGraphRenderer::CreateTextComponent(const FString& Text, int32 Index, TArray<Node77>& Nodes)
+void UGraphRenderer::CreateTextComponent(const FString& Text, int32 Index, TArray<GraphNode>& Nodes)
 {
 	if (!OwnerActor || !Config.bUseTextRenderComponents)
 	{

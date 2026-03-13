@@ -27,7 +27,7 @@
 
 #include "KnowledgeGraph.generated.h"
 
-class Link77
+class GraphLink
 {
 public:
 	int32 source;
@@ -37,34 +37,34 @@ public:
 	float distance;
 	AKnowledgeEdge* edge;
 	UStaticMeshComponent* edgeMesh;
-	Link77(int32 source, int32 target, AKnowledgeEdge* edge)
+	GraphLink(int32 source, int32 target, AKnowledgeEdge* edge)
 	{
 		this->source = source;
 		this->target = target;
 		this->edge = edge;
 	}
-	Link77(int32 source, int32 target)
+	GraphLink(int32 source, int32 target)
 	{
 		this->source = source;
 		this->target = target;
 	}
-	Link77()
+	GraphLink()
 	{
 	}
 };
 
-class Node77
+class GraphNode
 {
 public:
 	int id;
 	AKnowledgeNode* node;
 	UTextRenderComponent* textComponent;
-	Node77(int id, AKnowledgeNode* node)
+	GraphNode(int id, AKnowledgeNode* node)
 	{
 		this->id = id;
 		this->node = node;
 	}
-	Node77(int id, UTextRenderComponent* textComponent)
+	GraphNode(int id, UTextRenderComponent* textComponent)
 	{
 		this->id = id;
 		this->textComponent = textComponent;
@@ -136,10 +136,10 @@ public:
 	TMap<FString, int32> string_to_id;
 	
 	// Array of all graph nodes (formerly: all_nodes2)
-	TArray<Node77> GraphNodes;
+	TArray<GraphNode> GraphNodes;
 	
 	// Array of all graph links/edges (formerly: all_links2)
-	TArray<Link77> GraphLinks;
+	TArray<GraphLink> GraphLinks;
 	
 	TArray<FVector> predefined_positions;
 
@@ -204,7 +204,7 @@ public:
 	FVector get_player_location727();
 	FVector get_location_of_somewhere_in_front_of_player727();
 	void calculate_bias_and_strength_of_links();
-	bool generate_actor_for_a_link(Link77& link);
+	bool generate_actor_for_a_link(GraphLink& link);
 	void apply_force();
 	void calculate_link_force_and_update_velocity();
 	void calculate_charge_force_and_update_velocity();

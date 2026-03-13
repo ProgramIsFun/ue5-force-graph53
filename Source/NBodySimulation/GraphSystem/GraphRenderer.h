@@ -11,8 +11,8 @@
 #include "GraphRenderer.generated.h"
 
 // Forward declarations
-class Link77;
-class Node77;
+class GraphLink;
+class GraphNode;
 
 /**
  * Manages all visual representation of the graph
@@ -31,40 +31,40 @@ public:
 	// Node rendering
 	void InitializeNodeVisuals(
 		int32 NodeCount,
-		TArray<Node77>& Nodes,
+		TArray<GraphNode>& Nodes,
 		const TArray<FVector>& InitialPositions
 	);
 
 	void UpdateNodePositions(
 		const TArray<FVector>& NodePositions,
-		const TArray<Node77>& Nodes
+		const TArray<GraphNode>& Nodes
 	);
 
 	void RotateTextToFacePlayer(
 		const TArray<FVector>& NodePositions,
-		const TArray<Node77>& Nodes,
+		const TArray<GraphNode>& Nodes,
 		const FVector& PlayerLocation
 	);
 
 	// Link rendering
 	void InitializeLinkVisuals(
-		TArray<Link77>& Links,
+		TArray<GraphLink>& Links,
 		UStaticMesh* LinkMesh,
 		UMaterialInterface* LinkMaterial
 	);
 
 	void UpdateLinkPositions(
-		const TArray<Link77>& Links,
+		const TArray<GraphLink>& Links,
 		const TArray<FVector>& NodePositions,
 		UWorld* World
 	);
 
 	// Text label management
-	void SetTextSize(float Size, const TArray<Node77>& Nodes);
-	void AdjustTextSize(float Delta, const TArray<Node77>& Nodes);
+	void SetTextSize(float Size, const TArray<GraphNode>& Nodes);
+	void AdjustTextSize(float Delta, const TArray<GraphNode>& Nodes);
 
 	// Cleanup
-	void ClearAllVisuals(TArray<Node77>& Nodes, TArray<Link77>& Links);
+	void ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>& Links);
 
 	// Get instanced mesh component (for external access)
 	UInstancedStaticMeshComponent* GetInstancedMeshComponent() const { return InstancedMeshComponent; }
@@ -84,7 +84,7 @@ private:
 	TArray<FTransform> NodeTransforms;
 
 	// Helper methods
-	void CreateTextComponent(const FString& Text, int32 Index, TArray<Node77>& Nodes);
+	void CreateTextComponent(const FString& Text, int32 Index, TArray<GraphNode>& Nodes);
 	void UpdateInstancedMeshTransforms(const TArray<FVector>& NodePositions);
 
 	// Logging

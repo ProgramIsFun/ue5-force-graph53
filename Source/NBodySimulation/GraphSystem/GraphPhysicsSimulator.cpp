@@ -5,7 +5,7 @@
 
 #include "GraphPhysicsSimulator.h"
 #include "NBodyOctree.h"
-#include "KnowledgeGraph.h" // For Node77, Link77
+#include "KnowledgeGraph.h" // For GraphNode, GraphLink
 #include "NBodyUtils.h"
 
 void UGraphPhysicsSimulator::Initialize(const FGraphConfiguration& InConfig, const FPhysicsParameters& InParams)
@@ -46,8 +46,8 @@ void UGraphPhysicsSimulator::SimulateStep(
 	float DeltaTime,
 	TArray<FVector>& NodePositions,
 	TArray<FVector>& NodeVelocities,
-	const TArray<Node77>& Nodes,
-	const TArray<Link77>& Links)
+	const TArray<GraphNode>& Nodes,
+	const TArray<GraphLink>& Links)
 {
 	Iterations++;
 	
@@ -108,9 +108,9 @@ bool UGraphPhysicsSimulator::IsStabilized() const
 void UGraphPhysicsSimulator::CalculateLinkForces(
 	TArray<FVector>& NodeVelocities,
 	const TArray<FVector>& NodePositions,
-	const TArray<Link77>& Links)
+	const TArray<GraphLink>& Links)
 {
-	for (const Link77& Link : Links)
+	for (const GraphLink& Link : Links)
 	{
 		const FVector SourcePos = NodePositions[Link.source];
 		const FVector SourceVel = NodeVelocities[Link.source];
@@ -162,7 +162,7 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 void UGraphPhysicsSimulator::CalculateChargeForces(
 	TArray<FVector>& NodeVelocities,
 	const TArray<FVector>& NodePositions,
-	const TArray<Node77>& Nodes)
+	const TArray<GraphNode>& Nodes)
 {
 	if (Config.bUseBruteForceForManyBody)
 	{
@@ -200,7 +200,7 @@ void UGraphPhysicsSimulator::CalculateChargeForces(
 void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 	TArray<FVector>& NodeVelocities,
 	const TArray<FVector>& NodePositions,
-	const TArray<Node77>& Nodes)
+	const TArray<GraphNode>& Nodes)
 {
 	// Step 1: Build octree spatial data structure
 	// Octree divides 3D space into nested cubic cells
@@ -256,7 +256,7 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 void UGraphPhysicsSimulator::CalculateChargeForcesBruteForce(
 	TArray<FVector>& NodeVelocities,
 	const TArray<FVector>& NodePositions,
-	const TArray<Node77>& Nodes)
+	const TArray<GraphNode>& Nodes)
 {
 	if (Config.bUseParallelProcessing)
 	{

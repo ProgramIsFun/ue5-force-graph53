@@ -15,7 +15,7 @@
 #include "KnowledgeNode.h"
 // #include "PointData.h" // Make sure this include points to your actual PointData structure file location
 
-class Node77;
+class GraphNode;
 
 /**
  * Point data stored in octree leaf nodes
@@ -89,7 +89,7 @@ struct OctreeNode
 	bool check_contain_data_or_not();
 	// void AddAll1(TMap<int32, AKnowledgeNode*> Map1, TArray<FVector> nodePositions);
 	void AddAll1(
-		TArray<Node77> all_nodes,
+		TArray<GraphNode> all_nodes,
 		TArray<FVector> nodePositions
 	);
 

@@ -27,7 +27,23 @@ void LogAlways(const FString& TextToWrite)
 {
 	// Open/close each time for simplicity and hot-reload safety
 	// Performance note: For high-frequency logging, consider batching or using a persistent handle
-	std::ofstream LogFile(GetLogFilePath().c_str(), std::ios::app);
+	
+	// Ensure directory exists
+	FString LogFilePathFString = FPaths::ProjectSavedDir() + TEXT("Logs/GraphSystem_Debug.log");
+	FString LogDirectory = FPaths::GetPath(LogFilePathFString);
+	
+	if (!FPaths::DirectoryExists(LogDirectory))
+	{
+		IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+		if (!PlatformFile.CreateDirectoryTree(*LogDirectory))
+		{
+			UE_LOG(LogTemp, Error, TEXT("Failed to create log directory: %s"), *LogDirectory);
+			return;
+		}
+	}
+	
+	std::string LogFilePath = TCHAR_TO_UTF8(*LogFilePathFString);
+	std::ofstream LogFile(LogFilePath.c_str(), std::ios::app);
 	if (LogFile.is_open())
 	{
 		LogFile << TCHAR_TO_ANSI(*TextToWrite) << std::endl;
@@ -35,7 +51,7 @@ void LogAlways(const FString& TextToWrite)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to open GraphSystem log file for writing: %s"), *FString(GetLogFilePath().c_str()));
+		UE_LOG(LogTemp, Error, TEXT("Failed to open GraphSystem log file for writing: %s"), *LogFilePathFString);
 	}
 }
 

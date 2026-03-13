@@ -112,8 +112,8 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 {
 	for (const GraphLink& Link : Links)
 	{
-		const FVector SourcePos = NodePositions[Link.source];
-		const FVector SourceVel = NodeVelocities[Link.source];
+		const FVector SourcePos = NodePositions[Link.SourceNodeIndex];
+		const FVector SourceVel = NodeVelocities[Link.SourceNodeIndex];
 		const FVector TargetPos = NodePositions[Link.target];
 		const FVector TargetVel = NodeVelocities[Link.target];
 
@@ -144,7 +144,7 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 		// Bias determines how force is split between source and target
 		// Example: bias=0.7 means target gets 70% of force, source gets 30%
 		NodeVelocities[Link.target] -= Force * Link.bias;
-		NodeVelocities[Link.source] += Force * (1.0f - Link.bias);
+		NodeVelocities[Link.SourceNodeIndex] += Force * (1.0f - Link.bias);
 	}
 }
 

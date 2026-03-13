@@ -454,8 +454,8 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 	{
 		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index), log);
 
-		FVector source_pos = nodePositions[link.source];
-		FVector source_velocity = nodeVelocities[link.source];
+		FVector source_pos = nodePositions[link.SourceNodeIndex];
+		FVector source_velocity = nodeVelocities[link.SourceNodeIndex];
 		FVector target_pos = nodePositions[link.target];
 		FVector target_velocity = nodeVelocities[link.target];
 
@@ -489,13 +489,13 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		LogMessage("before update nodeVelocities", log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
 		nodeVelocities[link.target] -= new_v * (link.bias);
-		nodeVelocities[link.source] += new_v * (1 - link.bias);
+		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.bias);
 
 		LogMessage("after update nodeVelocities", log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.source) + "]: " + nodeVelocities[link.source].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
 
 		Index++;
 	}
@@ -743,7 +743,7 @@ void AKnowledgeGraph::update_link_position()
 {
 	for (auto& link : GraphLinks)
 	{
-		FVector Location1 = nodePositions[link.source];
+		FVector Location1 = nodePositions[link.SourceNodeIndex];
 		FVector Location2 = nodePositions[link.target];
 
 
@@ -1056,13 +1056,13 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 	for (auto& link : GraphLinks)
 	{
-		Nodeconnection[link.source] += 1;
+		Nodeconnection[link.SourceNodeIndex] += 1;
 		Nodeconnection[link.target] += 1;
 
 		if (Config.bUseGPUShaders)
 		{
-			connectout[link.source].push_back(link.target);
-			connectin[link.target].push_back(link.source);
+			connectout[link.SourceNodeIndex].push_back(link.target);
+			connectin[link.target].push_back(link.SourceNodeIndex);
 		}
 	}
 
@@ -1072,7 +1072,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		int i = 0;
 		for (auto& link : GraphLinks)
 		{
-			int s1 = Nodeconnection[link.source];
+			int s1 = Nodeconnection[link.SourceNodeIndex];
 			int s2 = Nodeconnection[link.target];
 
 			float ttttttttttt = s1 + s2;

@@ -30,22 +30,22 @@
 class GraphLink
 {
 public:
-	int32 source;
+	int32 SourceNodeIndex;
 	int32 target;
 	float bias;
 	float strength;
 	float distance;
 	AKnowledgeEdge* edge;
 	UStaticMeshComponent* edgeMesh;
-	GraphLink(int32 source, int32 target, AKnowledgeEdge* edge)
+	GraphLink(int32 SourceNodeIndex, int32 target, AKnowledgeEdge* edge)
 	{
-		this->source = source;
+		this->SourceNodeIndex = SourceNodeIndex;
 		this->target = target;
 		this->edge = edge;
 	}
-	GraphLink(int32 source, int32 target)
+	GraphLink(int32 SourceNodeIndex, int32 target)
 	{
-		this->source = source;
+		this->SourceNodeIndex = SourceNodeIndex;
 		this->target = target;
 	}
 	GraphLink()

@@ -481,7 +481,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		// LogMessage("l: " + FString::SanitizeFloat(l), log);
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
-		l = (l - link.distance * Config.UniversalGraphScale) /
+		l = (l - link.LinkDistance * Config.UniversalGraphScale) /
 			l
 			* Config.Alpha
 			* link.LinkStrength;
@@ -1315,7 +1315,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 	// Default link properties from d3-force
 	// DO NOT MODIFY - these are reference values from d3-force
 	link.LinkStrength = 1; // Will be recalculated based on node degree
-	link.distance = Config.EdgeDistance; // Default 30 from d3-force
+	link.LinkDistance = Config.EdgeDistance; // Default 30 from d3-force
 
 	GraphLinks[id] = link;
 }

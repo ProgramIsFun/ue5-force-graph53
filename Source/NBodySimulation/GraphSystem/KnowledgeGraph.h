@@ -34,7 +34,7 @@ public:
 	int32 TargetNodeIndex;
 	float LinkBias;
 	float LinkStrength;
-	float distance;
+	float LinkDistance;
 	AKnowledgeEdge* edge;
 	UStaticMeshComponent* edgeMesh;
 	GraphLink(int32 SourceNodeIndex, int32 TargetNodeIndex, AKnowledgeEdge* edge)

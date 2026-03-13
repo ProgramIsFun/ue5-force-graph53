@@ -134,7 +134,7 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 		// - If nodes are too far: positive force pulls them together
 		// - If nodes are too close: negative force pushes them apart
 		// - Multiplied by alpha (simulation temperature) and link strength
-		float ForceMagnitude = (Distance - Link.distance * PhysicsParams.UniversalGraphScale) / Distance
+		float ForceMagnitude = (Distance - Link.LinkDistance * PhysicsParams.UniversalGraphScale) / Distance
 			* PhysicsParams.Alpha
 			* Link.LinkStrength;
 		

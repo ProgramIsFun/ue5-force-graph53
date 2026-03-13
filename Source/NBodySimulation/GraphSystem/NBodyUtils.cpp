@@ -15,6 +15,11 @@ void ClearLogFile()
 	if (LogFile.is_open())
 	{
 		LogFile.close();
+		UE_LOG(LogTemp, Log, TEXT("GraphSystem log file cleared successfully."));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Failed to clear GraphSystem log file at: %s"), *FString(GetLogFilePath().c_str()));
 	}
 }
 
@@ -28,7 +33,7 @@ void LogAlways(const FString& TextToWrite)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Failed to open log file."));
+		UE_LOG(LogTemp, Error, TEXT("Failed to open GraphSystem log file for writing: %s"), *FString(GetLogFilePath().c_str()));
 	}
 }
 

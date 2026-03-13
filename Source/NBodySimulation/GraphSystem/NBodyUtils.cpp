@@ -2,12 +2,16 @@
 #include <fstream>
 #include "Engine/Engine.h"
 
-FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/GraphSystem_Debug.log");
-std::string const FilePath = TCHAR_TO_UTF8(*FilePath1);
+static std::string GetLogFilePath()
+{
+	static const FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/GraphSystem_Debug.log");
+	static const std::string FilePath = TCHAR_TO_UTF8(*FilePath1);
+	return FilePath;
+}
 
 void ClearLogFile()
 {
-	std::ofstream LogFile(FilePath, std::ios::trunc);
+	std::ofstream LogFile(GetLogFilePath(), std::ios::trunc);
 	if (LogFile.is_open())
 	{
 		LogFile.close();
@@ -16,7 +20,7 @@ void ClearLogFile()
 
 void LogAlways(const FString& TextToWrite)
 {
-	std::ofstream LogFile(FilePath, std::ios::app);
+	std::ofstream LogFile(GetLogFilePath(), std::ios::app);
 	if (LogFile.is_open())
 	{
 		LogFile << TCHAR_TO_ANSI(*TextToWrite) << std::endl;

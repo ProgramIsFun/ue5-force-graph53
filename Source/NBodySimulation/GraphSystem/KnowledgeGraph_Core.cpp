@@ -37,21 +37,6 @@ void AKnowledgeGraph::post_generate_graph()
 	graph_initialized = true;
 }
 
-void AKnowledgeGraph::cpu_calculate()
-{
-	bool log = Config.bEnableLogging;
-
-	// Safety check: Ensure arrays are initialized before simulation
-	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
-	{
-		LogMessage("Arrays not initialized yet, skipping cpu_calculate", log, 1);
-		return;
-	}
-
-	apply_force();
-	update_position_array_according_to_velocity_array();
-}
-
 void AKnowledgeGraph::update_position_array(bool log)
 {
 	if (Config.bUseGPUShaders)
@@ -70,6 +55,21 @@ void AKnowledgeGraph::update_position_array(bool log)
 			cpu_calculate();
 		}
 	}
+}
+
+void AKnowledgeGraph::cpu_calculate()
+{
+	bool log = Config.bEnableLogging;
+
+	// Safety check: Ensure arrays are initialized before simulation
+	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
+	{
+		LogMessage("Arrays not initialized yet, skipping cpu_calculate", log, 1);
+		return;
+	}
+
+	apply_force();
+	update_position_array_according_to_velocity_array();
 }
 
 bool AKnowledgeGraph::main_function(float DeltaTime)

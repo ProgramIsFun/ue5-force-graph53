@@ -201,8 +201,8 @@ public:
 	void add_edge(int32 id, int32 source, int32 target);
 	void initialize_node_position();
 	void initialize_node_position_individual(int index);
-	FVector get_player_location727();
-	FVector get_location_of_somewhere_in_front_of_player727();
+	FVector GetPlayerLocation();
+	FVector GetLocationInFrontOfPlayer();
 	void calculate_bias_and_strength_of_links();
 	bool generate_actor_for_a_link(GraphLink& link);
 	void apply_force();

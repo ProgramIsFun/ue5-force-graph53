@@ -59,7 +59,7 @@ void AKnowledgeGraph::rotate_to_face_player_new()
 		return;
 	}
 
-	FVector PlayerLocation = get_player_location727();
+	FVector PlayerLocation = GetPlayerLocation();
 	Renderer->RotateTextToFacePlayer(nodePositions, GraphNodes, PlayerLocation);
 }
 

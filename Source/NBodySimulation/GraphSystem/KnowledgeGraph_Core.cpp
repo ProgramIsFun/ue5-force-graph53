@@ -171,7 +171,7 @@ void AKnowledgeGraph::rotate_to_face_player111()
 		return;
 	}
 
-	FVector PlayerLocation = get_player_location727();
+	FVector PlayerLocation = GetPlayerLocation();
 
 	for (int i = 0; i < nodePositions.Num(); i++)
 	{

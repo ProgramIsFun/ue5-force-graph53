@@ -5,7 +5,7 @@
 // shader management, and GPU position retrieval.
 //
 // Key Functions:
-// - get_player_location727(): Gets current player position
+// - GetPlayerLocation(): Gets current player position
 // - update_alpha(): Updates simulation cooling parameter
 // - is_graph_stabilized(): Checks if simulation has converged
 // - gpu_get_positions(): Retrieves positions from GPU compute shader
@@ -15,15 +15,15 @@
 #include "KnowledgeGraph.h"
 #include "NBodyUtils.h"
 
-FVector AKnowledgeGraph::get_player_location727()
+FVector AKnowledgeGraph::GetPlayerLocation()
 {
 	return GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 }
 
-FVector AKnowledgeGraph::get_location_of_somewhere_in_front_of_player727()
+FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()
 {
 	// Get the current location
-	FVector CurrentLocation = get_player_location727();
+	FVector CurrentLocation = GetPlayerLocation();
 	// Get the forward direction
 	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorForwardVector();
 	// Calculate the new location

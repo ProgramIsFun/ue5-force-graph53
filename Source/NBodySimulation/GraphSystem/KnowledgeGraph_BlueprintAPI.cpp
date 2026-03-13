@@ -21,7 +21,7 @@
 
 void AKnowledgeGraph::select_closest_node_from_player222()
 {
-	FVector player_location = get_player_location727();
+	FVector player_location = GetPlayerLocation();
 	float min_distance = FLT_MAX;
 	int32 closest_node_index = -1;
 
@@ -57,7 +57,7 @@ void AKnowledgeGraph::select_closest_node_from_player222()
 
 void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 {
-	FVector player_location = get_player_location727();
+	FVector player_location = GetPlayerLocation();
 	
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
 
@@ -96,7 +96,7 @@ void AKnowledgeGraph::add_node_to_database1115httpCompleted(
 			FString id = JsonObject->GetStringField("id");
 			LogToScreen("id7: " + id, true, 2);
 			FString name = JsonObject->GetStringField("name");
-			FVector player_location = get_player_location727();
+			FVector player_location = GetPlayerLocation();
 			late_add_node(name, id, player_location);
 		}
 		else

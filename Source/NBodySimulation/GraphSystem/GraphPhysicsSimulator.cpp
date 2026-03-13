@@ -143,8 +143,8 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 		// Apply force with bias distribution
 		// Bias determines how force is split between source and target
 		// Example: bias=0.7 means target gets 70% of force, source gets 30%
-		NodeVelocities[Link.TargetNodeIndex] -= Force * Link.bias;
-		NodeVelocities[Link.SourceNodeIndex] += Force * (1.0f - Link.bias);
+		NodeVelocities[Link.TargetNodeIndex] -= Force * Link.LinkBias;
+		NodeVelocities[Link.SourceNodeIndex] += Force * (1.0f - Link.LinkBias);
 	}
 }
 

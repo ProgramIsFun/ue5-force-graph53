@@ -32,7 +32,7 @@ class GraphLink
 public:
 	int32 SourceNodeIndex;
 	int32 TargetNodeIndex;
-	float bias;
+	float LinkBias;
 	float strength;
 	float distance;
 	AKnowledgeEdge* edge;

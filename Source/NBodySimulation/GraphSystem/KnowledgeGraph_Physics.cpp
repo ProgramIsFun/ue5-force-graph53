@@ -490,8 +490,8 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 		LogMessage("before update nodeVelocities", log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
-		nodeVelocities[link.TargetNodeIndex] -= new_v * (link.bias);
-		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.bias);
+		nodeVelocities[link.TargetNodeIndex] -= new_v * (link.LinkBias);
+		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.LinkBias);
 
 		LogMessage("after update nodeVelocities", log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
@@ -1082,7 +1082,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			// DO NOT MODIFY - from d3-force
 			float bias = s1 / ttttttttttt;
 
-			link.bias = bias;
+			link.LinkBias = bias;
 
 			// Strength: 1 / min(source_degree, target_degree)
 			// This prevents highly connected nodes from dominating the layout
@@ -1090,7 +1090,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			link.strength = 1.0 / fmin(s1,
 			                           s2);
 			LogMessage("i: " + FString::FromInt(i), log);
-			LogMessage("link.bias: " + FString::SanitizeFloat(link.bias), log);
+			LogMessage("link.LinkBias: " + FString::SanitizeFloat(link.LinkBias), log);
 			LogMessage("link.strength: " + FString::SanitizeFloat(link.strength), log);
 			i++;
 		}

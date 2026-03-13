@@ -11,7 +11,7 @@ static std::string GetLogFilePath()
 
 void ClearLogFile()
 {
-	std::ofstream LogFile(GetLogFilePath(), std::ios::trunc);
+	std::ofstream LogFile(GetLogFilePath().c_str(), std::ios::trunc);
 	if (LogFile.is_open())
 	{
 		LogFile.close();
@@ -25,7 +25,9 @@ void ClearLogFile()
 
 void LogAlways(const FString& TextToWrite)
 {
-	std::ofstream LogFile(GetLogFilePath(), std::ios::app);
+	// Open/close each time for simplicity and hot-reload safety
+	// Performance note: For high-frequency logging, consider batching or using a persistent handle
+	std::ofstream LogFile(GetLogFilePath().c_str(), std::ios::app);
 	if (LogFile.is_open())
 	{
 		LogFile << TCHAR_TO_ANSI(*TextToWrite) << std::endl;

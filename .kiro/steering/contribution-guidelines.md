@@ -43,6 +43,22 @@ This project uses a modular architecture with split implementation files:
 
 When adding functionality, place it in the appropriate module file.
 
+### Architecture: Non-Actor Based Graph System
+
+**IMPORTANT:** For performance reasons, nodes and edges in this graph system are **NOT** implemented as Actors.
+
+The following files are **DEPRECATED** and should not be used:
+- `Source/NBodySimulation/GraphSystem/KnowledgeNode.cpp`
+- `Source/NBodySimulation/GraphSystem/KnowledgeEdge.cpp`
+
+#### Rationale:
+- Actor-based implementations have significant performance overhead
+- Large graphs with thousands of nodes/edges would cause severe performance degradation
+- The current architecture uses lightweight data structures managed by the `KnowledgeGraph` component
+- Nodes and edges are represented as structs/data within the graph manager, not as individual actors
+
+When implementing graph features, always work with the data-oriented approach in `KnowledgeGraph` rather than creating actor instances.
+
 ## Progress Tracking for Major Changes
 
 When making significant changes to the codebase (refactoring, migrations, architectural changes, etc.):

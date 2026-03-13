@@ -1,45 +1,16 @@
-// Refactored from utillllllssss.cpp in commit cfe5a2e49166b9a584b865688086bef641dc2862
 #include "NBodyUtils.h"
 #include <fstream>
-
-// #include <iostream>
-
 #include "Engine/Engine.h"
 
-
-// #include "Editor.h"
-// void ll(const FString& StringToLog)
-// {
-// 	if (!StringToLog.IsEmpty())
-// 	{
-// 		// Log to Unreal Engine console
-// 		UE_LOG(LogTemp, Log, TEXT("%s"), *StringToLog);
-//         
-// 		// Optionally, display on screen
-// 		if (GEngine)
-// 		{
-// 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, StringToLog);
-// 		}
-// 	}
-// }
-
-
-
-// FString FilePath1 = FPaths::ProjectDir() + TEXT("Saved/Logs/MyLogFile.txt");
-
 FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/KnowledgeEdge11111111111111.txt");
-
-
-
 std::string const FilePath = TCHAR_TO_UTF8(*FilePath1);
-void ClearLogFile() {
 
-
-	std::ofstream LogFile(FilePath, std::ios::trunc); // Open in truncate mode to clear contents
-	if (LogFile.is_open()) {
-		LogFile.close();  // Just close the file, it's already empty
-	} else {
-		// std::cerr << "Failed to open log file for clearing." << std::endl;
+void ClearLogFile()
+{
+	std::ofstream LogFile(FilePath, std::ios::trunc);
+	if (LogFile.is_open())
+	{
+		LogFile.close();
 	}
 }
 
@@ -48,132 +19,52 @@ void ClearLogFile() {
 
 void LogAlways(const FString& TextToWrite)
 {
-	bool nologgggggggg = false;
-
-	
-	if (nologgggggggg)
+	std::ofstream LogFile(FilePath, std::ios::app);
+	if (LogFile.is_open())
 	{
-		return;
+		LogFile << TCHAR_TO_ANSI(*TextToWrite) << std::endl;
+		LogFile.close();
 	}
-	
-	if (1)
+	else
 	{
-		// Define the path to the log file.
-		// Change path accordingly
-
-		
-		std::ofstream LogFile(FilePath,
-		                      std::ios::app
-		                      // std::ios::out
-		);
-		if (LogFile.is_open())
-		{
-			// Write the text to the file and end with a new line.
-			LogFile << TCHAR_TO_ANSI(*TextToWrite) << std::endl;
-
-			// Close the file.
-			LogFile.close();
-		}
-		else
-		{
-			// Log an error message if file opening failed.
-			UE_LOG(LogTemp, Warning, TEXT("Failed to open log file."));
-		}
+		UE_LOG(LogTemp, Warning, TEXT("Failed to open log file."));
 	}
 }
 
 
 void LogMessageInternal(const FString& StringToLog, bool LOG, int SeverityLevel, const FString& Prefix)
 {
-	bool nologgggggggg = false;
-
-	if (nologgggggggg)
+	if (!LOG || StringToLog.IsEmpty())
 	{
 		return;
 	}
 	
-	if (!LOG)
+	FString LogMessage = Prefix + StringToLog;
+
+	switch (SeverityLevel)
 	{
-		return;
-	}
-	
-	if (!StringToLog.IsEmpty())
-	{
-		FString LogMessage = Prefix + StringToLog; 
-
-		if (1)
-		{
-			switch (SeverityLevel)
-			{
-			case 0:
-				UE_LOG(LogTemp, Log, TEXT("%s"), *LogMessage);
-				break;
-			case 1:
-				UE_LOG(LogTemp, Warning, TEXT("%s"), *LogMessage);
-				break;
-			case 2:
-				UE_LOG(LogTemp, Error, TEXT("%s"), *LogMessage);
-				break;
-			default:
-				UE_LOG(LogTemp, Log, TEXT("%s"), *LogMessage);
-				break;
-			}
-		}
-
-		bool tryDebugOnScreen = false;
-		if (tryDebugOnScreen)
-		{
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White, LogMessage);
-			}
-		}
-
+	case 0:
+		UE_LOG(LogTemp, Log, TEXT("%s"), *LogMessage);
+		break;
+	case 1:
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *LogMessage);
+		break;
+	case 2:
+		UE_LOG(LogTemp, Error, TEXT("%s"), *LogMessage);
+		break;
+	default:
+		UE_LOG(LogTemp, Log, TEXT("%s"), *LogMessage);
+		break;
 	}
 
-
-	if (1)
-	{
-		LogAlways(StringToLog);
-	}
-	
+	LogAlways(StringToLog);
 }
 
 FVector Jiggle(const FVector& Vec, float Magnitude)
 {
-	if (0)
-	{
-		FVector RandomJitter;
-		RandomJitter.X = FMath::RandRange(-0.5f, 0.5f) * Magnitude;
-		RandomJitter.Y = FMath::RandRange(-0.5f, 0.5f) * Magnitude;
-		RandomJitter.Z = FMath::RandRange(-0.5f, 0.5f) * Magnitude;
-
-		return Vec + RandomJitter;
-	}
-	else
-	{
-		
-		return Vec;
-	}
-
+	return Vec;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void eeeee()
 {
-	// if (GEditor)
-	// {
-	// 	GEditor->EndPlayMap();
-	// }
 }

@@ -456,8 +456,8 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		FVector source_pos = nodePositions[link.SourceNodeIndex];
 		FVector source_velocity = nodeVelocities[link.SourceNodeIndex];
-		FVector target_pos = nodePositions[link.target];
-		FVector target_velocity = nodeVelocities[link.target];
+		FVector target_pos = nodePositions[link.TargetNodeIndex];
+		FVector target_velocity = nodeVelocities[link.TargetNodeIndex];
 
 		FVector new_v = target_pos + target_velocity - source_pos - source_velocity;
 
@@ -488,13 +488,13 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 		new_v *= l;
 
 		LogMessage("before update nodeVelocities", log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
-		nodeVelocities[link.target] -= new_v * (link.bias);
+		nodeVelocities[link.TargetNodeIndex] -= new_v * (link.bias);
 		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.bias);
 
 		LogMessage("after update nodeVelocities", log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.target) + "]: " + nodeVelocities[link.target].ToString(), log);
+		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
 		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
 
 		Index++;
@@ -744,7 +744,7 @@ void AKnowledgeGraph::update_link_position()
 	for (auto& link : GraphLinks)
 	{
 		FVector Location1 = nodePositions[link.SourceNodeIndex];
-		FVector Location2 = nodePositions[link.target];
+		FVector Location2 = nodePositions[link.TargetNodeIndex];
 
 
 		if (Config.bUseLinkStaticMesh)
@@ -1057,12 +1057,12 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	for (auto& link : GraphLinks)
 	{
 		Nodeconnection[link.SourceNodeIndex] += 1;
-		Nodeconnection[link.target] += 1;
+		Nodeconnection[link.TargetNodeIndex] += 1;
 
 		if (Config.bUseGPUShaders)
 		{
-			connectout[link.SourceNodeIndex].push_back(link.target);
-			connectin[link.target].push_back(link.SourceNodeIndex);
+			connectout[link.SourceNodeIndex].push_back(link.TargetNodeIndex);
+			connectin[link.TargetNodeIndex].push_back(link.SourceNodeIndex);
 		}
 	}
 
@@ -1073,7 +1073,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		for (auto& link : GraphLinks)
 		{
 			int s1 = Nodeconnection[link.SourceNodeIndex];
-			int s2 = Nodeconnection[link.target];
+			int s2 = Nodeconnection[link.TargetNodeIndex];
 
 			float ttttttttttt = s1 + s2;
 			

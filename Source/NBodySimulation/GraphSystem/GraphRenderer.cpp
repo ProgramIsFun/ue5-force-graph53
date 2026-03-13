@@ -174,7 +174,7 @@ void UGraphRenderer::UpdateLinkPositions(
 	for (const GraphLink& Link : Links)
 	{
 		const FVector Location1 = NodePositions[Link.SourceNodeIndex];
-		const FVector Location2 = NodePositions[Link.target];
+		const FVector Location2 = NodePositions[Link.TargetNodeIndex];
 
 		// Update static mesh links
 		if (Config.bUseLinkStaticMesh && Link.edgeMesh)

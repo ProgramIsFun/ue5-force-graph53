@@ -1269,14 +1269,14 @@ bool AKnowledgeGraph::generate_actor_for_a_link(Link77& link)
 		if (!LoadedBP)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Failed to load the Blueprint."));
-			eeeee();
+			GraphSystemDebugBreak();
 		}
 		// Check if the Blueprint class is valid
 		bpClass = LoadedBP->GeneratedClass;
 		if (!bpClass)
 		{
 			UE_LOG(LogTemp, Error, TEXT("Generated class from Blueprint is null."));
-			eeeee();
+			GraphSystemDebugBreak();
 		}
 		e = GetWorld()->SpawnActor<AKnowledgeEdge>(
 			bpClass

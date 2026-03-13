@@ -6,8 +6,11 @@ void ClearLogFile();
 void LogAlways(const FString& TextToWrite);
 void LogMessageInternal(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"));
 
+// Adds small random perturbation to near-zero vector components to prevent division by zero
 FVector Jiggle(const FVector& Vec, float Magnitude);
-void eeeee();
+
+// Debug breakpoint helper for critical errors during development
+void GraphSystemDebugBreak();
 
 inline FVector RandPointInCircle(float CircleRadius)
 {

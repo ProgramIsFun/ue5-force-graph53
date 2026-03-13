@@ -42,8 +42,8 @@ void UGraphDataManager::RequestFromDatabase()
 	HttpRequest->SetHeader("Content-Type", "application/json");
 	HttpRequest->SetURL("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
 	
-	// Set timeout (30 seconds)
-	HttpRequest->SetTimeout(30.0f);
+	// Set timeout (10 seconds - reduced for faster failure detection)
+	HttpRequest->SetTimeout(10.0f);
 	
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,
@@ -410,25 +410,57 @@ void UGraphDataManager::BuildIdMappings()
 		}
 	}
 
-	// Now resolve link indices
+	// Now resolve link indices with validation
 	if (CachedJsonObject.IsValid() && CachedJsonObject->HasField("links"))
 	{
 		TArray<TSharedPtr<FJsonValue>> JsonLinks = CachedJsonObject->GetArrayField("links");
+		
+		int32 ValidLinkCount = 0;
+		int32 InvalidLinkCount = 0;
 		
 		for (int32 i = 0; i < JsonLinks.Num() && i < Links.Num(); i++)
 		{
 			TSharedPtr<FJsonObject> LinkObj = JsonLinks[i]->AsObject();
 			if (!LinkObj.IsValid())
+			{
+				InvalidLinkCount++;
 				continue;
+			}
 
 			FString SourceId = LinkObj->GetStringField("source");
 			FString TargetId = LinkObj->GetStringField("target");
 
 			if (StringIdToIndex.Contains(SourceId) && StringIdToIndex.Contains(TargetId))
 			{
-				Links[i].SourceIndex = StringIdToIndex[SourceId];
-				Links[i].TargetIndex = StringIdToIndex[TargetId];
+				int32 SourceIdx = StringIdToIndex[SourceId];
+				int32 TargetIdx = StringIdToIndex[TargetId];
+				
+				// Validate indices are within bounds
+				if (SourceIdx >= 0 && SourceIdx < Nodes.Num() && TargetIdx >= 0 && TargetIdx < Nodes.Num())
+				{
+					Links[i].SourceIndex = SourceIdx;
+					Links[i].TargetIndex = TargetIdx;
+					ValidLinkCount++;
+				}
+				else
+				{
+					LogMessage("Link " + FString::FromInt(i) + " has out-of-bounds indices: Source=" + 
+						FString::FromInt(SourceIdx) + ", Target=" + FString::FromInt(TargetIdx), 1);
+					InvalidLinkCount++;
+				}
 			}
+			else
+			{
+				LogMessage("Link " + FString::FromInt(i) + " references unknown node IDs: Source=" + 
+					SourceId + ", Target=" + TargetId, 1);
+				InvalidLinkCount++;
+			}
+		}
+		
+		if (InvalidLinkCount > 0)
+		{
+			LogMessage("Link validation: " + FString::FromInt(ValidLinkCount) + " valid, " + 
+				FString::FromInt(InvalidLinkCount) + " invalid (will be skipped)", 1);
 		}
 	}
 }
@@ -573,11 +605,19 @@ const TMap<FString, FString>* UGraphDataManager::GetNodeProperties(int32 NodeInd
 
 void UGraphDataManager::ClearAllData()
 {
+	// Clear retry timer if active
+	if (GetWorld() && RetryTimerHandle.IsValid())
+	{
+		GetWorld()->GetTimerManager().ClearTimer(RetryTimerHandle);
+		RetryTimerHandle.Invalidate();
+	}
+	
 	Nodes.Empty();
 	Links.Empty();
 	StringIdToIndex.Empty();
 	IndexToStringId.Empty();
 	CachedJsonObject.Reset();
+	HttpRetryCount = 0;
 }
 
 void UGraphDataManager::HandleRequestError(FHttpRequestPtr Request, FHttpResponsePtr Response)

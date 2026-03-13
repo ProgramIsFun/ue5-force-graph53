@@ -36,7 +36,7 @@ public:
 	float LinkStrength;
 	float LinkDistance;
 	AKnowledgeEdge* EdgeActor;
-	UStaticMeshComponent* edgeMesh;
+	UStaticMeshComponent* EdgeMeshComponent;
 	GraphLink(int32 SourceNodeIndex, int32 TargetNodeIndex, AKnowledgeEdge* EdgeActor)
 	{
 		this->SourceNodeIndex = SourceNodeIndex;

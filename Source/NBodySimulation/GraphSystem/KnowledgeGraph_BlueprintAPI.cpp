@@ -205,12 +205,12 @@ void AKnowledgeGraph::clean_up_objects()
 	// For each link
 	for (int32 i = 0; i < GraphLinks.Num(); i++)
 	{
-		if (GraphLinks[i].edgeMesh && GraphLinks[i].edgeMesh->IsRegistered())
+		if (GraphLinks[i].EdgeMeshComponent && GraphLinks[i].EdgeMeshComponent->IsRegistered())
 		{
-			GraphLinks[i].edgeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-			GraphLinks[i].edgeMesh->UnregisterComponent();
-			GraphLinks[i].edgeMesh->DestroyComponent();
-			GraphLinks[i].edgeMesh = nullptr;
+			GraphLinks[i].EdgeMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			GraphLinks[i].EdgeMeshComponent->UnregisterComponent();
+			GraphLinks[i].EdgeMeshComponent->DestroyComponent();
+			GraphLinks[i].EdgeMeshComponent = nullptr;
 		}
 	}
 }

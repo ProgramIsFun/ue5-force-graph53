@@ -749,7 +749,7 @@ void AKnowledgeGraph::update_link_position()
 
 		if (Config.bUseLinkStaticMesh)
 		{
-			auto l = link.edgeMesh;
+			auto l = link.EdgeMeshComponent;
 
 			// Safety check - skip if mesh is null
 			if (!l)
@@ -1309,7 +1309,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 		CylinderMesh->SetMaterial(0, Config.LinkMaterial);
 
 		
-		link.edgeMesh = CylinderMesh;
+		link.EdgeMeshComponent = CylinderMesh;
 	}
 
 	// Default link properties from d3-force

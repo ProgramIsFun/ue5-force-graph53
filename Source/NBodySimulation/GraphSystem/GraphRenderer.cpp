@@ -159,7 +159,7 @@ void UGraphRenderer::InitializeLinkVisuals(
 				CylinderMesh->SetMaterial(0, LinkMaterial);
 			}
 
-			Links[i].edgeMesh = CylinderMesh;
+			Links[i].EdgeMeshComponent = CylinderMesh;
 		}
 	}
 
@@ -177,19 +177,19 @@ void UGraphRenderer::UpdateLinkPositions(
 		const FVector Location2 = NodePositions[Link.TargetNodeIndex];
 
 		// Update static mesh links
-		if (Config.bUseLinkStaticMesh && Link.edgeMesh)
+		if (Config.bUseLinkStaticMesh && Link.EdgeMeshComponent)
 		{
 			FVector ForwardVector = Location2 - Location1;
 			float CylinderHeight = ForwardVector.Size();
 			FRotator Rotation = FRotationMatrix::MakeFromZ(ForwardVector).Rotator();
 
-			Link.edgeMesh->SetWorldLocation(Location1);
-			Link.edgeMesh->SetWorldScale3D(FVector(
+			Link.EdgeMeshComponent->SetWorldLocation(Location1);
+			Link.EdgeMeshComponent->SetWorldScale3D(FVector(
 				Config.LinkThickness,
 				Config.LinkThickness,
 				Config.LinkLengthFineTune * CylinderHeight
 			));
-			Link.edgeMesh->SetWorldRotation(Rotation);
+			Link.EdgeMeshComponent->SetWorldRotation(Rotation);
 		}
 
 		// Draw debug lines
@@ -268,12 +268,12 @@ void UGraphRenderer::ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>
 	// Clear link meshes
 	for (GraphLink& Link : Links)
 	{
-		if (Link.edgeMesh && Link.edgeMesh->IsRegistered())
+		if (Link.EdgeMeshComponent && Link.EdgeMeshComponent->IsRegistered())
 		{
-			Link.edgeMesh->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
-			Link.edgeMesh->UnregisterComponent();
-			Link.edgeMesh->DestroyComponent();
-			Link.edgeMesh = nullptr;
+			Link.EdgeMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			Link.EdgeMeshComponent->UnregisterComponent();
+			Link.EdgeMeshComponent->DestroyComponent();
+			Link.EdgeMeshComponent = nullptr;
 		}
 	}
 

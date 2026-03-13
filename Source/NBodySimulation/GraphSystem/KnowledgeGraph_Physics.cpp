@@ -1279,7 +1279,7 @@ bool AKnowledgeGraph::generate_actor_for_a_link(GraphLink& link)
 			bpClass
 		);
 	}
-	link.edge = e;
+	link.EdgeActor = e;
 	return false;
 }
 

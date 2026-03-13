@@ -136,7 +136,7 @@ void UGraphPhysicsSimulator::CalculateLinkForces(
 		// - Multiplied by alpha (simulation temperature) and link strength
 		float ForceMagnitude = (Distance - Link.distance * PhysicsParams.UniversalGraphScale) / Distance
 			* PhysicsParams.Alpha
-			* Link.strength;
+			* Link.LinkStrength;
 		
 		FVector Force = Delta * ForceMagnitude;
 

@@ -33,7 +33,7 @@ public:
 	int32 SourceNodeIndex;
 	int32 TargetNodeIndex;
 	float LinkBias;
-	float strength;
+	float LinkStrength;
 	float distance;
 	AKnowledgeEdge* edge;
 	UStaticMeshComponent* edgeMesh;

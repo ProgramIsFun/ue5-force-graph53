@@ -484,7 +484,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 		l = (l - link.distance * Config.UniversalGraphScale) /
 			l
 			* Config.Alpha
-			* link.strength;
+			* link.LinkStrength;
 		new_v *= l;
 
 		LogMessage("before update nodeVelocities", log);
@@ -1087,11 +1087,11 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			// Strength: 1 / min(source_degree, target_degree)
 			// This prevents highly connected nodes from dominating the layout
 			// DO NOT MODIFY - from d3-force
-			link.strength = 1.0 / fmin(s1,
+			link.LinkStrength = 1.0 / fmin(s1,
 			                           s2);
 			LogMessage("i: " + FString::FromInt(i), log);
 			LogMessage("link.LinkBias: " + FString::SanitizeFloat(link.LinkBias), log);
-			LogMessage("link.strength: " + FString::SanitizeFloat(link.strength), log);
+			LogMessage("link.LinkStrength: " + FString::SanitizeFloat(link.LinkStrength), log);
 			i++;
 		}
 	}
@@ -1314,7 +1314,7 @@ void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 
 	// Default link properties from d3-force
 	// DO NOT MODIFY - these are reference values from d3-force
-	link.strength = 1; // Will be recalculated based on node degree
+	link.LinkStrength = 1; // Will be recalculated based on node degree
 	link.distance = Config.EdgeDistance; // Default 30 from d3-force
 
 	GraphLinks[id] = link;

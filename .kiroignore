@@ -1,1 +1,7 @@
+# Kiro Ignore File
+# Add file/folder patterns below to exclude them from Kiro's context
+# Syntax is the same as .gitignore
+
 To_do_list.md
+
+Saved\Logs

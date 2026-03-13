@@ -4,7 +4,7 @@
 
 static std::string GetLogFilePath()
 {
-	static const FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/GraphSystem_Debug.log");
+	static const FString FilePath1 = FPaths::ProjectSavedDir() + TEXT("Logs/GraphSystem_Debug.log");
 	static const std::string FilePath = TCHAR_TO_UTF8(*FilePath1);
 	return FilePath;
 }

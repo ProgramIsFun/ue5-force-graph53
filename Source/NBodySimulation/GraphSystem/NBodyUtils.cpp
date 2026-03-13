@@ -14,9 +14,6 @@ void ClearLogFile()
 	}
 }
 
-
-
-
 void LogAlways(const FString& TextToWrite)
 {
 	std::ofstream LogFile(FilePath, std::ios::app);
@@ -30,7 +27,6 @@ void LogAlways(const FString& TextToWrite)
 		UE_LOG(LogTemp, Warning, TEXT("Failed to open log file."));
 	}
 }
-
 
 void LogMessageInternal(const FString& StringToLog, bool LOG, int SeverityLevel, const FString& Prefix)
 {

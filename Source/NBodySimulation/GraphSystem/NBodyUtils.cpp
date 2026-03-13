@@ -2,7 +2,7 @@
 #include <fstream>
 #include "Engine/Engine.h"
 
-FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/KnowledgeEdge11111111111111.txt");
+FString FilePath1 = FPaths::ProjectDir() + TEXT("Source/NBodySimulation/GraphSystem_Debug.log");
 std::string const FilePath = TCHAR_TO_UTF8(*FilePath1);
 
 void ClearLogFile()

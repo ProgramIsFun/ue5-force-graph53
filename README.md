@@ -35,13 +35,6 @@ The compute shader code can be found at:
 
 ✅ **Stable** - Recent refactoring and improvements have been completed and are ready for testing.
 
-### Recent Completions
-- [CONFIG_MIGRATION_SUMMARY.md](CONFIG_MIGRATION_SUMMARY.md) - ✅ Configuration system unified into FGraphConfiguration
-- [ARRAY_BOUNDS_FIX.md](ARRAY_BOUNDS_FIX.md) - ✅ Array bounds safety checks implemented
-- [CLEANUP_COMPLETE.md](CLEANUP_COMPLETE.md) - ✅ Legacy properties removed and migrated
-
-See the [To-Do List](To_do_list.md) for planned features and improvements.
-
 ## Comparison to UE4 Force Graph
 
 This project is an improved version of [thomaswall/ue4-force-graph](https://github.com/thomaswall/ue4-force-graph).

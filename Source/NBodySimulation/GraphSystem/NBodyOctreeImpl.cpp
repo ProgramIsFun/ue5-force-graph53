@@ -179,12 +179,7 @@ void OctreeNode::AddAll1(
 	Cover(X0, Y0, Z0);
 	Cover(X1, Y1, Z1);
 
-	// ll("!!!!New center and you extend will be set to: " + Center.ToString() + " " + Extent.ToString());
 	// Add the new points
-	// for (int i = 0; i < N; ++i)
-	// {
-	// 	AddDataPoint(this,  nodePositions[i],i);
-	// }
 	i = 0;
 	for (auto& node : all_nodes)
 	{

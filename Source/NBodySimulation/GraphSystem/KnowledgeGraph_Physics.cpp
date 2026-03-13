@@ -686,9 +686,6 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 			] - (
 				aggregation / GraphNodes.Num() - center
 			) * 1;
-		// node.Value->SetActorLocation(
-		// 	node.Value->GetActorLocation() - (aggregation / all_nodes.Num() - center) * 1
-		// );
 		Index++;
 	}
 

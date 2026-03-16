@@ -47,9 +47,16 @@ When adding functionality, place it in the appropriate module file.
 
 **IMPORTANT:** For performance reasons, nodes and edges in this graph system are **NOT** implemented as Actors.
 
-The following files are **DEPRECATED** and should not be used:
-- `Source/NBodySimulation/GraphSystem/KnowledgeNode.cpp`
-- `Source/NBodySimulation/GraphSystem/KnowledgeEdge.cpp`
+The following files are **DEPRECATED** and should not be used or included:
+- `Source/NBodySimulation/GraphSystem/KnowledgeNode.h/.cpp`
+- `Source/NBodySimulation/GraphSystem/KnowledgeEdge.h/.cpp`
+
+All active code has been cleaned of `AKnowledgeNode` and `AKnowledgeEdge` references. The `GraphNode` and `GraphLink` structs (defined in `KnowledgeGraph.h`) are now pure data — no actor pointers. Do **NOT** reintroduce actor references into these structs.
+
+#### Key data types:
+- `GraphNode` — holds `int id` and `UTextRenderComponent* textComponent`
+- `GraphLink` — holds source/target indices, bias/strength/distance, and `UStaticMeshComponent* EdgeMeshComponent`
+- `FNodeData` / `FLinkData` (in `GraphDataManager.h`) — serializable data structs for the data manager
 
 #### Rationale:
 - Actor-based implementations have significant performance overhead
@@ -58,6 +65,15 @@ The following files are **DEPRECATED** and should not be used:
 - Nodes and edges are represented as structs/data within the graph manager, not as individual actors
 
 When implementing graph features, always work with the data-oriented approach in `KnowledgeGraph` rather than creating actor instances.
+
+### UI System
+
+The project includes a C++ Slate-based UI system for in-game graph controls:
+- `Source/NBodySimulation/GraphSystem/UI/GraphControlPanelWidget` — Main panel with toggle/action buttons
+- `Source/NBodySimulation/GraphSystem/UI/GraphPlayerController` — Handles Home key to show/hide panel
+- `Source/NBodySimulation/GraphSystem/UI/GraphGameMode` — Wires in the custom PlayerController
+
+The panel directly modifies `FGraphConfiguration` values at runtime. Adding new buttons requires only one line in `InitializePanel()`.
 
 ## Progress Tracking for Major Changes
 

@@ -12,7 +12,8 @@ public class NBodySimulation : ModuleRules
 		PublicIncludePaths.AddRange(
 			new string[] {
 				"NBodySimulation",
-				"NBodySimulation/GraphSystem"
+				"NBodySimulation/GraphSystem",
+				"NBodySimulation/GraphSystem/UI"
 			}
 		);
 
@@ -29,7 +30,10 @@ public class NBodySimulation : ModuleRules
 			"InputCore",
 			"Json", 
 			"JsonUtilities",
-			"EnhancedInput"
+			"EnhancedInput",
+			"UMG",
+			"Slate",
+			"SlateCore"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]

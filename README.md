@@ -101,6 +101,10 @@ float NodeRepulsionStrength = 100.0f;
 
 Learn more about [UPROPERTY macros](https://benui.ca/unreal/uproperty/)
 
+## In Progress
+
+- [Graph Control Panel UI](GRAPH_CONTROL_PANEL_UI_PROGRESS.md) — ESC menu with buttons to control graph rendering/simulation, implemented in C++ via Slate
+
 ## References
 
 - [vasturiano/3d-force-graph](https://github.com/vasturiano/3d-force-graph)

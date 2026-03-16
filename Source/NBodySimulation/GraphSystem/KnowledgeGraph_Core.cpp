@@ -191,12 +191,12 @@ void AKnowledgeGraph::rotate_to_face_player111()
 	}
 }
 
-void AKnowledgeGraph::increase_text_size_of_all_nodes1112(float size)
+void AKnowledgeGraph::IncreaseGraphNodeTextSize(float size)
 {
-	increase_or_decrease_text_size_of_all_nodes1112(true, size);
+	AdjustGraphNodeTextSize(true, size);
 }
 
-void AKnowledgeGraph::decrease_text_size_of_all_nodes1112(float size)
+void AKnowledgeGraph::DecreaseGraphNodeTextSize(float size)
 {
-	increase_or_decrease_text_size_of_all_nodes1112(false, size);
+	AdjustGraphNodeTextSize(false, size);
 }

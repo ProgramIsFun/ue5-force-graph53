@@ -67,7 +67,7 @@ void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int
 		TextComponent->SetWorldSize(Config.TextSize);
 		TextComponent->RegisterComponent(); // This is important to initialize the component
 		GraphNodes[index].textComponent = TextComponent;
-		// TextComponents11111111111111111111.Add(TextComponent);
+		// GraphNodeTextComponents.Add(TextComponent);
 	}
 }
 
@@ -1012,7 +1012,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 		if (Config.bUseTextRenderComponents)
 		{
 			GraphNodes[i].textComponent->SetWorldLocation(NewPosition);
-			// TextComponents11111111111111111111[i]->SetWorldLocation(NewPosition);
+			// GraphNodeTextComponents[i]->SetWorldLocation(NewPosition);
 			
 		}
 	}

@@ -64,7 +64,7 @@ void AKnowledgeGraph::rotate_to_face_player_new()
 }
 
 // Text size functions using Renderer
-void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
+void AKnowledgeGraph::SetGraphNodeTextSize(float size)
 {
 	if (Renderer)
 	{
@@ -83,7 +83,7 @@ void AKnowledgeGraph::set_text_size_of_all_nodes1112(float size)
 	}
 }
 
-void AKnowledgeGraph::increase_or_decrease_text_size_of_all_nodes1112(bool increase, float size)
+void AKnowledgeGraph::AdjustGraphNodeTextSize(bool increase, float size)
 {
 	float delta = increase ? size : -size;
 	

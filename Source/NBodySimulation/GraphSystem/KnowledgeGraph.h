@@ -78,34 +78,34 @@ class NBODYSIMULATION_API AKnowledgeGraph : public AActor
 	
 public:
 
-	// Function exposed to blueprints
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void set_text_size_of_all_nodes1112(float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void increase_or_decrease_text_size_of_all_nodes1112(bool increase, float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void increase_text_size_of_all_nodes1112(float size);
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void decrease_text_size_of_all_nodes1112(float size);
+	// Blueprint-exposed graph text functions
+	UFUNCTION(BlueprintCallable, Category = "Graph Text")
+	void SetGraphNodeTextSize(float size);
+	UFUNCTION(BlueprintCallable, Category = "Graph Text")
+	void AdjustGraphNodeTextSize(bool increase, float size);
+	UFUNCTION(BlueprintCallable, Category = "Graph Text")
+	void IncreaseGraphNodeTextSize(float size);
+	UFUNCTION(BlueprintCallable, Category = "Graph Text")
+	void DecreaseGraphNodeTextSize(float size);
 
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void update_position_of_all_nodes_to_database1113();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void add_link_to_database1114();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void add_node_to_database1115(FString NodeName);
-	void add_node_to_database1115httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+	UFUNCTION(BlueprintCallable, Category = "Graph Database")
+	void SyncGraphNodePositionsToDatabase();
+	UFUNCTION(BlueprintCallable, Category = "Graph Database")
+	void AddGraphLinkToDatabase();
+	UFUNCTION(BlueprintCallable, Category = "Graph Database")
+	void AddGraphNodeToDatabase(FString NodeName);
+	void OnAddGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 	void clean_up_objects();
 	void reload_the_whole_graph();
 	void late_add_node(FString NodeName, FString id, FVector location);
 
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void select_closest_node_from_player222();
+	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
+	void SelectClosestGraphNodeToPlayer();
 	
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void delete_node_from_database1116();
-	UFUNCTION(BlueprintCallable, Category = "YourCategory111111111111222222222")
-	void delete_link_from_database1117();
+	UFUNCTION(BlueprintCallable, Category = "Graph Database")
+	void DeleteGraphNodeFromDatabase();
+	UFUNCTION(BlueprintCallable, Category = "Graph Database")
+	void DeleteGraphLinkFromDatabase();
 	
 	// Temporary variables.
 	bool graph_requesting = false;
@@ -157,7 +157,7 @@ public:
 	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
 
 	UPROPERTY(VisibleAnywhere)
-	TArray<UTextRenderComponent*> TextComponents11111111111111111111;
+	TArray<UTextRenderComponent*> GraphNodeTextComponents;
 	
 
 	

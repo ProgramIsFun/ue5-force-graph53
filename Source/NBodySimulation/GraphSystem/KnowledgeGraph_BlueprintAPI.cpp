@@ -7,9 +7,9 @@
 // - Graph reloading and cleanup
 //
 // Key Functions:
-// - select_closest_node_from_player222(): Find nearest node to player
-// - add_node_to_database1115(): Create new node via HTTP
-// - update_position_of_all_nodes_to_database1113(): Sync positions to database
+// - SelectClosestGraphNodeToPlayer(): Find nearest node to player
+// - AddGraphNodeToDatabase(): Create new node via HTTP
+// - SyncGraphNodePositionsToDatabase(): Sync positions to database
 // - reload_the_whole_graph(): Full graph refresh
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph5.cpp
@@ -19,7 +19,7 @@
 #include "Interfaces/IHttpRequest.h"
 #include "Interfaces/IHttpResponse.h"
 
-void AKnowledgeGraph::select_closest_node_from_player222()
+void AKnowledgeGraph::SelectClosestGraphNodeToPlayer()
 {
 	FVector player_location = GetPlayerLocation();
 	float min_distance = FLT_MAX;
@@ -55,7 +55,7 @@ void AKnowledgeGraph::select_closest_node_from_player222()
 	}
 }
 
-void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
+void AKnowledgeGraph::AddGraphNodeToDatabase(FString NodeName)
 {
 	FVector player_location = GetPlayerLocation();
 	
@@ -77,11 +77,11 @@ void AKnowledgeGraph::add_node_to_database1115(FString NodeName)
 	FJsonSerializer::Serialize(json_object_772.ToSharedRef(), Writer);
 
 	HttpRequest->SetContentAsString(RequestBody);
-	HttpRequest->OnProcessRequestComplete().BindUObject(this, &AKnowledgeGraph::add_node_to_database1115httpCompleted);
+	HttpRequest->OnProcessRequestComplete().BindUObject(this, &AKnowledgeGraph::OnAddGraphNodeHttpCompleted);
 	HttpRequest->ProcessRequest();
 }
 
-void AKnowledgeGraph::add_node_to_database1115httpCompleted(
+void AKnowledgeGraph::OnAddGraphNodeHttpCompleted(
 	FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	if(bWasSuccessful && Response->GetResponseCode() == 200)
@@ -111,26 +111,26 @@ void AKnowledgeGraph::add_node_to_database1115httpCompleted(
 	}
 }
 
-void AKnowledgeGraph::delete_node_from_database1116()
+void AKnowledgeGraph::DeleteGraphNodeFromDatabase()
 {
 	// TODO: Implement node deletion
 }
 
-void AKnowledgeGraph::delete_link_from_database1117()
+void AKnowledgeGraph::DeleteGraphLinkFromDatabase()
 {
 	// TODO: Implement link deletion
 }
 
-void AKnowledgeGraph::add_link_to_database1114()
+void AKnowledgeGraph::AddGraphLinkToDatabase()
 {
 	// TODO: Implement link addition
 }
 
-void AKnowledgeGraph::update_position_of_all_nodes_to_database1113()
+void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 {
 	bool log = true;
 
-	LogMessage("222222222update_position_of_all_nodes_to_database1113 called", log, 0, TEXT("update_position_of_all_nodes_to_database1113: "));
+	LogMessage("SyncGraphNodePositionsToDatabase called", log, 0, TEXT("SyncGraphNodePositionsToDatabase: "));
 	
 	// Create a JSON writer and JSON Array
 	FString OutputString;

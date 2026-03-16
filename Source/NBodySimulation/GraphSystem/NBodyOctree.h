@@ -12,7 +12,7 @@
 
 #include "CoreMinimal.h"
 // #include "KnowledgeGraph.h"
-#include "KnowledgeNode.h"
+// KnowledgeNode.h is deprecated - GraphNode is forward-declared below
 // #include "PointData.h" // Make sure this include points to your actual PointData structure file location
 
 class GraphNode;

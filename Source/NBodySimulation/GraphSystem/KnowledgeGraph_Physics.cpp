@@ -11,50 +11,6 @@
 #define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White,text)
 
 
-bool AKnowledgeGraph::generate_actor_and_register(AKnowledgeNode*& kn)
-{
-	kn = GetWorld()->SpawnActor<AKnowledgeNode>();
-
-	if (kn)
-	{
-		UStaticMeshComponent* MeshComp = NewObject<UStaticMeshComponent>(kn);
-		MeshComp->AttachToComponent(
-			kn->GetRootComponent(),
-			FAttachmentTransformRules::SnapToTargetIncludingScale
-		);
-		MeshComp->RegisterComponent(); // Don't forget to register the component
-
-
-		float sss = Config.NodeActorSize;
-		FVector NewScale = FVector(sss, sss, sss);
-		MeshComp->SetWorldScale3D(NewScale);
-
-
-		UStaticMesh* CubeMesh;
-		if (false)
-		{
-			CubeMesh = LoadObject<UStaticMesh>(
-				nullptr,
-				TEXT(
-					"/Engine/BasicShapes/Cube.Cube"
-				)
-			);
-		}
-		CubeMesh = Config.NodeMesh;
-		if (CubeMesh)
-		{
-			MeshComp->SetStaticMesh(CubeMesh);
-		}
-		else
-		{
-			LogMessage("CubeMesh failed", true, 2);
-			QuitGame();
-			return true;
-		}
-	}
-	return false;
-}
-
 void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int32 index)
 {
 	UTextRenderComponent* TextComponent = NewObject<UTextRenderComponent>(
@@ -569,63 +525,41 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 		if (!Config.bUseParallelProcessing)
 		{
 			// Brute force
-			int32 Index = 0;
-			for (auto& node : GraphNodes)
+			for (int32 NodeIdx = 0; NodeIdx < GraphNodes.Num(); NodeIdx++)
 			{
-				auto kn = node.node;
-
-
-				int32 Index2 = 0;
-
-				for (auto& node2 : GraphNodes)
+				for (int32 OtherNodeIdx = 0; OtherNodeIdx < GraphNodes.Num(); OtherNodeIdx++)
 				{
-					auto kn2 = node2.node;
-					if (kn != kn2)
+					if (NodeIdx != OtherNodeIdx)
 					{
-						// FVector dir = kn2->GetActorLocation() - kn->GetActorLocation();
-						FVector dir = nodePositions[
-							Index2] - nodePositions[Index];
+						FVector dir = nodePositions[OtherNodeIdx] - nodePositions[NodeIdx];
 
 						float l = dir.Size() * dir.Size();
 						if (l < Config.DistanceMin)
 						{
 							l = sqrt(Config.DistanceMin * l);
 						}
-						nodeVelocities[Index] += dir * Config.NodeStrength * Config.Alpha / l;
-						// kn->velocity += dir * nodeStrength * alpha / l; 
+						nodeVelocities[NodeIdx] += dir * Config.NodeStrength * Config.Alpha / l;
 					}
-					Index2++;
 				}
-
-
-				Index++;
 			}
 		}
 		else
 		{
-			ParallelFor(GraphNodes.Num(), [&](int32 Index)
+			ParallelFor(GraphNodes.Num(), [&](int32 NodeIdx)
 			{
-				auto node = GraphNodes[Index];
-
-
-				int32 Index2 = 0;
-				for (auto& node2 : GraphNodes)
+				for (int32 OtherNodeIdx = 0; OtherNodeIdx < GraphNodes.Num(); OtherNodeIdx++)
 				{
-					auto kn2 = node2.node;
-					if (node.node != kn2)
+					if (NodeIdx != OtherNodeIdx)
 					{
-						// FVector dir = kn2->GetActorLocation() - kn->GetActorLocation();
-						FVector dir = nodePositions[Index2] - nodePositions[Index];
+						FVector dir = nodePositions[OtherNodeIdx] - nodePositions[NodeIdx];
 
 						float l = dir.Size() * dir.Size();
 						if (l < Config.DistanceMin)
 						{
 							l = sqrt(Config.DistanceMin * l);
 						}
-						nodeVelocities[Index] += dir * Config.NodeStrength * Config.Alpha * Config.UniversalGraphScale / l;
-						// kn->velocity += dir * nodeStrength * alpha / l; 
+						nodeVelocities[NodeIdx] += dir * Config.NodeStrength * Config.Alpha * Config.UniversalGraphScale / l;
 					}
-					Index2++;
 				}
 			});
 		}
@@ -698,33 +632,10 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 {
 	if (!Config.bUseParallelProcessing)
 	{
-		int32 Index = 0;
-		for (auto& node : GraphNodes)
+		for (int32 NodeIdx = 0; NodeIdx < GraphNodes.Num(); NodeIdx++)
 		{
-			auto kn = node.node;
-
-			nodeVelocities[
-				Index
-			] *= Config.VelocityDecay;
-			// kn->velocity *= velocityDecay;
-
-			// FVector NewLocation = kn->GetActorLocation() + kn->velocity;
-
-			// 	kn->SetActorLocation(
-			// 	NewLocation
-			// );
-
-			nodePositions[
-				Index
-			] = nodePositions[
-				Index
-
-			] + nodeVelocities[
-				Index
-
-			];
-
-			Index++;
+			nodeVelocities[NodeIdx] *= Config.VelocityDecay;
+			nodePositions[NodeIdx] = nodePositions[NodeIdx] + nodeVelocities[NodeIdx];
 		}
 	}
 	else
@@ -1220,68 +1131,6 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	}
 }
 
-
-bool AKnowledgeGraph::generate_actor_for_a_link(GraphLink& link)
-{
-	AKnowledgeEdge* e;
-	UClass* bpClass;
-
-	bool useCorrectWay=true;
-	if (useCorrectWay)
-	{
-		// This approach works in both play and editor and package game. 
-		UClass* loadedClass = StaticLoadClass(UObject::StaticClass(), nullptr,
-		                                      TEXT(
-			                                      // "Blueprint'/Game/Characters/Enemies/BP_LitchBoss1.BP_LitchBoss1_C'"
-			                                      "Blueprint'/Game/arttttttt/iii9.iii9_C'"
-		                                      ));
-		if (loadedClass)
-		{
-			e = GetWorld()->SpawnActor<AKnowledgeEdge>(loadedClass);
-		}
-		else
-		{
-			LogMessage("generate_actor_for_a_link failed to load class", true, 2);
-			QuitGame();
-			return true;
-			LogMessage("error loading classsssssssssssssssssssssss");
-			e = GetWorld()->SpawnActor<AKnowledgeEdge>(
-				AKnowledgeEdge::StaticClass()
-			);
-		}
-	}
-	else
-	{
-		// This approach works in Only play in editor
-		// Load the Blueprint
-		UBlueprint* LoadedBP = Cast<UBlueprint>(StaticLoadObject(
-				UBlueprint::StaticClass(),
-				nullptr,
-				TEXT(
-					// "Blueprint'/Game/NewBlueprint22222.NewBlueprint22222'"
-					"Blueprint'/Game/kkkkk/NewBlueprint22222.NewBlueprint22222'"
-				)
-			)
-		);
-		if (!LoadedBP)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Failed to load the Blueprint."));
-			GraphSystemDebugBreak();
-		}
-		// Check if the Blueprint class is valid
-		bpClass = LoadedBP->GeneratedClass;
-		if (!bpClass)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Generated class from Blueprint is null."));
-			GraphSystemDebugBreak();
-		}
-		e = GetWorld()->SpawnActor<AKnowledgeEdge>(
-			bpClass
-		);
-	}
-	link.EdgeActor = e;
-	return false;
-}
 
 void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
 {

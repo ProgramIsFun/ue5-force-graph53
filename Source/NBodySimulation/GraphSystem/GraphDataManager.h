@@ -14,7 +14,6 @@
 #include "GraphDataManager.generated.h"
 
 // Forward declarations
-class AKnowledgeNode;
 class UTextRenderComponent;
 
 // Simple data structures for nodes and links
@@ -39,7 +38,6 @@ struct FNodeData
 	TMap<FString, FString> Properties;
 
 	// Runtime references (not serialized)
-	AKnowledgeNode* NodeActor = nullptr;
 	UTextRenderComponent* TextComponent = nullptr;
 
 	FNodeData() {}
@@ -67,8 +65,7 @@ struct FLinkData
 	float Distance = 30.0f;
 
 	// Runtime references (not serialized)
-	class AKnowledgeEdge* EdgeActor = nullptr;
-	class UStaticMeshComponent* EdgeMesh = nullptr;
+	UStaticMeshComponent* EdgeMesh = nullptr;
 
 	FLinkData() {}
 	FLinkData(int32 Source, int32 Target) : SourceIndex(Source), TargetIndex(Target) {}

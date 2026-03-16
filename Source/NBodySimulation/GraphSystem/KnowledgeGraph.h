@@ -2,8 +2,6 @@
 
 #pragma once
 
-#include "KnowledgeNode.h"
-#include "KnowledgeEdge.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "CoreMinimal.h"
@@ -35,18 +33,11 @@ public:
 	float LinkBias;
 	float LinkStrength;
 	float LinkDistance;
-	AKnowledgeEdge* EdgeActor;
-	UStaticMeshComponent* EdgeMeshComponent;
-	GraphLink(int32 SourceNodeIndex, int32 TargetNodeIndex, AKnowledgeEdge* EdgeActor)
+	UStaticMeshComponent* EdgeMeshComponent = nullptr;
+	GraphLink(int32 InSourceNodeIndex, int32 InTargetNodeIndex)
 	{
-		this->SourceNodeIndex = SourceNodeIndex;
-		this->TargetNodeIndex = TargetNodeIndex;
-		this->EdgeActor = EdgeActor;
-	}
-	GraphLink(int32 SourceNodeIndex, int32 TargetNodeIndex)
-	{
-		this->SourceNodeIndex = SourceNodeIndex;
-		this->TargetNodeIndex = TargetNodeIndex;
+		SourceNodeIndex = InSourceNodeIndex;
+		TargetNodeIndex = InTargetNodeIndex;
 	}
 	GraphLink()
 	{
@@ -57,17 +48,15 @@ class GraphNode
 {
 public:
 	int id;
-	AKnowledgeNode* node;
-	UTextRenderComponent* textComponent;
-	GraphNode(int id, AKnowledgeNode* node)
+	UTextRenderComponent* textComponent = nullptr;
+	GraphNode(int InId, UTextRenderComponent* InTextComponent)
 	{
-		this->id = id;
-		this->node = node;
+		id = InId;
+		textComponent = InTextComponent;
 	}
-	GraphNode(int id, UTextRenderComponent* textComponent)
+	GraphNode()
+		: id(-1)
 	{
-		this->id = id;
-		this->textComponent = textComponent;
 	}
 };
 
@@ -184,7 +173,6 @@ public:
 	void update_alpha();
 	void print_out_location_of_the_node();
 	void update_iterations();
-	bool generate_actor_and_register(AKnowledgeNode*& kn);
 	void generate_text_render_component_and_attach(FString name,int32 index);
 	void get_number_of_nodes();
 	void create_one_to_one_mapping();
@@ -203,7 +191,6 @@ public:
 	FVector GetPlayerLocation();
 	FVector GetLocationInFrontOfPlayer();
 	void calculate_bias_and_strength_of_links();
-	bool generate_actor_for_a_link(GraphLink& link);
 	void apply_force();
 	void calculate_link_force_and_update_velocity();
 	void calculate_charge_force_and_update_velocity();

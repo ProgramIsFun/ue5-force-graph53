@@ -104,6 +104,7 @@ Learn more about [UPROPERTY macros](https://benui.ca/unreal/uproperty/)
 ## In Progress
 
 - [Graph Control Panel UI](GRAPH_CONTROL_PANEL_UI_PROGRESS.md) — ESC menu with buttons to control graph rendering/simulation, implemented in C++ via Slate
+- [Actor Reference Removal](ACTOR_REMOVAL_CLEANUP_PROGRESS.md) — Removing deprecated AKnowledgeNode/AKnowledgeEdge references from active code
 
 ## References
 

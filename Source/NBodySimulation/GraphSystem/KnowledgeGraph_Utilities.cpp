@@ -28,13 +28,17 @@ FVector AKnowledgeGraph::GetPlayerLocation()
 
 FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()
 {
-	// Get the current location
 	FVector CurrentLocation = GetPlayerLocation();
-	// Get the forward direction
-	FVector ForwardVector = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorForwardVector();
-	// Calculate the new location
-	FVector NewLocation = CurrentLocation + (ForwardVector * 10000); // 100 meters away in the forward direction
-	return NewLocation;
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (PlayerController && PlayerController->GetPawn())
+	{
+		FVector ForwardVector = PlayerController->GetPawn()->GetActorForwardVector();
+		// 10000 units = 100 meters in UE scale
+		constexpr float GraphSpawnDistanceFromPlayer = 10000.0f;
+		return CurrentLocation + (ForwardVector * GraphSpawnDistanceFromPlayer);
+	}
+	LogToScreen("WARNING: No player controller or pawn found for forward vector", true, 2);
+	return CurrentLocation;
 }
 
 void AKnowledgeGraph::print_out_location_of_the_node()

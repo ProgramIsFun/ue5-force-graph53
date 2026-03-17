@@ -104,6 +104,10 @@ public:
 	
 	bool use_predefined_position_should_update_once = true;
 	bool precheck_succeed = true;
+
+	// Server connection failure shutdown
+	bool bServerConnectionFailed = false;
+	float ServerConnectionShutdownTimer = 5.0f;
 	FVector current_own_position;
 	bool GPUvalid = false;
 	

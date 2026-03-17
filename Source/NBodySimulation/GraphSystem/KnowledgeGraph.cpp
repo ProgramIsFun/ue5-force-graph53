@@ -63,6 +63,22 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	LogMessage("tick is called. ", Config.bEnableLogging, 2);
+
+	// Handle server connection failure shutdown with countdown
+	if (bServerConnectionFailed)
+	{
+		ServerConnectionShutdownTimer -= DeltaTime;
+		int32 SecondsRemaining = FMath::CeilToInt(FMath::Max(ServerConnectionShutdownTimer, 0.0f));
+		GEngine->AddOnScreenDebugMessage(1, 0.0f, FColor::Red,
+			FString::Printf(TEXT("Server connection failed. Shutting down in %d seconds..."), SecondsRemaining));
+		if (ServerConnectionShutdownTimer <= 0.0f)
+		{
+			LogMessage("Server connection failure shutdown timer expired. Quitting game.", true, 2);
+			QuitGame();
+		}
+		return;
+	}
+
 	if (!precheck_succeed)
 	{
 		LogMessage("Prechecks failed! requested to end game", true, 2);

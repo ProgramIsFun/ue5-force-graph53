@@ -21,8 +21,10 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 
 	if (!bSuccess)
 	{
-		LogMessage("Failed to load graph data!", true, 2);
-		precheck_succeed = false;
+		LogMessage("Failed to load graph data! Server connection problem detected.", true, 2);
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red,
+			TEXT("ERROR: Failed to connect to graph database server."));
+		bServerConnectionFailed = true;
 		return;
 	}
 

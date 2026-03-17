@@ -118,6 +118,16 @@ struct FGraphConfiguration
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
 	bool bDrawDebugGrid = false;
 
+	// Server URLs
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server")
+	FString GraphDatabaseQueryUrl = TEXT("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server")
+	FString GraphNodeCreateUrl = TEXT("http://localhost:3062/api/v0/create_node77777777");
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server")
+	FString GraphNodePositionSyncUrl = TEXT("http://localhost:3062/api/v0/update_position_of_all_nodes111");
+
 	// Physics Simulation Parameters
 	// Reference: d3-force (https://github.com/d3/d3-force)
 	// These values are based on d3-force's velocity Verlet integration implementation

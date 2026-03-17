@@ -40,7 +40,7 @@ void UGraphDataManager::RequestFromDatabase()
 	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
 	HttpRequest->SetVerb("GET");
 	HttpRequest->SetHeader("Content-Type", "application/json");
-	HttpRequest->SetURL("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
+	HttpRequest->SetURL(DatabaseQueryUrl);
 	
 	// Set timeout (10 seconds - reduced for faster failure detection)
 	HttpRequest->SetTimeout(10.0f);
@@ -468,7 +468,7 @@ void UGraphDataManager::BuildIdMappings()
 void UGraphDataManager::AddNodeToDatabase(const FString& NodeName, const FVector& Location)
 {
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetURL("http://localhost:3062/api/v0/create_node77777777");
+	HttpRequest->SetURL(NodeCreateUrl);
 	HttpRequest->SetVerb("POST");
 	HttpRequest->SetHeader("Content-Type", "application/json");
 
@@ -545,7 +545,7 @@ void UGraphDataManager::UpdateAllNodePositionsToDatabase(const TArray<FVector>& 
 
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = FHttpModule::Get().CreateRequest();
 	Request->SetVerb("POST");
-	Request->SetURL("http://localhost:3062/api/v0/update_position_of_all_nodes111");
+	Request->SetURL(NodePositionSyncUrl);
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetContentAsString(OutputString);
 

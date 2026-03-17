@@ -54,6 +54,9 @@ void AKnowledgeGraph::BeginPlay()
 	// Bind to data manager's delegate
 	if (DataManager)
 	{
+		DataManager->DatabaseQueryUrl = Config.GraphDatabaseQueryUrl;
+		DataManager->NodeCreateUrl = Config.GraphNodeCreateUrl;
+		DataManager->NodePositionSyncUrl = Config.GraphNodePositionSyncUrl;
 		DataManager->OnGraphDataLoaded.AddDynamic(this, &AKnowledgeGraph::OnGraphDataLoadedCallback);
 	}
 }

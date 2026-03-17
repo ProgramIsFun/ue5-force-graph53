@@ -244,7 +244,7 @@ void AKnowledgeGraph::request_graph_http()
 	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
 	HttpRequest->SetVerb("GET");
 	HttpRequest->SetHeader("Content-Type", "application/json");
-	HttpRequest->SetURL("http://localhost:5007/api/v0/return_all_nodes_and_their_connections_if_any");
+	HttpRequest->SetURL(Config.GraphDatabaseQueryUrl);
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,
 		&AKnowledgeGraph::request_graph_httpCompleted

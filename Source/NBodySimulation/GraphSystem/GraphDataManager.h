@@ -111,6 +111,11 @@ public:
 	// Clear all data
 	void ClearAllData();
 
+	// Server URLs (set by owner before requesting data)
+	FString DatabaseQueryUrl;
+	FString NodeCreateUrl;
+	FString NodePositionSyncUrl;
+
 private:
 	// Data storage
 	UPROPERTY()

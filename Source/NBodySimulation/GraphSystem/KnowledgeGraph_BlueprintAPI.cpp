@@ -61,7 +61,7 @@ void AKnowledgeGraph::AddGraphNodeToDatabase(FString NodeName)
 	
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
 
-	HttpRequest->SetURL("http://localhost:3062/api/v0/create_node77777777");
+	HttpRequest->SetURL(Config.GraphNodeCreateUrl);
 	HttpRequest->SetVerb("POST");
 	HttpRequest->SetHeader("Content-Type", "application/json");
 
@@ -158,7 +158,7 @@ void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 	FHttpModule* Http = &FHttpModule::Get();
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> Request = Http->CreateRequest();
 	Request->SetVerb("POST");
-	Request->SetURL("http://localhost:3062/api/v0/update_position_of_all_nodes111");
+	Request->SetURL(Config.GraphNodePositionSyncUrl);
 	Request->SetHeader(TEXT("Content-Type"), TEXT("application/json"));
 	Request->SetContentAsString(OutputString);
 

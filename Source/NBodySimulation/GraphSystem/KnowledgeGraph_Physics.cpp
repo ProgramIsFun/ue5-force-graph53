@@ -435,7 +435,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		float l = new_v.Size();
 
-		// LogMessage("l: " + FString::SanitizeFloat(l), log);
+		// TODO: Add division-by-zero guard for l == 0
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
 		l = (l - link.LinkDistance * Config.UniversalGraphScale) /
 			l
@@ -610,6 +610,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 	}
 
 	Index = 0;
+	// TODO: Add division-by-zero guard for GraphNodes.Num() == 0
 	for (auto& node : GraphNodes)
 	{
 		nodePositions[
@@ -988,6 +989,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 			float TotalDegree = s1 + s2;
 			
+			// TODO: Add division-by-zero guard for TotalDegree == 0 and fmin(s1, s2) == 0
 			// Bias: ratio of source degree to total degree (source + target)
 			// This determines how the link force is distributed between nodes
 			// DO NOT MODIFY - from d3-force

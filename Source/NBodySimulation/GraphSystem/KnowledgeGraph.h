@@ -163,7 +163,6 @@ public:
 
 
 	// Internal functions. 
-	void debug_test();
 	void gpu_get_positions();
 	bool main_function(float DeltaTime);
 	void rotate_to_face_player111();

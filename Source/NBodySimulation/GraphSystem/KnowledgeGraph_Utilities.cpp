@@ -127,7 +127,4 @@ void AKnowledgeGraph::gpu_get_positions()
 	GPUvalid = true;
 }
 
-void AKnowledgeGraph::debug_test()
-{
-	// Debug test function - currently unused
-}
+

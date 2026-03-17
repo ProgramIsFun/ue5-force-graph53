@@ -420,7 +420,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 		LogMessage("new_v: " + new_v.ToString(), log);
 		LogMessage("target_pos- source_pos: " + (target_pos - source_pos).ToString(), log);
-		if (false)
+		if (Config.bEnableJiggle)
 		{
 			if (new_v.IsNearlyZero())
 			{
@@ -428,10 +428,6 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 			}
 			LogMessage("GIGGLE is enabled............", log);
 		}
-		LogMessage("GIGGLE is disabled............"
-		   "...................................................  "
-		   ""
-		   "Remember to turn it back on. ", log);
 
 		float l = new_v.Size();
 
@@ -744,9 +740,9 @@ void AKnowledgeGraph::apply_force()
 	}
 
 
-	if (true)
+	if (!Config.bCalculateCenterForce)
 	{
-		LogMessage("centre force is disabled for debugging. ", log);
+		LogMessage("centre force is disabled. ", log);
 	}
 	else
 	{

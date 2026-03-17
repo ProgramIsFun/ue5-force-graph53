@@ -59,6 +59,12 @@ struct FGraphConfiguration
 	bool bCalculateManyBodyForce = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Simulation")
+	bool bCalculateCenterForce = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Simulation")
+	bool bEnableJiggle = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Simulation")
 	bool bUseParallelProcessing = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Simulation")

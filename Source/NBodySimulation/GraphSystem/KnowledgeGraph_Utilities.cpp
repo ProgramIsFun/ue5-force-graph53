@@ -17,7 +17,13 @@
 
 FVector AKnowledgeGraph::GetPlayerLocation()
 {
-	return GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
+	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	if (PlayerController && PlayerController->GetPawn())
+	{
+		return PlayerController->GetPawn()->GetActorLocation();
+	}
+	LogToScreen("WARNING: No player controller or pawn found, returning zero vector", true, 2);
+	return FVector::ZeroVector;
 }
 
 FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()

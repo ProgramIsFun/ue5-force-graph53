@@ -164,7 +164,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 			if (Config.bUseTextRenderComponents)
 			{
 				FString name = "Sample Text : " + FString::FromInt(i);
-				generate_text_render_component_and_attach(name, i);
+				GenerateTextRenderComponentAndAttach(name, i);
 			}
 		}
 	}
@@ -182,7 +182,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 				{
 					name = "Node " + FString::FromInt(i);
 				}
-				generate_text_render_component_and_attach(name, i);
+				GenerateTextRenderComponentAndAttach(name, i);
 			}
 		}
 		LogMessage("Number of nodes generated: " + FString::FromInt(TotalNodeCount), log);

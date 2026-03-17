@@ -175,7 +175,7 @@ public:
 	void update_position_array(bool log);
 	void update_alpha();
 	void update_iterations();
-	void generate_text_render_component_and_attach(FString name,int32 index);
+	void GenerateTextRenderComponentAndAttach(FString name,int32 index);
 	void get_number_of_nodes();
 	void create_one_to_one_mapping();
 	void miscellaneous();

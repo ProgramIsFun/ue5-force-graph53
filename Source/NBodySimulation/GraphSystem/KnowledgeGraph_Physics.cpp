@@ -7,7 +7,7 @@
 #include "GameFramework/Character.h"
 
 
-void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int32 index)
+void AKnowledgeGraph::GenerateTextRenderComponentAndAttach(FString name,int32 index)
 {
 	UTextRenderComponent* TextComponent = NewObject<UTextRenderComponent>(
 		this, FName("TextComponent" + name)
@@ -171,7 +171,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 			{
 				FString name;
 				name = "Sample Text : " + FString::FromInt(i);
-				generate_text_render_component_and_attach(name,i);
+				GenerateTextRenderComponentAndAttach(name,i);
 			}
 		}
 		miscellaneous();
@@ -205,7 +205,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 					LogToScreen("WARNING: Failed to get node name from JSON at index " + FString::FromInt(i) + ", using fallback", true, 2);
 					name = "Sample Text : " + FString::FromInt(i);
 				}
-				generate_text_render_component_and_attach(name,i);
+				GenerateTextRenderComponentAndAttach(name,i);
 			}
 		}
 		LogMessage("Number of node generated: " + FString::FromInt(TotalNodeCount), log);

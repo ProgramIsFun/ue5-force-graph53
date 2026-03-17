@@ -29,6 +29,7 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 
 	// Debug
 	AddToggleButton(TEXT("Logging"), [&Cfg]() -> bool& { return Cfg.bEnableLogging; });
+	AddToggleButton(TEXT("Debug Grid"), [&Cfg]() -> bool& { return Cfg.bDrawDebugGrid; });
 
 	// Action buttons
 	AddActionButton(TEXT("Reload Graph"), [this]()

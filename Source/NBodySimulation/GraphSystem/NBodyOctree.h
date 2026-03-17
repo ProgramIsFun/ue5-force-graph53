@@ -11,9 +11,7 @@
 #include <functional>
 
 #include "CoreMinimal.h"
-// #include "KnowledgeGraph.h"
-// KnowledgeNode.h is deprecated - GraphNode is forward-declared below
-// #include "PointData.h" // Make sure this include points to your actual PointData structure file location
+#include "CoreMinimal.h"
 
 class GraphNode;
 
@@ -87,7 +85,6 @@ struct OctreeNode
 	void AccumulateStrengthAndComputeCenterOfMass();
 	void Cover(float X0, float Y0, float Z0);
 	bool check_contain_data_or_not();
-	// void AddAll1(TMap<int32, AKnowledgeNode*> Map1, TArray<FVector> nodePositions);
 	void AddAll1(
 		TArray<GraphNode> all_nodes,
 		TArray<FVector> nodePositions
@@ -95,16 +92,12 @@ struct OctreeNode
 
 };
 
-// void AddDataPoint(OctreeNode* node, AKnowledgeNode* newNode, FVector position);
-
 void AddDataPoint(OctreeNode* node, FVector Location,int32 id);
 
 // Define the Callback Type
 using OctreeCallback = std::function<bool(OctreeNode*,float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities)>;
 
 // Declare the BFS traversal function
-// void TraverseBFS(OctreeNode* root, OctreeCallback callback);
 void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities);
 
-// bool SampleCallback(OctreeNode* node);
 bool SampleCallback(OctreeNode* node, float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities);

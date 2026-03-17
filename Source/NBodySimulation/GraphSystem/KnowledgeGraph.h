@@ -201,7 +201,7 @@ public:
 	void update_link_position();
 	void request_graph_httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 	void request_graph_http();
-	void request_a_graph();
+	void RequestAGraph();
 	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
 
 	// New callback for DataManager

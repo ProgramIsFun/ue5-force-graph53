@@ -195,7 +195,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
 // Legacy HTTP request functions (kept for backward compatibility)
 // These are now mostly handled by GraphDataManager, but kept for any direct usage
 
-void AKnowledgeGraph::request_a_graph()
+void AKnowledgeGraph::RequestAGraph()
 {
 	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{

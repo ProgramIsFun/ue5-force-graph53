@@ -47,12 +47,6 @@ When adding functionality, place it in the appropriate module file.
 
 **IMPORTANT:** For performance reasons, nodes and edges in this graph system are **NOT** implemented as Actors.
 
-The following files are **DEPRECATED** and should not be used or included:
-- `Source/NBodySimulation/GraphSystem/KnowledgeNode.h/.cpp`
-- `Source/NBodySimulation/GraphSystem/KnowledgeEdge.h/.cpp`
-
-All active code has been cleaned of `AKnowledgeNode` and `AKnowledgeEdge` references. The `GraphNode` and `GraphLink` structs (defined in `KnowledgeGraph.h`) are now pure data — no actor pointers. Do **NOT** reintroduce actor references into these structs.
-
 #### Key data types:
 - `GraphNode` — holds `int id` and `UTextRenderComponent* textComponent`
 - `GraphLink` — holds source/target indices, bias/strength/distance, and `UStaticMeshComponent* EdgeMeshComponent`

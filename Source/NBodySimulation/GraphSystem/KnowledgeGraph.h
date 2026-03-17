@@ -84,7 +84,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void AddGraphNodeToDatabase(FString NodeName);
 	void OnAddGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void clean_up_objects();
+	void CleanUpObjects();
 	void reload_the_whole_graph();
 	void late_add_node(FString NodeName, FString id, FVector location);
 
@@ -153,6 +153,7 @@ public:
 	
 
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "General")
 	TMap<int32, FString> fileIndexToPath = {
 		{0, "statered.json"},
 		{1, "state - 2024-06-18T223257.374.json"},

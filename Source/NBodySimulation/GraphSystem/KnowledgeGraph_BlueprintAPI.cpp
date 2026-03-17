@@ -179,7 +179,7 @@ void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 	Request->ProcessRequest();
 }
 
-void AKnowledgeGraph::clean_up_objects()
+void AKnowledgeGraph::CleanUpObjects()
 {
 	// For every node
 	for (int32 i = 0; i < TotalNodeCount; i++)
@@ -217,7 +217,7 @@ void AKnowledgeGraph::clean_up_objects()
 
 void AKnowledgeGraph::reload_the_whole_graph()
 {
-	clean_up_objects();
+	CleanUpObjects();
 	
 	graph_requesting = true;
 	graph_initialized = false;

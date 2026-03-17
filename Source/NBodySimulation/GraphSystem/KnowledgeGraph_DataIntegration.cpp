@@ -77,12 +77,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 		}
 	}
 
-	// Extract node properties (for backward compatibility)
-	AllNodeProperties.Empty();
-	for (const FNodeData& Node : LoadedNodes)
-	{
-		AllNodeProperties.Add(Node.Properties);
-	}
+	// Node properties are stored in DataManager (FNodeData::Properties), no duplication needed
 
 	// Now continue with the old flow
 	initialize_arrays();

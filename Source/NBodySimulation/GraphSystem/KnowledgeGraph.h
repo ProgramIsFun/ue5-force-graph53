@@ -115,7 +115,6 @@ public:
 	
 	// Important Variables.
 	TSharedPtr<FJsonObject> JsonObject1;
-	TArray<TMap<FString, FString>> AllNodeProperties;
 
 	int32 selected_node_index = -1;
 	int32 selected_node_index_previous = -1;
@@ -184,7 +183,6 @@ public:
 	void initialize_arrays();
 	bool generate_objects_for_node_and_link();
 	bool generate_objects_for_node_and_link_new(); // New version using DataManager
-	void extracting_property_list_and_store();
 	void deal_with_predefined_location();
 	void default_generate_graph_method();
 	void add_edge(int32 id, int32 source, int32 target);

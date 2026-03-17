@@ -795,7 +795,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 	
 	FVector init_pos;
 
-	if (Config.bUsePredefinedLocation)
+	if (Config.bUsePredefinedLocation && predefined_positions.Num() > index)
 	{
 		init_pos = predefined_positions[index];
 	}

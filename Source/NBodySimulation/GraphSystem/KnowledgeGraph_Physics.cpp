@@ -453,7 +453,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 
 void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 {
-	bool log = true;
+	bool log = Config.bEnableLogging;
 	bool log2 = false;
 
 
@@ -707,7 +707,7 @@ void AKnowledgeGraph::update_link_position()
 
 void AKnowledgeGraph::apply_force()
 {
-	bool log = true;
+	bool log = Config.bEnableLogging;
 
 	// In here velocity of all notes are zeroed
 	// In the following for loop, In the first few loop, the velocity is 0. 

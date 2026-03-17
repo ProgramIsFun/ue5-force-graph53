@@ -398,7 +398,7 @@ void AKnowledgeGraph::default_generate_graph_method()
 
 void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 {
-	bool log = true;
+	bool log = Config.bEnableLogging;
 
 
 	// link forces

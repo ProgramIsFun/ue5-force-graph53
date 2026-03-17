@@ -921,8 +921,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 	for (auto& link : GraphLinks)
 	{
-		Nodeconnection[link.SourceNodeIndex] += 1;
-		Nodeconnection[link.TargetNodeIndex] += 1;
+		Nodeconnection.FindOrAdd(link.SourceNodeIndex, 0) += 1;
+		Nodeconnection.FindOrAdd(link.TargetNodeIndex, 0) += 1;
 
 		if (Config.bUseGPUShaders)
 		{
@@ -974,7 +974,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			LogMessage("outcount: " + FString::FromInt(outcount), log);
 			LogMessage("incount: " + FString::FromInt(incount), log);
 
-			int totalcount = Nodeconnection[i];
+			int totalcount = Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
 
 			if (totalcount != outcount + incount)
 			{
@@ -987,7 +987,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 			LogMessage("LinkOffsets[i]: " + FString::FromInt(LinkOffsets[i]), log);
 
-			LinkCounts[i] = Nodeconnection[i];
+			LinkCounts[i] = Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
 			LogMessage("LinkCounts[i]: " + FString::FromInt(LinkCounts[i]), log);
 
 			for (int j = 0; j < outcount; j++)
@@ -1003,8 +1003,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 					indexnow
 				] = 1;
 
-				int s1 = Nodeconnection[i];
-				int s2 = Nodeconnection[connectout[i][j]];
+				int s1 = Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
+				int s2 = Nodeconnection.Contains(connectout[i][j]) ? Nodeconnection[connectout[i][j]] : 0;
 
 				float TotalDegree = s1 + s2;
 				float bias = s1 / TotalDegree;
@@ -1021,8 +1021,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 				Linkinout[indexnow] = 0;
 
-				int s2 = Nodeconnection[i];
-				int s1 = Nodeconnection[counterpart];
+				int s2 = Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
+				int s1 = Nodeconnection.Contains(counterpart) ? Nodeconnection[counterpart] : 0;
 
 				float TotalDegree = s1 + s2;
 				float bias = s1 / TotalDegree;
@@ -1030,7 +1030,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 				LinkStrengths[indexnow] = 1.0 / fmin(s1,
 				                                     s2);
 			}
-			Index += Nodeconnection[i];
+			Index += Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
 		}
 
 

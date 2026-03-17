@@ -97,7 +97,7 @@ void AKnowledgeGraph::OnAddGraphNodeHttpCompleted(
 			LogToScreen("id7: " + id, true, 2);
 			FString name = JsonObject->GetStringField("name");
 			FVector player_location = GetPlayerLocation();
-			late_add_node(name, id, player_location);
+			LateAddNode(name, id, player_location);
 		}
 		else
 		{
@@ -225,7 +225,7 @@ void AKnowledgeGraph::ReloadTheWholeGraph()
 	prepare();
 }
 
-void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector location)
+void AKnowledgeGraph::LateAddNode(FString NodeName, FString id, FVector location)
 {
 	if (refresh_whole_graph_again_after_editing)
 	{

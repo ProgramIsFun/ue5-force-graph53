@@ -86,7 +86,7 @@ public:
 	void OnAddGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 	void CleanUpObjects();
 	void ReloadTheWholeGraph();
-	void late_add_node(FString NodeName, FString id, FVector location);
+	void LateAddNode(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
 	void SelectClosestGraphNodeToPlayer();

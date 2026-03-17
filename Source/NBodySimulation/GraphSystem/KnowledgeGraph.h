@@ -298,6 +298,7 @@ public:
 	void LogToScreen(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, StringToLog);
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *StringToLog);
 	}
 
 

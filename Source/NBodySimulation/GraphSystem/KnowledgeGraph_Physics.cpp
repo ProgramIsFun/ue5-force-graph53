@@ -206,6 +206,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				}
 				catch (...)
 				{
+					LogToScreen("WARNING: Failed to get node name from JSON at index " + FString::FromInt(i) + ", using fallback", true, 2);
 					name = "Sample Text : " + FString::FromInt(i);
 				}
 				generate_text_render_component_and_attach(name,i);

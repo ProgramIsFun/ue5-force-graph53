@@ -4,7 +4,6 @@
 
 
 #include "NBodyUtils.h"
-#include <map>
 #include "GameFramework/Character.h"
 
 
@@ -901,10 +900,10 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 	float n = GraphNodes.Num();
 	float m = GraphLinks.Num();
 
-	std::map<int32, int32> Nodeconnection;
+	TMap<int32, int32> Nodeconnection;
 
-	std::map<int, std::vector<int>> connectout;
-	std::map<int, std::vector<int>> connectin;
+	TMap<int32, TArray<int32>> connectout;
+	TMap<int32, TArray<int32>> connectin;
 
 
 	if (Config.bUseGPUShaders)
@@ -927,8 +926,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 
 		if (Config.bUseGPUShaders)
 		{
-			connectout[link.SourceNodeIndex].push_back(link.TargetNodeIndex);
-			connectin[link.TargetNodeIndex].push_back(link.SourceNodeIndex);
+			connectout[link.SourceNodeIndex].Add(link.TargetNodeIndex);
+			connectin[link.TargetNodeIndex].Add(link.SourceNodeIndex);
 		}
 	}
 
@@ -969,8 +968,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 		{
 			LogMessage("i: " + FString::FromInt(i), log);
 
-			int outcount = connectout[i].size();
-			int incount = connectin[i].size();
+			int outcount = connectout.Contains(i) ? connectout[i].Num() : 0;
+			int incount = connectin.Contains(i) ? connectin[i].Num() : 0;
 
 			LogMessage("outcount: " + FString::FromInt(outcount), log);
 			LogMessage("incount: " + FString::FromInt(incount), log);

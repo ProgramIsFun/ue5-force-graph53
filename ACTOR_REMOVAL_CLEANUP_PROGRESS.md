@@ -25,10 +25,12 @@ Removing `AKnowledgeNode*` and `AKnowledgeEdge*` references from the active code
 - Removed `#include "KnowledgeNode.h"` (was unused — only forward-declares `GraphNode`)
 
 ## Remaining (not touched)
-- `KnowledgeNode.h/.cpp` and `KnowledgeEdge.h/.cpp` still exist as deprecated files
-- Two commented-out lines in `NBodyOctree.h` reference `AKnowledgeNode` in comments only
+- `KnowledgeNode.h/.cpp` and `KnowledgeEdge.h/.cpp` have been **deleted** from the repository
+- Commented-out references in `NBodyOctree.h` have been cleaned up
 
 ## Status
 - [x] All active code references removed
+- [x] Deprecated files deleted
+- [x] Commented-out references cleaned up
 - [ ] Compile verification
 - [ ] Runtime testing

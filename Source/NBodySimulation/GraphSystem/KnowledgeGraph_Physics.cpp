@@ -8,9 +8,6 @@
 #include "GameFramework/Character.h"
 
 
-#define print(text) if (GEngine) GEngine->AddOnScreenDebugMessage(-1, 10, FColor::White,text)
-
-
 void AKnowledgeGraph::generate_text_render_component_and_attach(FString name,int32 index)
 {
 	UTextRenderComponent* TextComponent = NewObject<UTextRenderComponent>(

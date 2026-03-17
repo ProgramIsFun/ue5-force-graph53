@@ -36,7 +36,7 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 	{
 		if (GraphActorRef)
 		{
-			GraphActorRef->reload_the_whole_graph();
+			GraphActorRef->ReloadTheWholeGraph();
 		}
 	});
 

@@ -85,7 +85,7 @@ public:
 	void AddGraphNodeToDatabase(FString NodeName);
 	void OnAddGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
 	void CleanUpObjects();
-	void reload_the_whole_graph();
+	void ReloadTheWholeGraph();
 	void late_add_node(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "Graph Selection")

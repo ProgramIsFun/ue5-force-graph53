@@ -10,7 +10,7 @@
 // - SelectClosestGraphNodeToPlayer(): Find nearest node to player
 // - AddGraphNodeToDatabase(): Create new node via HTTP
 // - SyncGraphNodePositionsToDatabase(): Sync positions to database
-// - reload_the_whole_graph(): Full graph refresh
+// - ReloadTheWholeGraph(): Full graph refresh
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph5.cpp
 
@@ -215,7 +215,7 @@ void AKnowledgeGraph::CleanUpObjects()
 	}
 }
 
-void AKnowledgeGraph::reload_the_whole_graph()
+void AKnowledgeGraph::ReloadTheWholeGraph()
 {
 	CleanUpObjects();
 	
@@ -229,7 +229,7 @@ void AKnowledgeGraph::late_add_node(FString NodeName, FString id, FVector locati
 {
 	if (refresh_whole_graph_again_after_editing)
 	{
-		reload_the_whole_graph();
+		ReloadTheWholeGraph();
 	}
 	else
 	{

@@ -986,12 +986,12 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 			int s1 = Nodeconnection[link.SourceNodeIndex];
 			int s2 = Nodeconnection[link.TargetNodeIndex];
 
-			float ttttttttttt = s1 + s2;
+			float TotalDegree = s1 + s2;
 			
 			// Bias: ratio of source degree to total degree (source + target)
 			// This determines how the link force is distributed between nodes
 			// DO NOT MODIFY - from d3-force
-			float bias = s1 / ttttttttttt;
+			float bias = s1 / TotalDegree;
 
 			link.LinkBias = bias;
 
@@ -1051,8 +1051,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 				int s1 = Nodeconnection[i];
 				int s2 = Nodeconnection[connectout[i][j]];
 
-				float ttttttttttt = s1 + s2;
-				float bias = s1 / ttttttttttt;
+				float TotalDegree = s1 + s2;
+				float bias = s1 / TotalDegree;
 				LinkBiases[indexnow] = bias;
 				LinkStrengths[indexnow] = 1.0 / fmin(s1,
 				                                     s2);
@@ -1069,8 +1069,8 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 				int s2 = Nodeconnection[i];
 				int s1 = Nodeconnection[counterpart];
 
-				float ttttttttttt = s1 + s2;
-				float bias = s1 / ttttttttttt;
+				float TotalDegree = s1 + s2;
+				float bias = s1 / TotalDegree;
 				LinkBiases[indexnow] = bias;
 				LinkStrengths[indexnow] = 1.0 / fmin(s1,
 				                                     s2);

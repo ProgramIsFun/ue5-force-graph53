@@ -101,11 +101,11 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		}else
 		{
 			LogMessage("Graph is initialized. We have enough data to move on.  ", Config.bEnableLogging, 2);
-			if(iterationsf<10)
+			if(FrameSkipCounter<10)
 			{
 				LogMessage("The reason of this section is because the first few frames seems "
 			 "to be of sink between the gpu and the cpu. ", Config.bEnableLogging, 2); 
-				iterationsf+=1;
+				FrameSkipCounter+=1;
 				return;
 			}
 	

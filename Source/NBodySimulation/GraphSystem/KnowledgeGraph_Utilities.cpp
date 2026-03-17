@@ -43,10 +43,10 @@ void AKnowledgeGraph::print_out_location_of_the_node()
 void AKnowledgeGraph::update_iterations()
 {
 	bool log = false;
-	iterations += 1;
+	SimulationIterationCount += 1;
 	LogMessage("TICK----------------------------------------------------------------------------"
 	   "----------------------------------------------------------------------------", log);
-	LogMessage("iterations: " + FString::FromInt(iterations), log);
+	LogMessage("iterations: " + FString::FromInt(SimulationIterationCount), log);
 }
 
 void AKnowledgeGraph::update_alpha()
@@ -112,7 +112,7 @@ void AKnowledgeGraph::gpu_get_positions()
 	LogMessage("alpha: " + FString::SanitizeFloat(alphas[0]), Config.bEnableLogging, 2);
 	LogMessage("alpha1: " + FString::SanitizeFloat(alphas[1]), Config.bEnableLogging, 2);
 
-	if (iterations == 1)
+	if (SimulationIterationCount == 1)
 	{
 		LogMessage("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
 		GPUvalid = false;

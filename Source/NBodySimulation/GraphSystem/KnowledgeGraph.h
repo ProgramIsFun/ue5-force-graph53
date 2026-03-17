@@ -238,8 +238,8 @@ public:
 	UGraphRenderer* Renderer;
 
 	// Runtime iteration tracking (not in Config because it changes every frame)
-	int iterationsf = 0;
-	float iterations = 0;
+	int32 FrameSkipCounter = 0;
+	int32 SimulationIterationCount = 0;
 
 
 

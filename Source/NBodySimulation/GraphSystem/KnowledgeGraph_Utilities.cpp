@@ -41,15 +41,6 @@ FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()
 	return CurrentLocation;
 }
 
-void AKnowledgeGraph::print_out_location_of_the_node()
-{
-	bool log = true;
-	LogMessage("Before update. ", log);
-	LogMessage("first element. " + nodePositions[0].ToString(), log);
-	LogMessage("second element. " + nodePositions[1].ToString(), log);
-	LogMessage("third element. " + nodePositions[2].ToString(), log);
-}
-
 void AKnowledgeGraph::update_iterations()
 {
 	bool log = false;

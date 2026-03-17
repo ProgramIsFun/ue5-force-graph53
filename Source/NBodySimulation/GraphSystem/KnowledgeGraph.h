@@ -174,7 +174,6 @@ public:
 	void cpu_calculate();
 	void update_position_array(bool log);
 	void update_alpha();
-	void print_out_location_of_the_node();
 	void update_iterations();
 	void generate_text_render_component_and_attach(FString name,int32 index);
 	void get_number_of_nodes();

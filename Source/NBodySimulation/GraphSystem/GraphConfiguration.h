@@ -115,6 +115,9 @@ struct FGraphConfiguration
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
 	bool bEnableLogging = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+	bool bDrawDebugGrid = false;
+
 	// Physics Simulation Parameters
 	// Reference: d3-force (https://github.com/d3/d3-force)
 	// These values are based on d3-force's velocity Verlet integration implementation

@@ -113,7 +113,10 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		}
 	}
 	
-	DrawDebugGrid(GetActorLocation());
+	if (Config.bDrawDebugGrid)
+	{
+		DrawDebugGrid(GetActorLocation());
+	}
 }
 
 void AKnowledgeGraph::DrawDebugGrid(const FVector& Center, int32 GridSize, float CellSize)

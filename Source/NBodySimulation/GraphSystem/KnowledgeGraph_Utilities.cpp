@@ -71,12 +71,9 @@ bool AKnowledgeGraph::is_graph_stabilized(bool log)
 
 void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
 {
-	if (1)
-	{
-		float kkkkkkkkk = 1;
-		SimParameters.DeltaTime = kkkkkkkkk;
-		FNBodySimModule::Get().UpdateDeltaTime(kkkkkkkkk, Config.Alpha);
-	}
+	float ShaderDeltaTime = 1.0f;
+	SimParameters.DeltaTime = ShaderDeltaTime;
+	FNBodySimModule::Get().UpdateDeltaTime(ShaderDeltaTime, Config.Alpha);
 }
 
 void AKnowledgeGraph::pass_parameters_to_shader_management()

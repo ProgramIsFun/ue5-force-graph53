@@ -25,9 +25,11 @@ void AGraphPlayerController::SetupInputComponent()
 	// Home key to toggle graph control panel
 	InputComponent->BindKey(EKeys::Home, IE_Pressed, this, &AGraphPlayerController::ToggleGraphControlPanel);
 
-	// PgUp key: hold to aim laser, release to select node
-	InputComponent->BindKey(EKeys::PageUp, IE_Pressed, this, &AGraphPlayerController::OnLaserSelectPressed);
-	InputComponent->BindKey(EKeys::PageUp, IE_Released, this, &AGraphPlayerController::OnLaserSelectReleased);
+	// Laser-select key: hold to aim laser, release to confirm selection.
+	// Change this single constant to rebind to a different key.
+	const FKey LaserSelectKey = EKeys::LeftMouseButton;
+	InputComponent->BindKey(LaserSelectKey, IE_Pressed, this, &AGraphPlayerController::OnLaserSelectPressed);
+	InputComponent->BindKey(LaserSelectKey, IE_Released, this, &AGraphPlayerController::OnLaserSelectReleased);
 }
 
 void AGraphPlayerController::ToggleGraphControlPanel()

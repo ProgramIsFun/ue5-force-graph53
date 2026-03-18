@@ -25,8 +25,9 @@ void AGraphPlayerController::SetupInputComponent()
 	// Home key to toggle graph control panel
 	InputComponent->BindKey(EKeys::Home, IE_Pressed, this, &AGraphPlayerController::ToggleGraphControlPanel);
 
-	// PgUp key to select node by look-at (crosshair pick)
-	InputComponent->BindKey(EKeys::PageUp, IE_Pressed, this, &AGraphPlayerController::SelectNodeByLookAt);
+	// PgUp key: hold to aim laser, release to select node
+	InputComponent->BindKey(EKeys::PageUp, IE_Pressed, this, &AGraphPlayerController::OnLaserSelectPressed);
+	InputComponent->BindKey(EKeys::PageUp, IE_Released, this, &AGraphPlayerController::OnLaserSelectReleased);
 }
 
 void AGraphPlayerController::ToggleGraphControlPanel()
@@ -86,21 +87,31 @@ void AGraphPlayerController::FindAndBindGraphActor()
 	}
 }
 
-void AGraphPlayerController::SelectNodeByLookAt()
+void AGraphPlayerController::OnLaserSelectPressed()
 {
-	if (!CachedGraphActor)
-	{
-		// Try to find it if not cached yet
-		TArray<AActor*> FoundActors;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AKnowledgeGraph::StaticClass(), FoundActors);
-		if (FoundActors.Num() > 0)
-		{
-			CachedGraphActor = Cast<AKnowledgeGraph>(FoundActors[0]);
-		}
-	}
-
+	EnsureGraphActorCached();
 	if (CachedGraphActor)
 	{
-		CachedGraphActor->SelectGraphNodeByLookAt();
+		CachedGraphActor->BeginLaserSelect();
+	}
+}
+
+void AGraphPlayerController::OnLaserSelectReleased()
+{
+	if (CachedGraphActor)
+	{
+		CachedGraphActor->EndLaserSelect();
+	}
+}
+
+void AGraphPlayerController::EnsureGraphActorCached()
+{
+	if (CachedGraphActor) return;
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AKnowledgeGraph::StaticClass(), FoundActors);
+	if (FoundActors.Num() > 0)
+	{
+		CachedGraphActor = Cast<AKnowledgeGraph>(FoundActors[0]);
 	}
 }

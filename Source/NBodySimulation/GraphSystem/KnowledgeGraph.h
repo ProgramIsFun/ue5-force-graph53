@@ -94,6 +94,16 @@ public:
 	// Highlights the selected node's text in yellow; deselects the previous one.
 	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
 	void SelectGraphNodeByLookAt();
+
+	// Laser-select: hold to aim, release to confirm selection.
+	// Call BeginLaserSelect on key press, EndLaserSelect on key release.
+	// DrawLaserSelectRay is called every tick while active.
+	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
+	void BeginLaserSelect();
+	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
+	void EndLaserSelect();
+	void DrawLaserSelectRay();
+	bool bLaserSelectActive = false;
 	
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void DeleteGraphNodeFromDatabase();

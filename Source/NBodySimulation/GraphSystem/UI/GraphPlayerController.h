@@ -25,7 +25,9 @@ protected:
 private:
 	void ToggleGraphControlPanel();
 	void FindAndBindGraphActor();
-	void SelectNodeByLookAt();
+	void OnLaserSelectPressed();
+	void OnLaserSelectReleased();
+	void EnsureGraphActorCached();
 
 	UPROPERTY()
 	UGraphControlPanelWidget* GraphControlPanel = nullptr;

@@ -116,6 +116,11 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		}
 	}
 	
+	if (bLaserSelectActive)
+	{
+		DrawLaserSelectRay();
+	}
+
 	if (Config.bDrawDebugGrid)
 	{
 		DrawDebugGrid(GetActorLocation());

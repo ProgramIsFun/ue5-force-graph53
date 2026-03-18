@@ -128,6 +128,78 @@ void AKnowledgeGraph::SelectGraphNodeByLookAt()
 }
 
 // ---------------------------------------------------------------------------
+// Laser-select: hold PgUp to aim a visible laser, release to confirm
+// ---------------------------------------------------------------------------
+
+void AKnowledgeGraph::BeginLaserSelect()
+{
+	bLaserSelectActive = true;
+}
+
+void AKnowledgeGraph::EndLaserSelect()
+{
+	bLaserSelectActive = false;
+	// Fire the actual selection on release
+	SelectGraphNodeByLookAt();
+}
+
+void AKnowledgeGraph::DrawLaserSelectRay()
+{
+	UWorld* World = GetWorld();
+	if (!World) return;
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+	if (!PlayerController) return;
+
+	FVector CameraLocation;
+	FRotator CameraRotation;
+	PlayerController->GetPlayerViewPoint(CameraLocation, CameraRotation);
+	FVector CameraForward = CameraRotation.Vector();
+
+	// Find the closest node to the ray so we can draw the laser to it
+	float SmallestRayDistance = FLT_MAX;
+	int32 ClosestNodeToRayIndex = -1;
+	FVector ClosestNodePosition = FVector::ZeroVector;
+
+	for (int32 i = 0; i < nodePositions.Num(); i++)
+	{
+		FVector CameraToNode = nodePositions[i] - CameraLocation;
+		float ProjectionLength = FVector::DotProduct(CameraToNode, CameraForward);
+		if (ProjectionLength < 0.0f) continue;
+
+		FVector ClosestPointOnRay = CameraLocation + CameraForward * ProjectionLength;
+		float PerpendicularDistance = FVector::Dist(nodePositions[i], ClosestPointOnRay);
+
+		if (PerpendicularDistance < SmallestRayDistance)
+		{
+			SmallestRayDistance = PerpendicularDistance;
+			ClosestNodeToRayIndex = i;
+			ClosestNodePosition = nodePositions[i];
+		}
+	}
+
+	// Draw the laser line (single frame lifetime so it redraws each tick)
+	constexpr float LaserRayLength = 50000.0f;
+	FVector LaserEndPoint = CameraLocation + CameraForward * LaserRayLength;
+	FColor LaserColor = FColor::Red;
+
+	if (ClosestNodeToRayIndex >= 0)
+	{
+		// Draw laser from camera to the targeted node
+		LaserEndPoint = ClosestNodePosition;
+		LaserColor = FColor::Cyan;
+	}
+
+	DrawDebugLine(World, CameraLocation, LaserEndPoint, LaserColor, false, -1.0f, 0, 3.0f);
+
+	// Draw a small sphere at the hit point for visibility
+	if (ClosestNodeToRayIndex >= 0)
+	{
+		DrawDebugSphere(World, ClosestNodePosition, 30.0f, 8, FColor::Yellow, false, -1.0f, 0, 2.0f);
+	}
+}
+
+// ---------------------------------------------------------------------------
 // High-level mode-aware graph editing
 // ---------------------------------------------------------------------------
 // AutoGenerate / FromJson  → edit locally and immediately

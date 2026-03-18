@@ -178,7 +178,7 @@ void AKnowledgeGraph::RotateToFacePlayer()
 		FVector NewPosition = nodePositions[i];
 		if (Config.bUseTextRenderComponents)
 		{
-			if (Config.bRotateTextToFacePlayer)
+			if (Config.bRotateTextToFacePlayer && GraphNodes[i].textComponent)
 			{
 				// Compute the direction from the text component to the player.
 				FVector ToPlayer = PlayerLocation - NewPosition;

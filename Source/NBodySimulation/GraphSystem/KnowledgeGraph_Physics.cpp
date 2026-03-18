@@ -641,11 +641,9 @@ void AKnowledgeGraph::UpdateNodeWorldPositionAccordingToPositionArray()
 			BodyTransforms[i].SetTranslation(NewPosition);
 		}
 
-		if (Config.bUseTextRenderComponents)
+		if (Config.bUseTextRenderComponents && GraphNodes[i].textComponent)
 		{
 			GraphNodes[i].textComponent->SetWorldLocation(NewPosition);
-			// GraphNodeTextComponents[i]->SetWorldLocation(NewPosition);
-			
 		}
 	}
 

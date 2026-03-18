@@ -65,7 +65,7 @@ void AKnowledgeGraph::SetArrayLengths()
 	if (TotalNodeCount <= 0 || TotalNodeCount > 100000)
 	{
 		LogMessage("ERROR: Invalid TotalNodeCount value: " + FString::FromInt(TotalNodeCount) + ". Refusing to allocate arrays.", true, 3);
-		precheck_succeed = false;
+		bPrecheckSucceeded = false;
 		return;
 	}
 	
@@ -477,7 +477,7 @@ void AKnowledgeGraph::InitializeNodePosition()
 {
 	if (Config.bInitializeUsingActorLocation)
 	{
-		current_own_position = GetActorLocation();
+		GraphOwnerPosition = GetActorLocation();
 	}
 
 	if (!Config.bUseParallelProcessing)
@@ -580,7 +580,7 @@ void AKnowledgeGraph::InitializeNodePositionIndividual(int index)
 
 		if (Config.bInitializeUsingActorLocation)
 		{
-			init_pos += current_own_position;
+			init_pos += GraphOwnerPosition;
 		}
 	}
 

@@ -37,14 +37,14 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	LogMessage("Loaded " + FString::FromInt(TotalNodeCount) + " nodes from DataManager", true, 0);
 
 	// Build ID mappings (for backward compatibility)
-	id_to_string.Empty();
-	string_to_id.Empty();
+	NodeIdToStringMap.Empty();
+	StringToNodeIdMap.Empty();
 	for (int32 i = 0; i < LoadedNodes.Num(); i++)
 	{
 		if (!LoadedNodes[i].StringId.IsEmpty())
 		{
-			string_to_id.Add(LoadedNodes[i].StringId, i);
-			id_to_string.Add(i, LoadedNodes[i].StringId);
+			StringToNodeIdMap.Add(LoadedNodes[i].StringId, i);
+			NodeIdToStringMap.Add(i, LoadedNodes[i].StringId);
 		}
 	}
 

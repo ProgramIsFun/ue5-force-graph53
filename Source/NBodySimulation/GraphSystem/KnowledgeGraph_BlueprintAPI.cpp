@@ -44,8 +44,8 @@ void AKnowledgeGraph::SelectClosestGraphNodeToPlayer()
 
 	if (closest_node_index != -1)
 	{
-		selected_node_index = closest_node_index;
-		selected_node_name = id_to_string[closest_node_index];
+		SelectedGraphNodeIndex = closest_node_index;
+		SelectedGraphNodeName = NodeIdToStringMap[closest_node_index];
 		LogToScreen("The closest node index is: " + FString::FromInt(closest_node_index) + 
 		   " with a distance of: " + FString::SanitizeFloat(min_distance), true, 2);
 	}
@@ -139,7 +139,7 @@ void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 
 	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
-		auto string_id = id_to_string[i];
+		auto string_id = NodeIdToStringMap[i];
 		
 		Writer->WriteObjectStart();
 		Writer->WriteValue("ID", string_id);
@@ -219,15 +219,15 @@ void AKnowledgeGraph::ReloadTheWholeGraph()
 {
 	CleanUpObjects();
 	
-	graph_requesting = true;
-	graph_initialized = false;
-	use_predefined_position_should_update_once = true;
+	bGraphRequesting = true;
+	bGraphInitialized = false;
+	bPredefinedPositionNeedsUpdate = true;
 	Prepare();
 }
 
 void AKnowledgeGraph::LateAddNode(FString NodeName, FString id, FVector location)
 {
-	if (refresh_whole_graph_again_after_editing)
+	if (bRefreshGraphAfterEditing)
 	{
 		ReloadTheWholeGraph();
 	}

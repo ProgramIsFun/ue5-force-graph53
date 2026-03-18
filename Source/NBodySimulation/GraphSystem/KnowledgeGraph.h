@@ -97,32 +97,32 @@ public:
 	void DeleteGraphLinkFromDatabase();
 	
 	// Temporary variables.
-	bool graph_requesting = false;
-	bool graph_initialized = false;
+	bool bGraphRequesting = false;
+	bool bGraphInitialized = false;
 
-	bool refresh_whole_graph_again_after_editing = true;
+	bool bRefreshGraphAfterEditing = true;
 	
-	bool use_predefined_position_should_update_once = true;
-	bool precheck_succeed = true;
+	bool bPredefinedPositionNeedsUpdate = true;
+	bool bPrecheckSucceeded = true;
 
 	// Server connection failure shutdown
 	bool bServerConnectionFailed = false;
 	float ServerConnectionShutdownTimer = 5.0f;
-	FVector current_own_position;
+	FVector GraphOwnerPosition;
 	bool GPUvalid = false;
 	
 
 	
 	// Important Variables.
-	int32 selected_node_index = -1;
-	int32 selected_node_index_previous = -1;
-	FString selected_node_name = "";
+	int32 SelectedGraphNodeIndex = -1;
+	int32 PreviousSelectedGraphNodeIndex = -1;
+	FString SelectedGraphNodeName = "";
 	
 	// Total number of nodes in the graph (formerly: jnodessss)
 	int32 TotalNodeCount;
 	
-	TMap<int32, FString> id_to_string;
-	TMap<FString, int32> string_to_id;
+	TMap<int32, FString> NodeIdToStringMap;
+	TMap<FString, int32> StringToNodeIdMap;
 	
 	// Array of all graph nodes (formerly: all_nodes2)
 	TArray<GraphNode> GraphNodes;

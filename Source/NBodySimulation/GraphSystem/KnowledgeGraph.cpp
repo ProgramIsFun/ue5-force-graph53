@@ -82,22 +82,22 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 		return;
 	}
 
-	if (!precheck_succeed)
+	if (!bPrecheckSucceeded)
 	{
 		LogMessage("Prechecks failed! requested to end game", true, 2);
 		QuitGame();
 		
 	}else
 	{
-		if (!graph_initialized)
+		if (!bGraphInitialized)
 		{
-			if (graph_requesting)
+			if (bGraphRequesting)
 			{
 				LogMessage("Graph is requested but not initialized. ", true, 2);
 			}else
 			{
 				LogMessage("Graph is not initialized and also not requested. We need to request a graph. ", true, 2);
-				graph_requesting = true;
+				bGraphRequesting = true;
 				Prepare();
 			}
 			

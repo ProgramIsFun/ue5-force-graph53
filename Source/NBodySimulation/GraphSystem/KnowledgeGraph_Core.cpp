@@ -33,8 +33,8 @@ void AKnowledgeGraph::PostGenerateGraph()
 	}
 	
 	LogMessage("Graph is generated. Now setting initialized to true.  ", true, 2);
-	graph_requesting = false;
-	graph_initialized = true;
+	bGraphRequesting = false;
+	bGraphInitialized = true;
 }
 
 void AKnowledgeGraph::UpdatePositionArray(bool log)
@@ -84,9 +84,9 @@ bool AKnowledgeGraph::MainFunction(float DeltaTime)
 	{
 		if (Config.bUsePredefinedLocation)
 		{
-			if (use_predefined_position_should_update_once)
+			if (bPredefinedPositionNeedsUpdate)
 			{
-				use_predefined_position_should_update_once = false;
+				bPredefinedPositionNeedsUpdate = false;
 				// Use new renderer if available
 				if (Renderer)
 				{

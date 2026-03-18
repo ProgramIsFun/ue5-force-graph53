@@ -204,7 +204,7 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 {
 	// Step 1: Build octree spatial data structure
 	// Octree divides 3D space into nested cubic cells
-	OctreeNode* Octree = new OctreeNode();
+	TUniquePtr<OctreeNode> Octree(new OctreeNode());
 	Octree->AddAll1(Nodes, NodePositions);
 	
 	// Step 2: Calculate center of mass and total strength for each octree cell
@@ -220,7 +220,7 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 		// Parallel processing for better performance on multi-core CPUs
 		ParallelFor(Nodes.Num(), [&](int32 Index)
 		{
-			TraverseBFS(Octree, SampleCallback, PhysicsParams.Alpha, Index, 
+			TraverseBFS(Octree.Get(), SampleCallback, PhysicsParams.Alpha, Index, 
 				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities,
 				PhysicsParams.NodeStrength, PhysicsParams.DistanceMin, PhysicsParams.DistanceMax, BarnesHutThetaSquared);
 		});
@@ -230,14 +230,13 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 		// Sequential processing
 		for (int32 Index = 0; Index < Nodes.Num(); Index++)
 		{
-			TraverseBFS(Octree, SampleCallback, PhysicsParams.Alpha, Index,
+			TraverseBFS(Octree.Get(), SampleCallback, PhysicsParams.Alpha, Index,
 				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities,
 				PhysicsParams.NodeStrength, PhysicsParams.DistanceMin, PhysicsParams.DistanceMax, BarnesHutThetaSquared);
 		}
 	}
 
-	// Clean up
-	delete Octree;
+	// Octree automatically cleaned up by TUniquePtr
 }
 
 /**

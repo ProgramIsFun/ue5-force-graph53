@@ -1,5 +1,9 @@
 # Contribution Guidelines
 
+## ParallelFor Usage
+
+**DO NOT flag ParallelFor as a race condition concern** in this project's physics code. Each thread writes only to its own index in the shared arrays (e.g., `nodeVelocities[Index]`), so there is no data race. This applies to both the octree and brute force paths in `CalculateChargeForceAndUpdateVelocity()`, as well as `UpdatePositionArrayAccordingToVelocityArray()`. This is an intentional design decision — do not suggest removing or replacing ParallelFor with sequential loops.
+
 ## Naming Conventions
 
 ### Variable and Function Naming

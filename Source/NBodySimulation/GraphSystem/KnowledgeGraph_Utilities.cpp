@@ -139,7 +139,14 @@ void AKnowledgeGraph::GpuGetPositions()
 // property walk that USTRUCT would require every GC cycle.
 void AKnowledgeGraph::AddReferencedObjects(UObject* InThis, FReferenceCollector& Collector)
 {
-	AKnowledgeGraph* This = CastChecked<AKnowledgeGraph>(InThis);
+	// Use Cast instead of CastChecked to survive hot-reload / Live Coding,
+	// where REINST_ classes from the old CDO will fail CastChecked.
+	AKnowledgeGraph* This = Cast<AKnowledgeGraph>(InThis);
+	if (!This)
+	{
+		Super::AddReferencedObjects(InThis, Collector);
+		return;
+	}
 
 	// Register UTextRenderComponent pointers inside GraphNodes with the GC
 	for (GraphNode& Node : This->GraphNodes)

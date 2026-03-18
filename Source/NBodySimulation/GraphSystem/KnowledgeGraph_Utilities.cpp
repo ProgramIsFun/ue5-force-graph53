@@ -127,3 +127,33 @@ void AKnowledgeGraph::GpuGetPositions()
 	}
 	bGPUResultValid = true;
 }
+
+// GraphNode and GraphLink are plain C++ structs (not USTRUCT) holding UObject pointers
+// (UTextRenderComponent*, UStaticMeshComponent*) that the GC cannot see through reflection.
+// We use AddReferencedObjects instead of converting to USTRUCT+UPROPERTY because this graph
+// can have thousands of nodes/links — a direct C++ loop is faster than the reflection-based
+// property walk that USTRUCT would require every GC cycle.
+void AKnowledgeGraph::AddReferencedObjects(UObject* InThis, FReferenceCollector& Collector)
+{
+	AKnowledgeGraph* This = CastChecked<AKnowledgeGraph>(InThis);
+
+	// Register UTextRenderComponent pointers inside GraphNodes with the GC
+	for (GraphNode& Node : This->GraphNodes)
+	{
+		if (Node.textComponent)
+		{
+			Collector.AddReferencedObject(Node.textComponent);
+		}
+	}
+
+	// Register UStaticMeshComponent pointers inside GraphLinks with the GC
+	for (GraphLink& Link : This->GraphLinks)
+	{
+		if (Link.EdgeMeshComponent)
+		{
+			Collector.AddReferencedObject(Link.EdgeMeshComponent);
+		}
+	}
+
+	Super::AddReferencedObjects(InThis, Collector);
+}

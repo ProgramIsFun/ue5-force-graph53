@@ -145,9 +145,6 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, Instanced)
 	TObjectPtr<UInstancedStaticMeshComponent> InstancedStaticMeshComponent;
-
-	UPROPERTY(VisibleAnywhere)
-	TArray<UTextRenderComponent*> GraphNodeTextComponents;
 	
 
 	
@@ -241,6 +238,9 @@ public:
 	virtual void BeginDestroy() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void Tick(float DeltaTime) override;
+
+	// Register UObject pointers hidden inside GraphNodes/GraphLinks with the GC
+	static void AddReferencedObjects(UObject* InThis, FReferenceCollector& Collector);
 
 
 

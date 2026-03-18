@@ -25,8 +25,8 @@ class NBODYSIMULATION_API UGraphRenderer : public UActorComponent
 public:
 	UGraphRenderer();
 
-	// Initialize renderer with configuration
-	void Initialize(const FGraphConfiguration& Config, AActor* OwnerActor);
+	// Initialize renderer with configuration (stores pointer to live config for runtime updates)
+	void Initialize(const FGraphConfiguration& InConfig, AActor* InOwnerActor);
 
 	// Node rendering
 	void InitializeNodeVisuals(
@@ -73,8 +73,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	// Configuration
-	FGraphConfiguration Config;
+	// Configuration - pointer to live config owned by KnowledgeGraph actor
+	// This ensures runtime UI toggles are reflected immediately
+	const FGraphConfiguration* ConfigPtr = nullptr;
 	AActor* OwnerActor = nullptr;
 
 	// Node rendering

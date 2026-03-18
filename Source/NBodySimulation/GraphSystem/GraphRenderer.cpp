@@ -17,11 +17,11 @@ void UGraphRenderer::BeginPlay()
 
 void UGraphRenderer::Initialize(const FGraphConfiguration& InConfig, AActor* InOwnerActor)
 {
-	Config = InConfig;
+	ConfigPtr = &InConfig;
 	OwnerActor = InOwnerActor;
 
 	// Create instanced mesh component if needed
-	if (Config.bUseInstancedStaticMesh && !InstancedMeshComponent)
+	if (ConfigPtr->bUseInstancedStaticMesh && !InstancedMeshComponent)
 	{
 		InstancedMeshComponent = NewObject<UInstancedStaticMeshComponent>(
 			OwnerActor,
@@ -45,11 +45,11 @@ void UGraphRenderer::InitializeNodeVisuals(
 	TArray<GraphNode>& Nodes,
 	const TArray<FVector>& InitialPositions)
 {
-	if (Config.bUseInstancedStaticMesh && InstancedMeshComponent && Config.NodeMesh)
+	if (ConfigPtr->bUseInstancedStaticMesh && InstancedMeshComponent && ConfigPtr->NodeMesh)
 	{
 		// Prepare transforms for instanced rendering
 		NodeTransforms.SetNum(NodeCount);
-		float Scale = Config.InstancedMeshSize;
+		float Scale = ConfigPtr->InstancedMeshSize;
 
 		for (int32 i = 0; i < NodeCount; i++)
 		{
@@ -62,7 +62,7 @@ void UGraphRenderer::InitializeNodeVisuals(
 		}
 
 		// Set the mesh
-		InstancedMeshComponent->SetStaticMesh(Config.NodeMesh);
+		InstancedMeshComponent->SetStaticMesh(ConfigPtr->NodeMesh);
 
 		// Add all instances at once
 		InstancedMeshComponent->AddInstances(NodeTransforms, false);
@@ -77,7 +77,7 @@ void UGraphRenderer::UpdateNodePositions(
 	const TArray<GraphNode>& Nodes)
 {
 	// Update instanced mesh positions
-	if (Config.bUseInstancedStaticMesh && InstancedMeshComponent)
+	if (ConfigPtr->bUseInstancedStaticMesh && InstancedMeshComponent)
 	{
 		for (int32 i = 0; i < NodePositions.Num(); i++)
 		{
@@ -93,7 +93,7 @@ void UGraphRenderer::UpdateNodePositions(
 	}
 
 	// Update text component positions
-	if (Config.bUseTextRenderComponents)
+	if (ConfigPtr->bUseTextRenderComponents)
 	{
 		for (int32 i = 0; i < NodePositions.Num() && i < Nodes.Num(); i++)
 		{
@@ -110,7 +110,7 @@ void UGraphRenderer::RotateTextToFacePlayer(
 	const TArray<GraphNode>& Nodes,
 	const FVector& PlayerLocation)
 {
-	if (!Config.bUseTextRenderComponents || !Config.bRotateTextToFacePlayer)
+	if (!ConfigPtr->bUseTextRenderComponents || !ConfigPtr->bRotateTextToFacePlayer)
 	{
 		return;
 	}
@@ -132,7 +132,7 @@ void UGraphRenderer::InitializeLinkVisuals(
 	UStaticMesh* LinkMesh,
 	UMaterialInterface* LinkMaterial)
 {
-	if (!Config.bUseLinkStaticMesh || !LinkMesh || !OwnerActor)
+	if (!ConfigPtr->bUseLinkStaticMesh || !LinkMesh || !OwnerActor)
 	{
 		return;
 	}
@@ -177,7 +177,7 @@ void UGraphRenderer::UpdateLinkPositions(
 		const FVector Location2 = NodePositions[Link.TargetNodeIndex];
 
 		// Update static mesh links
-		if (Config.bUseLinkStaticMesh && Link.EdgeMeshComponent)
+		if (ConfigPtr->bUseLinkStaticMesh && Link.EdgeMeshComponent)
 		{
 			FVector ForwardVector = Location2 - Location1;
 			float CylinderHeight = ForwardVector.Size();
@@ -185,15 +185,15 @@ void UGraphRenderer::UpdateLinkPositions(
 
 			Link.EdgeMeshComponent->SetWorldLocation(Location1);
 			Link.EdgeMeshComponent->SetWorldScale3D(FVector(
-				Config.LinkThickness,
-				Config.LinkThickness,
-				Config.LinkLengthFineTune * CylinderHeight
+				ConfigPtr->LinkThickness,
+				ConfigPtr->LinkThickness,
+				ConfigPtr->LinkLengthFineTune * CylinderHeight
 			));
 			Link.EdgeMeshComponent->SetWorldRotation(Rotation);
 		}
 
 		// Draw debug lines
-		if (Config.bUseLinkDebugLine && World)
+		if (ConfigPtr->bUseLinkDebugLine && World)
 		{
 			DrawDebugLine(
 				World,
@@ -211,7 +211,7 @@ void UGraphRenderer::UpdateLinkPositions(
 
 void UGraphRenderer::SetTextSize(float Size, const TArray<GraphNode>& Nodes)
 {
-	if (!Config.bUseTextRenderComponents)
+	if (!ConfigPtr->bUseTextRenderComponents)
 	{
 		return;
 	}
@@ -227,7 +227,7 @@ void UGraphRenderer::SetTextSize(float Size, const TArray<GraphNode>& Nodes)
 
 void UGraphRenderer::AdjustTextSize(float Delta, const TArray<GraphNode>& Nodes)
 {
-	if (!Config.bUseTextRenderComponents)
+	if (!ConfigPtr->bUseTextRenderComponents)
 	{
 		return;
 	}
@@ -245,7 +245,7 @@ void UGraphRenderer::AdjustTextSize(float Delta, const TArray<GraphNode>& Nodes)
 void UGraphRenderer::ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>& Links)
 {
 	// Clear text components
-	if (Config.bUseTextRenderComponents)
+	if (ConfigPtr->bUseTextRenderComponents)
 	{
 		for (GraphNode& Node : Nodes)
 		{
@@ -260,7 +260,7 @@ void UGraphRenderer::ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>
 	}
 
 	// Clear instanced meshes
-	if (Config.bUseInstancedStaticMesh && InstancedMeshComponent)
+	if (ConfigPtr->bUseInstancedStaticMesh && InstancedMeshComponent)
 	{
 		InstancedMeshComponent->ClearInstances();
 	}
@@ -282,7 +282,7 @@ void UGraphRenderer::ClearAllVisuals(TArray<GraphNode>& Nodes, TArray<GraphLink>
 
 void UGraphRenderer::CreateTextComponent(const FString& Text, int32 Index, TArray<GraphNode>& Nodes)
 {
-	if (!OwnerActor || !Config.bUseTextRenderComponents)
+	if (!OwnerActor || !ConfigPtr->bUseTextRenderComponents)
 	{
 		return;
 	}
@@ -296,7 +296,7 @@ void UGraphRenderer::CreateTextComponent(const FString& Text, int32 Index, TArra
 	{
 		TextComponent->SetText(FText::FromString(Text));
 		TextComponent->SetupAttachment(OwnerActor->GetRootComponent());
-		TextComponent->SetWorldSize(Config.TextSize);
+		TextComponent->SetWorldSize(ConfigPtr->TextSize);
 		TextComponent->RegisterComponent();
 		
 		if (Nodes.IsValidIndex(Index))
@@ -308,7 +308,7 @@ void UGraphRenderer::CreateTextComponent(const FString& Text, int32 Index, TArra
 
 void UGraphRenderer::LogMessage(const FString& Message, bool bForceLog) const
 {
-	if (Config.bEnableLogging || bForceLog)
+	if (ConfigPtr->bEnableLogging || bForceLog)
 	{
 		UE_LOG(LogTemp, Log, TEXT("[GraphRenderer] %s"), *Message);
 	}

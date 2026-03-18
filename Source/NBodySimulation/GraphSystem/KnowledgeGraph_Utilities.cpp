@@ -6,9 +6,9 @@
 //
 // Key Functions:
 // - GetPlayerLocation(): Gets current player position
-// - update_alpha(): Updates simulation cooling parameter
-// - is_graph_stabilized(): Checks if simulation has converged
-// - gpu_get_positions(): Retrieves positions from GPU compute shader
+// - UpdateAlpha(): Updates simulation cooling parameter
+// - IsGraphStabilized(): Checks if simulation has converged
+// - GpuGetPositions(): Retrieves positions from GPU compute shader
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph2/3.cpp
 
@@ -41,7 +41,7 @@ FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()
 	return CurrentLocation;
 }
 
-void AKnowledgeGraph::update_iterations()
+void AKnowledgeGraph::UpdateIterations()
 {
 	bool log = false;
 	SimulationIterationCount += 1;
@@ -50,34 +50,34 @@ void AKnowledgeGraph::update_iterations()
 	LogMessage("iterations: " + FString::FromInt(SimulationIterationCount), log);
 }
 
-void AKnowledgeGraph::update_alpha()
+void AKnowledgeGraph::UpdateAlpha()
 {
 	bool log = true;
 	Config.Alpha += (Config.AlphaTarget - Config.Alpha) * Config.AlphaDecay; //need to restart this if want to keep moving
 	LogMessage("alpha After update, pass to the gpu later: " + FString::SanitizeFloat(Config.Alpha), log);
 }
 
-bool AKnowledgeGraph::is_graph_stabilized(bool log)
+bool AKnowledgeGraph::IsGraphStabilized(bool log)
 {
 	// LogMessage("alpha Before update: " + FString::SanitizeFloat(Config.Alpha), log);
 	if (Config.Alpha < Config.AlphaMin)
 	{
 		LogMessage("alpha is less than alphaMin", log);
 		FNBodySimModule::Get().EndRendering();
-		// update_link_position();
+		// UpdateLinkPosition();
 		return true;
 	}
 	return false;
 }
 
-void AKnowledgeGraph::update_parameter_in_shader(float DeltaTime)
+void AKnowledgeGraph::UpdateParameterInShader(float DeltaTime)
 {
 	float ShaderDeltaTime = 1.0f;
 	SimParameters.DeltaTime = ShaderDeltaTime;
 	FNBodySimModule::Get().UpdateDeltaTime(ShaderDeltaTime, Config.Alpha);
 }
 
-void AKnowledgeGraph::pass_parameters_to_shader_management()
+void AKnowledgeGraph::PassParametersToShaderManagement()
 {
 	SimParameters.ViewportWidth = 8000.0;
 	SimParameters.CameraAspectRatio = 1.777778;
@@ -89,7 +89,7 @@ void AKnowledgeGraph::pass_parameters_to_shader_management()
 	FNBodySimModule::Get().InitWithParameters(SimParameters);
 }
 
-void AKnowledgeGraph::gpu_get_positions()
+void AKnowledgeGraph::GpuGetPositions()
 {
 	// Retrieve GPU computed bodies position.
 	TArray<FVector3f> GPUOutputPositions = FNBodySimModule::Get().GetComputedPositions();
@@ -127,5 +127,3 @@ void AKnowledgeGraph::gpu_get_positions()
 	}
 	GPUvalid = true;
 }
-
-

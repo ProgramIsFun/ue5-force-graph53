@@ -6,9 +6,9 @@
 //
 // Key Functions:
 // - OnGraphDataLoadedCallback(): Async callback when data is loaded
-// - prepare(): Initiates graph data loading based on creation mode
-// - generate_objects_for_node_and_link_new(): Creates visual objects from data
-// - request_graph_http(): Legacy HTTP request functions (kept for compatibility)
+// - Prepare(): Initiates graph data loading based on creation mode
+// - GenerateObjectsForNodeAndLinkNew(): Creates visual objects from data
+// - RequestGraphHttp(): Legacy HTTP request functions (kept for compatibility)
 //
 // Part of the KnowledgeGraph refactoring - integrates GraphDataManager component
 
@@ -80,7 +80,7 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	// Node properties are stored in DataManager (FNodeData::Properties), no duplication needed
 
 	// Now continue with the old flow
-	initialize_arrays();
+	InitializeArrays();
 	
 	// Copy links to old format and create their meshes
 	// LoadedLinks already declared at the top of the function
@@ -88,23 +88,23 @@ void AKnowledgeGraph::OnGraphDataLoadedCallback(bool bSuccess)
 	
 	for (int32 i = 0; i < LoadedLinks.Num(); i++)
 	{
-		// Use add_edge to properly create the link with its mesh
-		add_edge(i, LoadedLinks[i].SourceIndex, LoadedLinks[i].TargetIndex);
+		// Use AddEdge to properly create the link with its mesh
+		AddEdge(i, LoadedLinks[i].SourceIndex, LoadedLinks[i].TargetIndex);
 	}
 	
-	if (generate_objects_for_node_and_link_new())
+	if (GenerateObjectsForNodeAndLinkNew())
 	{
 		return;
 	}
 
 	LogMessage("post generate graph", true, 0);
-	post_generate_graph();
+	PostGenerateGraph();
 }
 
 // Updated prepare() function to use DataManager
-void AKnowledgeGraph::prepare()
+void AKnowledgeGraph::Prepare()
 {
-	LogMessage("prepare() called - using new DataManager", true, 0);
+	LogMessage("Prepare() called - using new DataManager", true, 0);
 
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
@@ -112,16 +112,16 @@ void AKnowledgeGraph::prepare()
 		LogMessage("Auto-generate mode", true, 0);
 		TotalNodeCount = Config.AutoGenerateNodeCount;
 		
-		initialize_arrays();
-		miscellaneous(); // Creates the links
+		InitializeArrays();
+		Miscellaneous(); // Creates the links
 		
-		if (generate_objects_for_node_and_link())
+		if (GenerateObjectsForNodeAndLink())
 		{
 			return;
 		}
 
 		LogMessage("post generate graph", true, 0);
-		post_generate_graph();
+		PostGenerateGraph();
 	}
 	else
 	{
@@ -152,7 +152,7 @@ void AKnowledgeGraph::prepare()
 
 
 // Updated generate_objects_for_node_and_link to work with DataManager
-bool AKnowledgeGraph::generate_objects_for_node_and_link_new()
+bool AKnowledgeGraph::GenerateObjectsForNodeAndLinkNew()
 {
 	bool log = true;
 	
@@ -200,7 +200,7 @@ void AKnowledgeGraph::RequestAGraph()
 	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
 		LogMessage("CreationMode is database via HTTP. ", true, 0, TEXT("YourFunction: "));
-		request_graph_http();
+		RequestGraphHttp();
 	}
 	else
 	{
@@ -230,11 +230,11 @@ void AKnowledgeGraph::RequestAGraph()
 		{
 			LogMessage("CreationMode is something else, should be auto generate. ", true, 0, TEXT("YourFunction: "));
 		}
-		default_generate_graph_method();
+		DefaultGenerateGraphMethod();
 	}
 }
 
-void AKnowledgeGraph::request_graph_http()
+void AKnowledgeGraph::RequestGraphHttp()
 {
 	TSharedPtr<FJsonObject> Js = MakeShareable(new FJsonObject());
 	Js->SetStringField("some_field", "some_value");
@@ -247,19 +247,19 @@ void AKnowledgeGraph::request_graph_http()
 	HttpRequest->SetURL(Config.GraphDatabaseQueryUrl);
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,
-		&AKnowledgeGraph::request_graph_httpCompleted
+		&AKnowledgeGraph::RequestGraphHttpCompleted
 	);
 	HttpRequest->ProcessRequest();
 	LogMessage("YourFunction called", true, 0, TEXT("YourFunction: "));
 }
 
-void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+void AKnowledgeGraph::RequestGraphHttpCompleted(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
 	bool log = true;
-	LogMessage("request_graph_httpCompleted called", log, 0, TEXT("request_graph_httpCompleted: "));
+	LogMessage("RequestGraphHttpCompleted called", log, 0, TEXT("RequestGraphHttpCompleted: "));
 	if (bWasSuccessful)
 	{
-		LogMessage("Request was successful", log, 0, TEXT("request_graph_httpCompleted: "));
+		LogMessage("Request was successful", log, 0, TEXT("RequestGraphHttpCompleted: "));
 		if (
 			Response->GetContentType() == "application/json" ||
 			Response->GetContentType() == "application/json; charset=utf-8"
@@ -273,8 +273,8 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 			if (FJsonSerializer::Deserialize(JsonReader, JsonObject1) &&
 				JsonObject1.IsValid())
 			{
-				LogMessage("Successfully parsed JSON.", log, 0, TEXT("request_graph_httpCompleted: "));
-				default_generate_graph_method();
+				LogMessage("Successfully parsed JSON.", log, 0, TEXT("RequestGraphHttpCompleted: "));
+				DefaultGenerateGraphMethod();
 			}
 			else
 			{
@@ -289,11 +289,11 @@ void AKnowledgeGraph::request_graph_httpCompleted(FHttpRequestPtr Request, FHttp
 	}
 	else
 	{
-		debug_error_request(Request, Response);
+		DebugErrorRequest(Request, Response);
 	}
 }
 
-void AKnowledgeGraph::debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response)
+void AKnowledgeGraph::DebugErrorRequest(FHttpRequestPtr Request, FHttpResponsePtr Response)
 {
 	precheck_succeed = false;
 	LogMessage("Request failed", true, 2);

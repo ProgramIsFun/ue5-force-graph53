@@ -23,12 +23,12 @@ void AKnowledgeGraph::GenerateTextRenderComponentAndAttach(FString name,int32 in
 	}
 }
 
-void AKnowledgeGraph::get_number_of_nodes()
+void AKnowledgeGraph::GetNumberOfNodes()
 {
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
 	{
 		LogMessage("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
-		   TEXT("get_number_of_nodes: "));
+		   TEXT("GetNumberOfNodes: "));
 		TotalNodeCount = Config.AutoGenerateNodeCount;
 	}
 	if (Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase)
@@ -57,7 +57,7 @@ void AKnowledgeGraph::get_number_of_nodes()
 	}
 }
 
-void AKnowledgeGraph::create_one_to_one_mapping()
+void AKnowledgeGraph::CreateOneToOneMapping()
 {
 	// Create one-to-one mapping between string IDs and integer indices
 	
@@ -85,7 +85,7 @@ void AKnowledgeGraph::create_one_to_one_mapping()
 	}
 }
 
-void AKnowledgeGraph::miscellaneous()
+void AKnowledgeGraph::Miscellaneous()
 {
 	GraphLinks.SetNumUninitialized(TotalNodeCount-1);
 
@@ -100,7 +100,7 @@ void AKnowledgeGraph::miscellaneous()
 
 			// Connected to random node 
 			int jtarget = FMath::RandRange(0, i - 1);
-			add_edge(jid, jsource, jtarget);
+			AddEdge(jid, jsource, jtarget);
 		}
 	}
 	else
@@ -113,12 +113,12 @@ void AKnowledgeGraph::miscellaneous()
 
 			// Connected to random node 
 			int jtarget = i - 1;
-			add_edge(jid, jsource, jtarget);
+			AddEdge(jid, jsource, jtarget);
 		}
 	}
 }
 
-void AKnowledgeGraph::set_array_lengths()
+void AKnowledgeGraph::SetArrayLengths()
 {
 	// Safety check to prevent memory allocation crashes
 	if (TotalNodeCount <= 0 || TotalNodeCount > 100000)
@@ -144,7 +144,7 @@ void AKnowledgeGraph::set_array_lengths()
 	}
 }
 
-void AKnowledgeGraph::set_array_values()
+void AKnowledgeGraph::SetArrayValues()
 {
 	for (FVector& velocity : nodeVelocities)
 	{
@@ -154,13 +154,13 @@ void AKnowledgeGraph::set_array_values()
 	}
 }
 
-void AKnowledgeGraph::initialize_arrays()
+void AKnowledgeGraph::InitializeArrays()
 {
-	set_array_lengths();
-	set_array_values();
+	SetArrayLengths();
+	SetArrayValues();
 }
 
-bool AKnowledgeGraph::generate_objects_for_node_and_link()
+bool AKnowledgeGraph::GenerateObjectsForNodeAndLink()
 {
 	bool log = true;
 	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
@@ -174,7 +174,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 				GenerateTextRenderComponentAndAttach(name,i);
 			}
 		}
-		miscellaneous();
+		Miscellaneous();
 	}
 	else
 	{
@@ -230,7 +230,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 			int jsource = string_to_id[jsourceS];
 			int jtarget = string_to_id[jtargetS];
 			// LogMessage("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
-			add_edge(i, jsource, jtarget);
+			AddEdge(i, jsource, jtarget);
 		}
 
 		LogMessage("Number of link generated: " + FString::FromInt(jedges.Num()), log);
@@ -238,7 +238,7 @@ bool AKnowledgeGraph::generate_objects_for_node_and_link()
 	return false;
 }
 
-void AKnowledgeGraph::deal_with_predefined_location()
+void AKnowledgeGraph::DealWithPredefinedLocation()
 {
 	bool log=Config.bEnableLogging;
 	predefined_positions.SetNumUninitialized(TotalNodeCount);
@@ -311,23 +311,23 @@ void AKnowledgeGraph::deal_with_predefined_location()
 	}
 }
 
-void AKnowledgeGraph::default_generate_graph_method()
+void AKnowledgeGraph::DefaultGenerateGraphMethod()
 {
 
-	get_number_of_nodes();
+	GetNumberOfNodes();
 
 	if (
 		Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase
 	)
 	{
-		LogMessage("creating one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
-		create_one_to_one_mapping();
+		LogMessage("creating one to one mapping", true, 0, TEXT("DefaultGenerateGraphMethod: "));
+		CreateOneToOneMapping();
 	}else
 	{
-		LogMessage("auto generate graph, no need to create one to one mapping", true, 0, TEXT("default_generate_graph_method: "));
+		LogMessage("auto generate graph, no need to create one to one mapping", true, 0, TEXT("DefaultGenerateGraphMethod: "));
 	}
 	
-	initialize_arrays();
+	InitializeArrays();
 	
 	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
 	{
@@ -337,25 +337,25 @@ void AKnowledgeGraph::default_generate_graph_method()
 		
 	}
 	
-	if (generate_objects_for_node_and_link())
+	if (GenerateObjectsForNodeAndLink())
 	{
 		return;
 	}
 
 	if (Config.bUsePredefinedLocation)
 	{	
-		deal_with_predefined_location();
+		DealWithPredefinedLocation();
 	}else
 	{
-		LogMessage("not using predefined location", true, 0, TEXT("default_generate_graph_method: "));
+		LogMessage("not using predefined location", true, 0, TEXT("DefaultGenerateGraphMethod: "));
 	}
 
-	LogMessage("post generate graph", true, 0, TEXT("default_generate_graph_method: "));
-	post_generate_graph();
+	LogMessage("post generate graph", true, 0, TEXT("DefaultGenerateGraphMethod: "));
+	PostGenerateGraph();
 }
 
 
-void AKnowledgeGraph::calculate_link_force_and_update_velocity()
+void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 {
 	bool log = Config.bEnableLogging;
 
@@ -410,7 +410,7 @@ void AKnowledgeGraph::calculate_link_force_and_update_velocity()
 	}
 }
 
-void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
+void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 {
 	bool log = Config.bEnableLogging;
 	bool log2 = false;
@@ -519,7 +519,7 @@ void AKnowledgeGraph::calculate_charge_force_and_update_velocity()
 	}
 }
 
-void AKnowledgeGraph::calculate_centre_force_and_update_position()
+void AKnowledgeGraph::CalculateCentreForceAndUpdatePosition()
 {
 	// Following is javascript implementation of Center Force
 	// for (i = 0; i < n; ++i) {
@@ -582,7 +582,7 @@ void AKnowledgeGraph::calculate_centre_force_and_update_position()
 }
 
 
-void AKnowledgeGraph::update_position_array_according_to_velocity_array()
+void AKnowledgeGraph::UpdatePositionArrayAccordingToVelocityArray()
 {
 	if (!Config.bUseParallelProcessing)
 	{
@@ -604,7 +604,7 @@ void AKnowledgeGraph::update_position_array_according_to_velocity_array()
 	}
 }
 
-void AKnowledgeGraph::update_link_position()
+void AKnowledgeGraph::UpdateLinkPosition()
 {
 	for (auto& link : GraphLinks)
 	{
@@ -664,7 +664,7 @@ void AKnowledgeGraph::update_link_position()
 	}
 }
 
-void AKnowledgeGraph::apply_force()
+void AKnowledgeGraph::ApplyForce()
 {
 	bool log = Config.bEnableLogging;
 
@@ -675,7 +675,7 @@ void AKnowledgeGraph::apply_force()
 	if (Config.bCalculateLinkForce)
 	{
 		LogMessage("Ready to calculate link.--------------------------------------", log);
-		calculate_link_force_and_update_velocity();
+		CalculateLinkForceAndUpdateVelocity();
 		LogMessage("Finish calculating link.--------------------------------------", log);
 	}
 	else
@@ -688,7 +688,7 @@ void AKnowledgeGraph::apply_force()
 	{
 		LogMessage("Ready to calculate charge.--------------------------------------", log);
 
-		calculate_charge_force_and_update_velocity();
+		CalculateChargeForceAndUpdateVelocity();
 		LogMessage("Finish calculating charge.--------------------------------------", log);
 	}
 	else
@@ -703,12 +703,12 @@ void AKnowledgeGraph::apply_force()
 	}
 	else
 	{
-		calculate_centre_force_and_update_position();
+		CalculateCentreForceAndUpdatePosition();
 	}
 }
 
 
-void AKnowledgeGraph::initialize_node_position()
+void AKnowledgeGraph::InitializeNodePosition()
 {
 	if (Config.bInitializeUsingActorLocation)
 	{
@@ -721,7 +721,7 @@ void AKnowledgeGraph::initialize_node_position()
 			int32 index = 0; index < TotalNodeCount; index++
 		)
 		{
-			initialize_node_position_individual(
+			InitializeNodePositionIndividual(
 				index);
 		}
 	}
@@ -730,7 +730,7 @@ void AKnowledgeGraph::initialize_node_position()
 		ParallelFor(
 			TotalNodeCount, [&](int32 index)
 			{
-				initialize_node_position_individual(
+				InitializeNodePositionIndividual(
 					index);
 			}
 		);
@@ -742,7 +742,7 @@ void AKnowledgeGraph::initialize_node_position()
 	}
 }
 
-void AKnowledgeGraph::initialize_node_position_individual(int index)
+void AKnowledgeGraph::InitializeNodePositionIndividual(int index)
 {
 	// Fibonacci/golden angle spiral distribution for initial node positions
 	// Reference: d3-force initial positioning algorithm (https://github.com/d3/d3-force)
@@ -856,7 +856,7 @@ void AKnowledgeGraph::initialize_node_position_individual(int index)
 
 
 
-void AKnowledgeGraph::update_node_world_position_according_to_position_array()
+void AKnowledgeGraph::UpdateNodeWorldPositionAccordingToPositionArray()
 {
 	if (Config.bUseGPUShaders && !GPUvalid)
 	{
@@ -888,7 +888,7 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array()
 	}
 }
 
-void AKnowledgeGraph::calculate_bias_and_strength_of_links()
+void AKnowledgeGraph::CalculateBiasAndStrengthOfLinks()
 {
 	// Calculate link bias and strength based on node degree (number of connections)
 	// Reference: d3-force link force implementation (https://github.com/d3/d3-force)
@@ -1087,7 +1087,7 @@ void AKnowledgeGraph::calculate_bias_and_strength_of_links()
 }
 
 
-void AKnowledgeGraph::add_edge(int32 id, int32 source, int32 target)
+void AKnowledgeGraph::AddEdge(int32 id, int32 source, int32 target)
 {
 	GraphLink link = GraphLink(source, target);
 

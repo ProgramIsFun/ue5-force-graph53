@@ -222,7 +222,7 @@ void AKnowledgeGraph::ReloadTheWholeGraph()
 	graph_requesting = true;
 	graph_initialized = false;
 	use_predefined_position_should_update_once = true;
-	prepare();
+	Prepare();
 }
 
 void AKnowledgeGraph::LateAddNode(FString NodeName, FString id, FVector location)

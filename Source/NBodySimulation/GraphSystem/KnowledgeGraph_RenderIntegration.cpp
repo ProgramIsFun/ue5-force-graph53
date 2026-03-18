@@ -6,12 +6,12 @@
 
 // Wrapper functions that delegate to Renderer
 
-void AKnowledgeGraph::update_node_world_position_according_to_position_array_new()
+void AKnowledgeGraph::UpdateNodeWorldPositionAccordingToPositionArrayNew()
 {
 	if (!Renderer)
 	{
 		LogMessage("Renderer is null, falling back to old method", true, 1);
-		update_node_world_position_according_to_position_array();
+		UpdateNodeWorldPositionAccordingToPositionArray();
 		return;
 	}
 
@@ -25,12 +25,12 @@ void AKnowledgeGraph::update_node_world_position_according_to_position_array_new
 	Renderer->UpdateNodePositions(nodePositions, GraphNodes);
 }
 
-void AKnowledgeGraph::update_link_position_new()
+void AKnowledgeGraph::UpdateLinkPositionNew()
 {
 	if (!Renderer)
 	{
 		LogMessage("Renderer is null, falling back to old method", true, 1);
-		update_link_position();
+		UpdateLinkPosition();
 		return;
 	}
 
@@ -44,12 +44,12 @@ void AKnowledgeGraph::update_link_position_new()
 	Renderer->UpdateLinkPositions(GraphLinks, nodePositions, GetWorld());
 }
 
-void AKnowledgeGraph::rotate_to_face_player_new()
+void AKnowledgeGraph::RotateToFacePlayerNew()
 {
 	if (!Renderer)
 	{
 		LogMessage("Renderer is null, falling back to old method", true, 1);
-		rotate_to_face_player111();
+		RotateToFacePlayer();
 		return;
 	}
 

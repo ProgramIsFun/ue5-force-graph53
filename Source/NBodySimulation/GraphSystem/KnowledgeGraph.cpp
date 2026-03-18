@@ -98,7 +98,7 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 			{
 				LogMessage("Graph is not initialized and also not requested. We need to request a graph. ", true, 2);
 				graph_requesting = true;
-				prepare();
+				Prepare();
 			}
 			
 		}else
@@ -112,7 +112,7 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 				return;
 			}
 	
-			main_function(DeltaTime);
+			MainFunction(DeltaTime);
 		}
 	}
 	

@@ -5,27 +5,27 @@
 // handles stabilization, and coordinates updates between physics and rendering.
 //
 // Key Functions:
-// - main_function(): Main simulation loop called every tick
-// - post_generate_graph(): Initialization after graph generation
-// - cpu_calculate(): Legacy CPU physics calculation (fallback)
-// - update_position_array(): Dispatches to GPU or CPU physics
+// - MainFunction(): Main simulation loop called every tick
+// - PostGenerateGraph(): Initialization after graph generation
+// - CpuCalculate(): Legacy CPU physics calculation (fallback)
+// - UpdatePositionArray(): Dispatches to GPU or CPU physics
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph3.cpp
 
 #include "KnowledgeGraph.h"
 
-void AKnowledgeGraph::post_generate_graph()
+void AKnowledgeGraph::PostGenerateGraph()
 {
-	initialize_node_position();
+	InitializeNodePosition();
 	
-	calculate_bias_and_strength_of_links();
+	CalculateBiasAndStrengthOfLinks();
 	
 	// Initialize physics simulator
 	InitializePhysicsSimulator();
 	
 	if (Config.bUseGPUShaders)
 	{
-		pass_parameters_to_shader_management();
+		PassParametersToShaderManagement();
 	}
 	else
 	{
@@ -37,50 +37,50 @@ void AKnowledgeGraph::post_generate_graph()
 	graph_initialized = true;
 }
 
-void AKnowledgeGraph::update_position_array(bool log)
+void AKnowledgeGraph::UpdatePositionArray(bool log)
 {
 	if (Config.bUseGPUShaders)
 	{
-		gpu_get_positions();
+		GpuGetPositions();
 	}
 	else
 	{
 		// Use new physics simulator if available, otherwise fall back to old method
 		if (PhysicsSimulator)
 		{
-			cpu_calculate_new();
+			CpuCalculateNew();
 		}
 		else
 		{
-			cpu_calculate();
+			CpuCalculate();
 		}
 	}
 }
 
-void AKnowledgeGraph::cpu_calculate()
+void AKnowledgeGraph::CpuCalculate()
 {
 	bool log = Config.bEnableLogging;
 
 	// Safety check: Ensure arrays are initialized before simulation
 	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
 	{
-		LogMessage("Arrays not initialized yet, skipping cpu_calculate", log, 1);
+		LogMessage("Arrays not initialized yet, skipping CpuCalculate", log, 1);
 		return;
 	}
 
-	apply_force();
-	update_position_array_according_to_velocity_array();
+	ApplyForce();
+	UpdatePositionArrayAccordingToVelocityArray();
 }
 
-bool AKnowledgeGraph::main_function(float DeltaTime)
+bool AKnowledgeGraph::MainFunction(float DeltaTime)
 {
 	bool log = Config.bEnableLogging;
 
-	LogMessage("main_function called", log, 0, TEXT("main_function: "));
+	LogMessage("MainFunction called", log, 0, TEXT("MainFunction: "));
 
-	update_iterations();
+	UpdateIterations();
 
-	if (is_graph_stabilized(log))
+	if (IsGraphStabilized(log))
 	{
 		if (Config.bUsePredefinedLocation)
 		{
@@ -90,13 +90,13 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 				// Use new renderer if available
 				if (Renderer)
 				{
-					update_node_world_position_according_to_position_array_new();
-					update_link_position_new();
+					UpdateNodeWorldPositionAccordingToPositionArrayNew();
+					UpdateLinkPositionNew();
 				}
 				else
 				{
-					update_node_world_position_according_to_position_array();
-					update_link_position();
+					UpdateNodeWorldPositionAccordingToPositionArray();
+					UpdateLinkPosition();
 				}
 			}
 		}
@@ -106,27 +106,27 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 		{
 			if (Renderer)
 			{
-				update_link_position_new();
+				UpdateLinkPositionNew();
 			}
 			else
 			{
-				update_link_position();
+				UpdateLinkPosition();
 			}
 		}
 	}
 	else
 	{
-		update_alpha();
-		update_position_array(log);
+		UpdateAlpha();
+		UpdatePositionArray(log);
 
 		// Use new renderer if available
 		if (Renderer)
 		{
-			update_node_world_position_according_to_position_array_new();
+			UpdateNodeWorldPositionAccordingToPositionArrayNew();
 		}
 		else
 		{
-			update_node_world_position_according_to_position_array();
+			UpdateNodeWorldPositionAccordingToPositionArray();
 		}
 
 		if (Config.bUpdateLinkBeforeStabilize)
@@ -134,17 +134,17 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 			LogMessage("update link position", log);
 			if (Renderer)
 			{
-				update_link_position_new();
+				UpdateLinkPositionNew();
 			}
 			else
 			{
-				update_link_position();
+				UpdateLinkPosition();
 			}
 		}
 	
 		if (Config.bUseGPUShaders)
 		{
-			update_parameter_in_shader(DeltaTime);
+			UpdateParameterInShader(DeltaTime);
 		}
 	}
 	
@@ -152,18 +152,18 @@ bool AKnowledgeGraph::main_function(float DeltaTime)
 	{
 		if (Renderer)
 		{
-			rotate_to_face_player_new();
+			RotateToFacePlayerNew();
 		}
 		else
 		{
-			rotate_to_face_player111();
+			RotateToFacePlayer();
 		}
 	}
 	
 	return false;
 }
 
-void AKnowledgeGraph::rotate_to_face_player111()
+void AKnowledgeGraph::RotateToFacePlayer()
 {
 	// Safety check: Ensure arrays are initialized
 	if (nodePositions.Num() == 0 || GraphNodes.Num() == 0)

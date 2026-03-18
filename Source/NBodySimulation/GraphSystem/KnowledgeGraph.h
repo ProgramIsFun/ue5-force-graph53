@@ -163,46 +163,46 @@ public:
 
 
 	// Internal functions. 
-	void gpu_get_positions();
-	bool main_function(float DeltaTime);
-	void rotate_to_face_player111();
-	void pass_parameters_to_shader_management();
-	void post_generate_graph();
-	void prepare();
-	void update_parameter_in_shader(float DeltaTime);
-	bool is_graph_stabilized(bool log);
-	void cpu_calculate();
-	void update_position_array(bool log);
-	void update_alpha();
-	void update_iterations();
+	void GpuGetPositions();
+	bool MainFunction(float DeltaTime);
+	void RotateToFacePlayer();
+	void PassParametersToShaderManagement();
+	void PostGenerateGraph();
+	void Prepare();
+	void UpdateParameterInShader(float DeltaTime);
+	bool IsGraphStabilized(bool log);
+	void CpuCalculate();
+	void UpdatePositionArray(bool log);
+	void UpdateAlpha();
+	void UpdateIterations();
 	void GenerateTextRenderComponentAndAttach(FString name,int32 index);
-	void get_number_of_nodes();
-	void create_one_to_one_mapping();
-	void miscellaneous();
-	void set_array_lengths();
-	void set_array_values();
-	void initialize_arrays();
-	bool generate_objects_for_node_and_link();
-	bool generate_objects_for_node_and_link_new(); // New version using DataManager
-	void deal_with_predefined_location();
-	void default_generate_graph_method();
-	void add_edge(int32 id, int32 source, int32 target);
-	void initialize_node_position();
-	void initialize_node_position_individual(int index);
+	void GetNumberOfNodes();
+	void CreateOneToOneMapping();
+	void Miscellaneous();
+	void SetArrayLengths();
+	void SetArrayValues();
+	void InitializeArrays();
+	bool GenerateObjectsForNodeAndLink();
+	bool GenerateObjectsForNodeAndLinkNew(); // New version using DataManager
+	void DealWithPredefinedLocation();
+	void DefaultGenerateGraphMethod();
+	void AddEdge(int32 id, int32 source, int32 target);
+	void InitializeNodePosition();
+	void InitializeNodePositionIndividual(int index);
 	FVector GetPlayerLocation();
 	FVector GetLocationInFrontOfPlayer();
-	void calculate_bias_and_strength_of_links();
-	void apply_force();
-	void calculate_link_force_and_update_velocity();
-	void calculate_charge_force_and_update_velocity();
-	void calculate_centre_force_and_update_position();
-	void update_node_world_position_according_to_position_array();
-	void update_position_array_according_to_velocity_array();
-	void update_link_position();
-	void request_graph_httpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void request_graph_http();
+	void CalculateBiasAndStrengthOfLinks();
+	void ApplyForce();
+	void CalculateLinkForceAndUpdateVelocity();
+	void CalculateChargeForceAndUpdateVelocity();
+	void CalculateCentreForceAndUpdatePosition();
+	void UpdateNodeWorldPositionAccordingToPositionArray();
+	void UpdatePositionArrayAccordingToVelocityArray();
+	void UpdateLinkPosition();
+	void RequestGraphHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+	void RequestGraphHttp();
 	void RequestAGraph();
-	void debug_error_request(FHttpRequestPtr Request, FHttpResponsePtr Response);
+	void DebugErrorRequest(FHttpRequestPtr Request, FHttpResponsePtr Response);
 
 	// New callback for DataManager
 	UFUNCTION()
@@ -210,12 +210,12 @@ public:
 
 	// Physics simulator integration
 	void InitializePhysicsSimulator();
-	void cpu_calculate_new(); // New version using PhysicsSimulator
+	void CpuCalculateNew(); // New version using PhysicsSimulator
 
 	// Renderer integration
-	void update_node_world_position_according_to_position_array_new();
-	void update_link_position_new();
-	void rotate_to_face_player_new();
+	void UpdateNodeWorldPositionAccordingToPositionArrayNew();
+	void UpdateLinkPositionNew();
+	void RotateToFacePlayerNew();
 
 
 

@@ -33,12 +33,12 @@ void AKnowledgeGraph::InitializePhysicsSimulator()
 }
 
 // New CPU calculate using PhysicsSimulator
-void AKnowledgeGraph::cpu_calculate_new()
+void AKnowledgeGraph::CpuCalculateNew()
 {
 	if (!PhysicsSimulator)
 	{
 		LogMessage("PhysicsSimulator is null, falling back to old method", true, 1);
-		cpu_calculate();
+		CpuCalculate();
 		return;
 	}
 

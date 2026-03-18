@@ -48,6 +48,15 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 		}
 	});
 
+	AddActionButton(TEXT("Add Node In Front"), [this]()
+	{
+		if (GraphActorRef)
+		{
+			FString RandomNodeName = FString::Printf(TEXT("Node_%d"), FMath::RandRange(1000, 9999));
+			GraphActorRef->RequestAddGraphNode(RandomNodeName);
+		}
+	});
+
 	RefreshAllLabels();
 }
 

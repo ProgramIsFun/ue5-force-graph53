@@ -72,7 +72,7 @@ void AKnowledgeGraph::RequestAddGraphNode(FString NodeName, int32 LinkTargetNode
 	else
 	{
 		// AutoGenerate / FromJson: apply immediately
-		FVector SpawnPosition = GetPlayerLocation();
+		FVector SpawnPosition = GetLocationInFrontOfPlayer();
 		FString GeneratedId = FString::Printf(TEXT("local_%d_%lld"), GraphNodes.Num(), FDateTime::Now().GetTicks());
 		AddGraphNodeLocal(NodeName, GeneratedId, SpawnPosition, LinkTargetNodeIndex);
 	}

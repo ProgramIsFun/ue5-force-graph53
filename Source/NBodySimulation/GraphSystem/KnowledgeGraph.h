@@ -109,7 +109,7 @@ public:
 	bool bServerConnectionFailed = false;
 	float ServerConnectionShutdownTimer = 5.0f;
 	FVector GraphOwnerPosition;
-	bool GPUvalid = false;
+	bool bGPUResultValid = false;
 	
 
 	

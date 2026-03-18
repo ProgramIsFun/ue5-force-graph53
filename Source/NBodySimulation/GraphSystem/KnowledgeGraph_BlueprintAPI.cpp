@@ -66,15 +66,15 @@ void AKnowledgeGraph::AddGraphNodeToDatabase(FString NodeName)
 	HttpRequest->SetHeader("Content-Type", "application/json");
 
 	// Create JSON Object
-	TSharedPtr<FJsonObject> json_object_772 = MakeShareable(new FJsonObject);
-	json_object_772->SetStringField("name", NodeName);
-	json_object_772->SetNumberField("locationX", player_location.X);
-	json_object_772->SetNumberField("locationY", player_location.Y);
-	json_object_772->SetNumberField("locationZ", player_location.Z);
+	TSharedPtr<FJsonObject> NodeJsonPayload = MakeShareable(new FJsonObject);
+	NodeJsonPayload->SetStringField("name", NodeName);
+	NodeJsonPayload->SetNumberField("locationX", player_location.X);
+	NodeJsonPayload->SetNumberField("locationY", player_location.Y);
+	NodeJsonPayload->SetNumberField("locationZ", player_location.Z);
 
 	FString RequestBody;
 	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&RequestBody);
-	FJsonSerializer::Serialize(json_object_772.ToSharedRef(), Writer);
+	FJsonSerializer::Serialize(NodeJsonPayload.ToSharedRef(), Writer);
 
 	HttpRequest->SetContentAsString(RequestBody);
 	HttpRequest->OnProcessRequestComplete().BindUObject(this, &AKnowledgeGraph::OnAddGraphNodeHttpCompleted);
@@ -139,10 +139,10 @@ void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 
 	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
-		auto string_id = NodeIdToStringMap[i];
+		auto NodeStringId = NodeIdToStringMap[i];
 		
 		Writer->WriteObjectStart();
-		Writer->WriteValue("ID", string_id);
+		Writer->WriteValue("ID", NodeStringId);
 		Writer->WriteObjectStart("unreal_engine_location_728");
 		Writer->WriteValue("X", nodePositions[i].X);
 		Writer->WriteValue("Y", nodePositions[i].Y);

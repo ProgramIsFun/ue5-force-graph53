@@ -630,7 +630,7 @@ void AKnowledgeGraph::InitializeNodePositionIndividual(int index)
 
 void AKnowledgeGraph::UpdateNodeWorldPositionAccordingToPositionArray()
 {
-	if (Config.bUseGPUShaders && !GPUvalid)
+	if (Config.bUseGPUShaders && !bGPUResultValid)
 	{
 		return;
 	}

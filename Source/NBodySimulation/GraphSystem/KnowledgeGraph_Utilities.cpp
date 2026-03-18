@@ -99,7 +99,7 @@ void AKnowledgeGraph::GpuGetPositions()
 		   FString::FromInt(SimParameters.Bodies.Num()) + ") Output(" + FString::FromInt(GPUOutputPositions.Num()) +
 		   ")", true, 2);
 
-		GPUvalid = false;
+		bGPUResultValid = false;
 		return;
 	}
 	else
@@ -116,7 +116,7 @@ void AKnowledgeGraph::GpuGetPositions()
 	if (SimulationIterationCount == 1)
 	{
 		LogMessage("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
-		GPUvalid = false;
+		bGPUResultValid = false;
 		return;
 	}
 
@@ -125,5 +125,5 @@ void AKnowledgeGraph::GpuGetPositions()
 		FVector NewPosition = FVector(GPUOutputPositions[i]);
 		nodePositions[i] = NewPosition;
 	}
-	GPUvalid = true;
+	bGPUResultValid = true;
 }

@@ -186,19 +186,18 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 	if (!Config.bUseBruteForceForManyBody)
 	{
 		//
-		OctreeData2 = new OctreeNode(
-		);
+		TUniquePtr<OctreeNode> OctreeScope(new OctreeNode());
 
 
-		OctreeData2->AddAll1(
+		OctreeScope->AddAll1(
 			GraphNodes,
 			nodePositions);
 
-		OctreeData2->AccumulateStrengthAndComputeCenterOfMass();
+		OctreeScope->AccumulateStrengthAndComputeCenterOfMass();
 
 		// LogAlways("tttttttttttttttttttttttt");
-		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeData2->CenterOfMass.ToString(), log);
-		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeData2->Strength), log);
+		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeScope->CenterOfMass.ToString(), log);
+		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeScope->Strength), log);
 
 
 		if (!Config.bUseParallelProcessing)
@@ -215,7 +214,7 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 					), log);
 
 
-				TraverseBFS(OctreeData2,
+				TraverseBFS(OctreeScope.Get(),
 				            SampleCallback,
 				            Config.Alpha,
 				            Index
@@ -231,14 +230,13 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 		{
 			ParallelFor(GraphNodes.Num(), [&](int32 Index)
 			{
-				TraverseBFS(OctreeData2,
+				TraverseBFS(OctreeScope.Get(),
 				            SampleCallback, Config.Alpha, Index, nodePositions, nodeVelocities);
 			});
 		}
 
 
-		LogMessage("Finished traversing, now we can delete the tree. ", log);
-		delete OctreeData2;
+		LogMessage("Finished traversing, now the tree will be cleaned up automatically. ", log);
 	}
 	else
 	{

@@ -115,7 +115,6 @@ public:
 	
 	// Important Variables.
 	int32 SelectedGraphNodeIndex = -1;
-	int32 PreviousSelectedGraphNodeIndex = -1;
 	FString SelectedGraphNodeName = "";
 	
 	// Total number of nodes in the graph (formerly: jnodessss)

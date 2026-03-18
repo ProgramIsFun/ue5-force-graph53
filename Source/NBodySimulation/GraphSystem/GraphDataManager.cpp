@@ -626,38 +626,38 @@ void UGraphDataManager::HandleRequestError(FHttpRequestPtr Request, FHttpRespons
 
 	if (!Response.IsValid())
 	{
-		LogMessage("No response received - possible causes:", 3);
-		LogMessage("  - Server is not running", 3);
-		LogMessage("  - Network connectivity issue", 3);
-		LogMessage("  - Firewall blocking connection", 3);
-		LogMessage("  - Request timeout", 3);
+		LogMessage("No response received - possible causes:", 2);
+		LogMessage("  - Server is not running", 2);
+		LogMessage("  - Network connectivity issue", 2);
+		LogMessage("  - Firewall blocking connection", 2);
+		LogMessage("  - Request timeout", 2);
 	}
 	else
 	{
 		const int32 ResponseCode = Response->GetResponseCode();
-		LogMessage("HTTP Status Code: " + FString::FromInt(ResponseCode) + " - " + GetHttpErrorDescription(ResponseCode), 3);
+		LogMessage("HTTP Status Code: " + FString::FromInt(ResponseCode) + " - " + GetHttpErrorDescription(ResponseCode), 2);
 		
 		const FString ResponseContent = Response->GetContentAsString();
 		if (!ResponseContent.IsEmpty())
 		{
-			LogMessage("Response Content (first 500 chars): " + ResponseContent.Left(500), 3);
+			LogMessage("Response Content (first 500 chars): " + ResponseContent.Left(500), 2);
 		}
 		else
 		{
-			LogMessage("Response body is empty", 3);
+			LogMessage("Response body is empty", 2);
 		}
 	}
 
 	if (Request.IsValid())
 	{
-		LogMessage("Request Details:", 3);
-		LogMessage("  HTTP Verb: " + Request->GetVerb(), 3);
-		LogMessage("  URL: " + Request->GetURL(), 3);
+		LogMessage("Request Details:", 2);
+		LogMessage("  HTTP Verb: " + Request->GetVerb(), 2);
+		LogMessage("  URL: " + Request->GetURL(), 2);
 		
 		const TArray<FString> Headers = Request->GetAllHeaders();
 		if (Headers.Num() > 0)
 		{
-			LogMessage("  Headers: " + FString::FromInt(Headers.Num()) + " total", 3);
+			LogMessage("  Headers: " + FString::FromInt(Headers.Num()) + " total", 2);
 		}
 	}
 }
@@ -792,8 +792,8 @@ void UGraphDataManager::LogMessage(const FString& Message, int32 Severity) const
 	case 2: // Error
 		UE_LOG(LogTemp, Error, TEXT("[GraphDataManager] %s"), *Message);
 		break;
-	case 3: // Critical
-		UE_LOG(LogTemp, Fatal, TEXT("[GraphDataManager] %s"), *Message);
+	case 3: // Critical (use Error, not Fatal — Fatal crashes the engine)
+		UE_LOG(LogTemp, Error, TEXT("[GraphDataManager] CRITICAL: %s"), *Message);
 		break;
 	}
 }

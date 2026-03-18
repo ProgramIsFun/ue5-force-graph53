@@ -255,7 +255,7 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 						{
 							l = sqrt(Config.DistanceMin * l);
 						}
-						nodeVelocities[NodeIdx] += dir * Config.NodeStrength * Config.Alpha / l;
+						nodeVelocities[NodeIdx] += dir * Config.NodeStrength * Config.Alpha * Config.UniversalGraphScale / l;
 					}
 				}
 			}

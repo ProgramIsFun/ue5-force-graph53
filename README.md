@@ -35,6 +35,8 @@ The compute shader code can be found at:
 
 ✅ **Stable** - Recent refactoring and improvements have been completed and are ready for testing.
 
+📋 **Recent Changes** - [Code Quality Fixes](CODE_QUALITY_FIXES_SUMMARY.md): Division-by-zero guards, Fatal log crash fix, null safety, and consistency fixes.
+
 ## Comparison to UE4 Force Graph
 
 This project is an improved version of [thomaswall/ue4-force-graph](https://github.com/thomaswall/ue4-force-graph).

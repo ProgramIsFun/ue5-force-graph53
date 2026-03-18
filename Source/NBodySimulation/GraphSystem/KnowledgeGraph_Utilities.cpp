@@ -17,7 +17,9 @@
 
 FVector AKnowledgeGraph::GetPlayerLocation()
 {
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	UWorld* World = GetWorld();
+	if (!World) { return FVector::ZeroVector; }
+	APlayerController* PlayerController = World->GetFirstPlayerController();
 	if (PlayerController && PlayerController->GetPawn())
 	{
 		return PlayerController->GetPawn()->GetActorLocation();
@@ -29,7 +31,9 @@ FVector AKnowledgeGraph::GetPlayerLocation()
 FVector AKnowledgeGraph::GetLocationInFrontOfPlayer()
 {
 	FVector CurrentLocation = GetPlayerLocation();
-	APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+	UWorld* World = GetWorld();
+	if (!World) { return CurrentLocation; }
+	APlayerController* PlayerController = World->GetFirstPlayerController();
 	if (PlayerController && PlayerController->GetPawn())
 	{
 		FVector ForwardVector = PlayerController->GetPawn()->GetActorForwardVector();

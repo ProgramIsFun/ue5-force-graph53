@@ -40,6 +40,14 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 		}
 	});
 
+	AddActionButton(TEXT("Remove Selected Node"), [this]()
+	{
+		if (GraphActorRef)
+		{
+			GraphActorRef->RemoveSelectedGraphNode();
+		}
+	});
+
 	RefreshAllLabels();
 }
 

@@ -35,11 +35,13 @@ public:
 	float LinkDistance;
 	UStaticMeshComponent* EdgeMeshComponent = nullptr;
 	GraphLink(int32 InSourceNodeIndex, int32 InTargetNodeIndex)
+		: SourceNodeIndex(InSourceNodeIndex), TargetNodeIndex(InTargetNodeIndex),
+		  LinkBias(0.5f), LinkStrength(1.0f), LinkDistance(30.0f)
 	{
-		SourceNodeIndex = InSourceNodeIndex;
-		TargetNodeIndex = InTargetNodeIndex;
 	}
 	GraphLink()
+		: SourceNodeIndex(-1), TargetNodeIndex(-1),
+		  LinkBias(0.5f), LinkStrength(1.0f), LinkDistance(30.0f)
 	{
 	}
 };
@@ -95,6 +97,20 @@ public:
 	void DeleteGraphNodeFromDatabase();
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void DeleteGraphLinkFromDatabase();
+
+	// --- Incremental graph mutation (swap-remove) ---
+	// Removes a node by array index using swap-remove: moves the last node into the deleted slot,
+	// fixes up all link indices, and removes any links that referenced the deleted node.
+	// Returns true on success.
+	bool RemoveGraphNodeByIndex(int32 NodeIndexToRemove);
+
+	// Adds a node to the end of all parallel arrays, creates its visual, and returns the new index.
+	// Pass LinkTargetNodeIndex >= 0 to also create a link to an existing node.
+	int32 AddGraphNodeLocal(const FString& NodeName, const FString& NodeStringId, FVector NodeWorldPosition, int32 LinkTargetNodeIndex = -1);
+
+	// Removes the selected node (SelectedGraphNodeIndex) locally. Blueprint-friendly wrapper.
+	UFUNCTION(BlueprintCallable, Category = "Graph Editing")
+	void RemoveSelectedGraphNode();
 	
 	// Temporary variables.
 	bool bGraphRequesting = false;

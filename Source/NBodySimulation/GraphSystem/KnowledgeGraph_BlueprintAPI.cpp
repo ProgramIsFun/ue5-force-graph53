@@ -113,12 +113,226 @@ void AKnowledgeGraph::OnAddGraphNodeHttpCompleted(
 
 void AKnowledgeGraph::DeleteGraphNodeFromDatabase()
 {
-	// TODO: Implement node deletion
+	// TODO: Send HTTP DELETE to server, then call RemoveGraphNodeByIndex on success
 }
 
 void AKnowledgeGraph::DeleteGraphLinkFromDatabase()
 {
-	// TODO: Implement link deletion
+	// TODO: Send HTTP DELETE to server for link removal
+}
+
+// ---------------------------------------------------------------------------
+// Incremental graph mutation — swap-remove approach
+// ---------------------------------------------------------------------------
+//
+// All parallel arrays (GraphNodes, nodePositions, nodeVelocities, BodyTransforms)
+// are kept dense. Deleting a node at index K works by:
+//   1. Destroy visuals for node K and any links referencing K
+//   2. Move the last element into slot K
+//   3. Fix up every GraphLink that pointed to the old last index
+//   4. Shrink arrays by one
+//   5. Rebuild instanced mesh instances
+//   6. Recalculate link bias/strength
+// ---------------------------------------------------------------------------
+
+bool AKnowledgeGraph::RemoveGraphNodeByIndex(int32 NodeIndexToRemove)
+{
+	if (!GraphNodes.IsValidIndex(NodeIndexToRemove))
+	{
+		LogToScreen("RemoveGraphNodeByIndex: invalid index " + FString::FromInt(NodeIndexToRemove));
+		return false;
+	}
+
+	const int32 LastNodeIndex = GraphNodes.Num() - 1;
+
+	// --- 1. Destroy the visual for the node being removed ---
+	if (Config.bUseTextRenderComponents && GraphNodes[NodeIndexToRemove].textComponent)
+	{
+		UTextRenderComponent* TextComp = GraphNodes[NodeIndexToRemove].textComponent;
+		if (TextComp->IsRegistered())
+		{
+			TextComp->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+			TextComp->UnregisterComponent();
+			TextComp->DestroyComponent();
+		}
+		GraphNodes[NodeIndexToRemove].textComponent = nullptr;
+	}
+
+	// --- 2. Remove links that reference the deleted node, destroy their meshes ---
+	// Walk backwards so removal doesn't skip elements
+	for (int32 LinkIdx = GraphLinks.Num() - 1; LinkIdx >= 0; --LinkIdx)
+	{
+		GraphLink& Link = GraphLinks[LinkIdx];
+		if (Link.SourceNodeIndex == NodeIndexToRemove || Link.TargetNodeIndex == NodeIndexToRemove)
+		{
+			// Destroy link mesh
+			if (Link.EdgeMeshComponent && Link.EdgeMeshComponent->IsRegistered())
+			{
+				Link.EdgeMeshComponent->DetachFromComponent(FDetachmentTransformRules::KeepWorldTransform);
+				Link.EdgeMeshComponent->UnregisterComponent();
+				Link.EdgeMeshComponent->DestroyComponent();
+				Link.EdgeMeshComponent = nullptr;
+			}
+			// Swap-remove the link itself (don't shrink yet, we do it after the loop)
+			GraphLinks.RemoveAtSwap(LinkIdx, 1, false);
+		}
+	}
+	GraphLinks.Shrink();
+
+	// --- 3. Update ID maps: remove the deleted node's mapping ---
+	FString RemovedNodeStringId;
+	if (NodeIdToStringMap.Contains(NodeIndexToRemove))
+	{
+		RemovedNodeStringId = NodeIdToStringMap[NodeIndexToRemove];
+		NodeIdToStringMap.Remove(NodeIndexToRemove);
+		StringToNodeIdMap.Remove(RemovedNodeStringId);
+	}
+
+	// --- 4. Swap last node into the deleted slot (unless it IS the last) ---
+	if (NodeIndexToRemove != LastNodeIndex)
+	{
+		// Move data from last slot into the removed slot
+		GraphNodes[NodeIndexToRemove] = GraphNodes[LastNodeIndex];
+		nodePositions[NodeIndexToRemove] = nodePositions[LastNodeIndex];
+		nodeVelocities[NodeIndexToRemove] = nodeVelocities[LastNodeIndex];
+
+		if (Config.bUseInstancedStaticMesh && BodyTransforms.IsValidIndex(LastNodeIndex))
+		{
+			BodyTransforms[NodeIndexToRemove] = BodyTransforms[LastNodeIndex];
+		}
+
+		// Update ID maps for the moved node
+		FString MovedNodeStringId;
+		if (NodeIdToStringMap.Contains(LastNodeIndex))
+		{
+			MovedNodeStringId = NodeIdToStringMap[LastNodeIndex];
+			NodeIdToStringMap.Remove(LastNodeIndex);
+			NodeIdToStringMap.Add(NodeIndexToRemove, MovedNodeStringId);
+			StringToNodeIdMap.Add(MovedNodeStringId, NodeIndexToRemove);
+		}
+
+		// Fix up all links that referenced the old last index
+		for (GraphLink& Link : GraphLinks)
+		{
+			if (Link.SourceNodeIndex == LastNodeIndex)
+			{
+				Link.SourceNodeIndex = NodeIndexToRemove;
+			}
+			if (Link.TargetNodeIndex == LastNodeIndex)
+			{
+				Link.TargetNodeIndex = NodeIndexToRemove;
+			}
+		}
+	}
+
+	// --- 5. Shrink all parallel arrays by one ---
+	const int32 NewNodeCount = LastNodeIndex; // == old Num() - 1
+	GraphNodes.SetNum(NewNodeCount);
+	nodePositions.SetNum(NewNodeCount);
+	nodeVelocities.SetNum(NewNodeCount);
+	TotalNodeCount = NewNodeCount;
+
+	if (Config.bUseInstancedStaticMesh)
+	{
+		BodyTransforms.SetNum(NewNodeCount);
+		// Rebuild instanced mesh from scratch (safest way to keep instance indices in sync)
+		InstancedStaticMeshComponent->ClearInstances();
+		if (BodyTransforms.Num() > 0)
+		{
+			InstancedStaticMeshComponent->AddInstances(BodyTransforms, false);
+		}
+	}
+
+	// --- 6. Recalculate link bias/strength since node degrees changed ---
+	if (GraphLinks.Num() > 0)
+	{
+		CalculateBiasAndStrengthOfLinks();
+	}
+
+	// Clear selection if it pointed to the removed node
+	if (SelectedGraphNodeIndex == NodeIndexToRemove)
+	{
+		SelectedGraphNodeIndex = -1;
+		SelectedGraphNodeName = TEXT("");
+	}
+	else if (SelectedGraphNodeIndex == LastNodeIndex)
+	{
+		// Selection was the node that got moved
+		SelectedGraphNodeIndex = NodeIndexToRemove;
+	}
+
+	// Reheat simulation so the graph can re-settle
+	Config.Alpha = FMath::Max(Config.Alpha, 0.3f);
+
+	LogToScreen("Removed node. Graph now has " + FString::FromInt(TotalNodeCount) + " nodes, " + FString::FromInt(GraphLinks.Num()) + " links.");
+	return true;
+}
+
+int32 AKnowledgeGraph::AddGraphNodeLocal(const FString& NodeName, const FString& NodeStringId, FVector NodeWorldPosition, int32 LinkTargetNodeIndex)
+{
+	const int32 NewNodeIndex = GraphNodes.Num();
+
+	// --- 1. Expand all parallel arrays ---
+	GraphNode NewNode;
+	NewNode.id = NewNodeIndex;
+	GraphNodes.Add(NewNode);
+	nodePositions.Add(NodeWorldPosition);
+	nodeVelocities.Add(FVector::ZeroVector);
+	TotalNodeCount = GraphNodes.Num();
+
+	// --- 2. Create text visual ---
+	if (Config.bUseTextRenderComponents)
+	{
+		FString DisplayName = NodeName.IsEmpty() ? ("Node " + FString::FromInt(NewNodeIndex)) : NodeName;
+		GenerateTextRenderComponentAndAttach(DisplayName, NewNodeIndex);
+	}
+
+	// --- 3. Instanced mesh ---
+	if (Config.bUseInstancedStaticMesh)
+	{
+		float MeshScale = Config.InstancedMeshSize;
+		FTransform NodeMeshTransform(FRotator::ZeroRotator, NodeWorldPosition, FVector(MeshScale, MeshScale, MeshScale));
+		BodyTransforms.Add(NodeMeshTransform);
+		InstancedStaticMeshComponent->AddInstance(NodeMeshTransform, false);
+	}
+
+	// --- 4. ID maps ---
+	if (!NodeStringId.IsEmpty())
+	{
+		NodeIdToStringMap.Add(NewNodeIndex, NodeStringId);
+		StringToNodeIdMap.Add(NodeStringId, NewNodeIndex);
+	}
+
+	// --- 5. Optionally create a link to an existing node ---
+	if (LinkTargetNodeIndex >= 0 && GraphNodes.IsValidIndex(LinkTargetNodeIndex))
+	{
+		const int32 NewLinkId = GraphLinks.Num();
+		// AddEdge does GraphLinks[id] = link, so grow the array first
+		GraphLinks.SetNum(NewLinkId + 1);
+		AddEdge(NewLinkId, NewNodeIndex, LinkTargetNodeIndex);
+	}
+
+	// --- 6. Recalculate link bias/strength ---
+	if (GraphLinks.Num() > 0)
+	{
+		CalculateBiasAndStrengthOfLinks();
+	}
+
+	// Reheat simulation
+	Config.Alpha = FMath::Max(Config.Alpha, 0.3f);
+
+	LogToScreen("Added node '" + NodeName + "' at index " + FString::FromInt(NewNodeIndex) + ". Total: " + FString::FromInt(TotalNodeCount));
+	return NewNodeIndex;
+}
+
+void AKnowledgeGraph::RemoveSelectedGraphNode()
+{
+	if (SelectedGraphNodeIndex < 0 || !GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
+	{
+		LogToScreen("No valid node selected for removal.");
+		return;
+	}
+	RemoveGraphNodeByIndex(SelectedGraphNodeIndex);
 }
 
 void AKnowledgeGraph::AddGraphLinkToDatabase()
@@ -233,6 +447,7 @@ void AKnowledgeGraph::LateAddNode(FString NodeName, FString id, FVector location
 	}
 	else
 	{
-		// TODO: Implement incremental node addition without full reload
+		// Incremental add — no full reload needed
+		AddGraphNodeLocal(NodeName, id, location, /*LinkTargetNodeIndex=*/ -1);
 	}
 }

@@ -37,6 +37,8 @@ The compute shader code can be found at:
 
 📋 **Recent Changes** - [Code Quality Fixes](CODE_QUALITY_FIXES_SUMMARY.md): Division-by-zero guards, Fatal log crash fix, null safety, and consistency fixes.
 
+🔧 **In Progress** - [Incremental Add/Delete](INCREMENTAL_ADD_DELETE_SUMMARY.md): Swap-remove based node add/delete without full graph reload.
+
 ## Comparison to UE4 Force Graph
 
 This project is an improved version of [thomaswall/ue4-force-graph](https://github.com/thomaswall/ue4-force-graph).

@@ -72,7 +72,18 @@ void AKnowledgeGraph::RequestAddGraphNode(FString NodeName, int32 LinkTargetNode
 	else
 	{
 		// AutoGenerate / FromJson: apply immediately
-		FVector SpawnPosition = GetLocationInFrontOfPlayer();
+		// Spawn 500 units (5m) in front of the player so the node is visible near the graph
+		FVector SpawnPosition = GetPlayerLocation();
+		UWorld* World = GetWorld();
+		if (World)
+		{
+			APlayerController* PlayerController = World->GetFirstPlayerController();
+			if (PlayerController && PlayerController->GetPawn())
+			{
+				FVector ForwardVector = PlayerController->GetPawn()->GetActorForwardVector();
+				SpawnPosition += ForwardVector * 500.0f;
+			}
+		}
 		FString GeneratedId = FString::Printf(TEXT("local_%d_%lld"), GraphNodes.Num(), FDateTime::Now().GetTicks());
 		AddGraphNodeLocal(NodeName, GeneratedId, SpawnPosition, LinkTargetNodeIndex);
 	}
@@ -377,11 +388,16 @@ int32 AKnowledgeGraph::AddGraphNodeLocal(const FString& NodeName, const FString&
 	nodeVelocities.Add(FVector::ZeroVector);
 	TotalNodeCount = GraphNodes.Num();
 
-	// --- 2. Create text visual ---
+	// --- 2. Create text visual and set its position immediately ---
 	if (Config.bUseTextRenderComponents)
 	{
 		FString DisplayName = NodeName.IsEmpty() ? ("Node " + FString::FromInt(NewNodeIndex)) : NodeName;
 		GenerateTextRenderComponentAndAttach(DisplayName, NewNodeIndex);
+		// Set world position right away so it's visible before the next physics tick
+		if (GraphNodes[NewNodeIndex].textComponent)
+		{
+			GraphNodes[NewNodeIndex].textComponent->SetWorldLocation(NodeWorldPosition);
+		}
 	}
 
 	// --- 3. Instanced mesh ---

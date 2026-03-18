@@ -55,6 +55,78 @@ void AKnowledgeGraph::SelectClosestGraphNodeToPlayer()
 	}
 }
 
+void AKnowledgeGraph::SelectGraphNodeByLookAt()
+{
+	if (nodePositions.Num() == 0)
+	{
+		LogToScreen("SelectGraphNodeByLookAt: no nodes in graph.");
+		return;
+	}
+
+	UWorld* World = GetWorld();
+	if (!World) return;
+
+	APlayerController* PlayerController = World->GetFirstPlayerController();
+	if (!PlayerController) return;
+
+	// Get camera location and forward direction (the look-at ray)
+	FVector CameraLocation;
+	FRotator CameraRotation;
+	PlayerController->GetPlayerViewPoint(CameraLocation, CameraRotation);
+	FVector CameraForward = CameraRotation.Vector();
+
+	float SmallestRayDistance = FLT_MAX;
+	int32 ClosestNodeToRayIndex = -1;
+
+	for (int32 i = 0; i < nodePositions.Num(); i++)
+	{
+		// Point-to-line distance: project node onto the camera ray
+		FVector CameraToNode = nodePositions[i] - CameraLocation;
+		float ProjectionLength = FVector::DotProduct(CameraToNode, CameraForward);
+
+		// Skip nodes behind the camera
+		if (ProjectionLength < 0.0f) continue;
+
+		FVector ClosestPointOnRay = CameraLocation + CameraForward * ProjectionLength;
+		float PerpendicularDistance = FVector::Dist(nodePositions[i], ClosestPointOnRay);
+
+		if (PerpendicularDistance < SmallestRayDistance)
+		{
+			SmallestRayDistance = PerpendicularDistance;
+			ClosestNodeToRayIndex = i;
+		}
+	}
+
+	if (ClosestNodeToRayIndex < 0)
+	{
+		LogToScreen("SelectGraphNodeByLookAt: no node found in front of camera.");
+		return;
+	}
+
+	// --- Deselect previous node (reset to white) ---
+	if (SelectedGraphNodeIndex >= 0 && GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
+	{
+		if (Config.bUseTextRenderComponents && GraphNodes[SelectedGraphNodeIndex].textComponent)
+		{
+			GraphNodes[SelectedGraphNodeIndex].textComponent->SetTextRenderColor(FColor::White);
+		}
+	}
+
+	// --- Select new node (highlight yellow) ---
+	SelectedGraphNodeIndex = ClosestNodeToRayIndex;
+	SelectedGraphNodeName = NodeIdToStringMap.Contains(ClosestNodeToRayIndex)
+		? NodeIdToStringMap[ClosestNodeToRayIndex]
+		: FString::Printf(TEXT("Index_%d"), ClosestNodeToRayIndex);
+
+	if (Config.bUseTextRenderComponents && GraphNodes[ClosestNodeToRayIndex].textComponent)
+	{
+		GraphNodes[ClosestNodeToRayIndex].textComponent->SetTextRenderColor(FColor::Yellow);
+	}
+
+	LogToScreen("Selected: " + SelectedGraphNodeName + " (idx " + FString::FromInt(ClosestNodeToRayIndex) +
+		", ray dist: " + FString::SanitizeFloat(SmallestRayDistance) + ")");
+}
+
 // ---------------------------------------------------------------------------
 // High-level mode-aware graph editing
 // ---------------------------------------------------------------------------

@@ -57,6 +57,14 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 		}
 	});
 
+	AddActionButton(TEXT("Select Node (Look At)"), [this]()
+	{
+		if (GraphActorRef)
+		{
+			GraphActorRef->SelectGraphNodeByLookAt();
+		}
+	});
+
 	RefreshAllLabels();
 }
 

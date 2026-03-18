@@ -24,6 +24,9 @@ void AGraphPlayerController::SetupInputComponent()
 
 	// Home key to toggle graph control panel
 	InputComponent->BindKey(EKeys::Home, IE_Pressed, this, &AGraphPlayerController::ToggleGraphControlPanel);
+
+	// PgUp key to select node by look-at (crosshair pick)
+	InputComponent->BindKey(EKeys::PageUp, IE_Pressed, this, &AGraphPlayerController::SelectNodeByLookAt);
 }
 
 void AGraphPlayerController::ToggleGraphControlPanel()
@@ -70,6 +73,9 @@ void AGraphPlayerController::FindAndBindGraphActor()
 	AKnowledgeGraph* GraphActor = Cast<AKnowledgeGraph>(FoundGraphActor);
 	if (!GraphActor) return;
 
+	// Cache the graph actor for direct key bindings (e.g. PgUp select)
+	CachedGraphActor = GraphActor;
+
 	// Create the panel widget
 	GraphControlPanel = CreateWidget<UGraphControlPanelWidget>(this);
 	if (GraphControlPanel)
@@ -77,5 +83,24 @@ void AGraphPlayerController::FindAndBindGraphActor()
 		GraphControlPanel->AddToViewport(10);
 		GraphControlPanel->SetVisibility(ESlateVisibility::Collapsed);
 		GraphControlPanel->InitializePanel(GraphActor);
+	}
+}
+
+void AGraphPlayerController::SelectNodeByLookAt()
+{
+	if (!CachedGraphActor)
+	{
+		// Try to find it if not cached yet
+		TArray<AActor*> FoundActors;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AKnowledgeGraph::StaticClass(), FoundActors);
+		if (FoundActors.Num() > 0)
+		{
+			CachedGraphActor = Cast<AKnowledgeGraph>(FoundActors[0]);
+		}
+	}
+
+	if (CachedGraphActor)
+	{
+		CachedGraphActor->SelectGraphNodeByLookAt();
 	}
 }

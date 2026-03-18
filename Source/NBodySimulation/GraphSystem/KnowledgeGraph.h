@@ -89,6 +89,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
 	void SelectClosestGraphNodeToPlayer();
+
+	// Selects the node closest to the camera look-at ray (crosshair pick).
+	// Highlights the selected node's text in yellow; deselects the previous one.
+	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
+	void SelectGraphNodeByLookAt();
 	
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void DeleteGraphNodeFromDatabase();

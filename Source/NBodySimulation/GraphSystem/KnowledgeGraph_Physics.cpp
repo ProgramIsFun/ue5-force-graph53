@@ -73,7 +73,7 @@ void AKnowledgeGraph::SetArrayLengths()
 	
 	nodePositions.SetNumUninitialized(TotalNodeCount);
 	nodeVelocities.SetNumUninitialized(TotalNodeCount);
-	GraphNodes.SetNumUninitialized(TotalNodeCount);
+	GraphNodes.SetNum(TotalNodeCount);
 	
 	if (Config.bUseGPUShaders)
 	{

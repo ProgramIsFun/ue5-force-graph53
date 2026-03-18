@@ -38,13 +38,12 @@ void UNodePropertyPanelWidget::RefreshSelectedNodeProperties()
 	// Built-in: node index
 	DisplayProperties.Emplace(TEXT("Index"), FString::FromInt(SelectedNodeIndex));
 
-	// Built-in: database ID (if present)
-	if (GraphActorRef->GraphNodes.IsValidIndex(SelectedNodeIndex))
+	// Built-in: string ID from the ID map (safe UPROPERTY TMap)
+	if (const FString* NodeStringId = GraphActorRef->NodeIdToStringMap.Find(SelectedNodeIndex))
 	{
-		const FString& NodeDatabaseId = GraphActorRef->GraphNodes[SelectedNodeIndex].DatabaseNodeId;
-		if (!NodeDatabaseId.IsEmpty())
+		if (!NodeStringId->IsEmpty())
 		{
-			DisplayProperties.Emplace(TEXT("DB Id"), NodeDatabaseId);
+			DisplayProperties.Emplace(TEXT("String Id"), *NodeStringId);
 		}
 	}
 

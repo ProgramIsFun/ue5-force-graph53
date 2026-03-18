@@ -80,9 +80,9 @@ struct OctreeNode
 	void PrintData() const;
 	
 	void Subdivide();
-	void accumulate_with_recursion();
-	void accumulate_without_recursion();
-	void AccumulateStrengthAndComputeCenterOfMass();
+	void accumulate_with_recursion(float NodeChargeStrength);
+	void accumulate_without_recursion(float NodeChargeStrength);
+	void AccumulateStrengthAndComputeCenterOfMass(float NodeChargeStrength);
 	void Cover(float X0, float Y0, float Z0);
 	bool check_contain_data_or_not();
 	void AddAll1(
@@ -95,9 +95,9 @@ struct OctreeNode
 void AddDataPoint(OctreeNode* node, FVector Location,int32 id);
 
 // Define the Callback Type
-using OctreeCallback = std::function<bool(OctreeNode*,float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities)>;
+using OctreeCallback = std::function<bool(OctreeNode*, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities, float NodeChargeStrength, float ForceDistanceMin, float ForceDistanceMax, float BarnesHutThetaSquared)>;
 
 // Declare the BFS traversal function
-void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities);
+void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities, float NodeChargeStrength, float ForceDistanceMin, float ForceDistanceMax, float BarnesHutThetaSquared);
 
-bool SampleCallback(OctreeNode* node, float alpha, int32 id, TArray<FVector>&  nodePositions, TArray<FVector>&  nodeVelocities);
+bool SampleCallback(OctreeNode* node, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities, float NodeChargeStrength, float ForceDistanceMin, float ForceDistanceMax, float BarnesHutThetaSquared);

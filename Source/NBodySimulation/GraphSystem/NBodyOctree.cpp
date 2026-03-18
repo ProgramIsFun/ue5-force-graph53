@@ -74,7 +74,7 @@ void OctreeNode::Subdivide()
 	delete OldData; // Deleting the old data after redistributing
 }
 
-void OctreeNode::accumulate_with_recursion()
+void OctreeNode::accumulate_with_recursion(float NodeChargeStrength)
 {
 	FVector aggregatePosition = FVector(0);
 	float aggregateStrength = 0.0;
@@ -86,7 +86,7 @@ void OctreeNode::accumulate_with_recursion()
 		{
 			// FVector position = Data->Node->GetActorLocation();
 			FVector position = Data->Position;
-			double strength = -60;
+			double strength = NodeChargeStrength;
 
 			LogMessageInternal("strength555555555: " + FString::SanitizeFloat(strength));
 			Strength = strength;
@@ -114,7 +114,7 @@ void OctreeNode::accumulate_with_recursion()
 				child != nullptr
 			)
 			{
-				child->accumulate_with_recursion();
+				child->accumulate_with_recursion(NodeChargeStrength);
 
 
 				if (
@@ -221,7 +221,7 @@ void AddDataPoint(OctreeNode* node, FVector Location,int32 id)
 }
 
 
-void OctreeNode::accumulate_without_recursion()
+void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 {
 
 	bool log=true;
@@ -278,7 +278,7 @@ void OctreeNode::accumulate_without_recursion()
 				
 				FVector position = node->Data->Position;
 				
-				node->Strength = -60;
+				node->Strength = NodeChargeStrength;
 				node->StrengthSet = true;
 				node->CenterOfMass = position;
 				
@@ -312,21 +312,21 @@ void OctreeNode::accumulate_without_recursion()
 	}
 }
 
-void OctreeNode::AccumulateStrengthAndComputeCenterOfMass()
+void OctreeNode::AccumulateStrengthAndComputeCenterOfMass(float NodeChargeStrength)
 {
 	bool using_recursion = false;
 	bool log = true;
 	if (using_recursion)
 	{
-		accumulate_with_recursion();
+		accumulate_with_recursion(NodeChargeStrength);
 	}
 	else{
-		accumulate_without_recursion();
+		accumulate_without_recursion(NodeChargeStrength);
 	}
 }
 
 
-void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities)
+void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities, float NodeChargeStrength, float ForceDistanceMin, float ForceDistanceMax, float BarnesHutThetaSquared)
 {
 	bool log = false;
 
@@ -350,7 +350,7 @@ void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 i
 
 
 		// Execute the callback on the current node
-		bool skipChildren = callback(currentNode, alpha, id, nodePositions, nodeVelocities);
+		bool skipChildren = callback(currentNode, alpha, id, nodePositions, nodeVelocities, NodeChargeStrength, ForceDistanceMin, ForceDistanceMax, BarnesHutThetaSquared);
 
 		// If callback returns true, do not enqueue children
 		if (skipChildren)
@@ -401,7 +401,11 @@ bool SampleCallback(OctreeNode* node,
 	float alpha,
 	int32 id,
 	TArray<FVector>& nodePositions,
-	TArray<FVector>& nodeVelocities)
+	TArray<FVector>& nodeVelocities,
+	float NodeChargeStrength,
+	float ForceDistanceMin,
+	float ForceDistanceMax,
+	float BarnesHutThetaSquared)
 {
 	bool log = false;
 	bool log2 = false;
@@ -425,9 +429,10 @@ bool SampleCallback(OctreeNode* node,
 		// Remember that direction is the sum of all the Actor locations of the elements in that note. 
 		float l = dir.Size() * dir.Size();
 
-		float theta2 = 0.81;
-		float distancemax = 1000000000;
-		float distancemin = 1;
+		// Barnes-Hut opening angle and distance bounds from configuration
+		float theta2 = BarnesHutThetaSquared;
+		float distancemax = ForceDistanceMax;
+		float distancemin = ForceDistanceMin;
 		// LogMessageInternal("bounds: " + node->Center.ToString() + " " + node->Extent.ToString());
 
 		LogMessageInternal(FString::SanitizeFloat(node->Center.X - node->Extent.X) + " " +
@@ -619,7 +624,7 @@ bool SampleCallback(OctreeNode* node,
 					currentNode->nodeid != id
 				)
 				{
-					float w = -60 * alpha / l;
+					float w = NodeChargeStrength * alpha / l;
 
 
 					// kn->velocity += dir * w;
@@ -645,7 +650,7 @@ bool SampleCallback(OctreeNode* node,
 			)
 			{
 				// float w = currentNode->Node->strength * alpha / l;
-				float w = -60 * alpha / l;
+				float w = NodeChargeStrength * alpha / l;
 
 
 				// kn->velocity += dir * w;

@@ -209,7 +209,10 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 	
 	// Step 2: Calculate center of mass and total strength for each octree cell
 	// This allows treating groups of nodes as single bodies
-	Octree->AccumulateStrengthAndComputeCenterOfMass();
+	Octree->AccumulateStrengthAndComputeCenterOfMass(PhysicsParams.NodeStrength);
+
+	// Pre-compute theta squared for Barnes-Hut opening angle criterion
+	float BarnesHutThetaSquared = Config.BarnesHutTheta * Config.BarnesHutTheta;
 
 	// Step 3: Traverse octree for each node to calculate forces
 	if (Config.bUseParallelProcessing)
@@ -218,7 +221,8 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 		ParallelFor(Nodes.Num(), [&](int32 Index)
 		{
 			TraverseBFS(Octree, SampleCallback, PhysicsParams.Alpha, Index, 
-				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities);
+				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities,
+				PhysicsParams.NodeStrength, PhysicsParams.DistanceMin, PhysicsParams.DistanceMax, BarnesHutThetaSquared);
 		});
 	}
 	else
@@ -227,7 +231,8 @@ void UGraphPhysicsSimulator::CalculateChargeForcesOctree(
 		for (int32 Index = 0; Index < Nodes.Num(); Index++)
 		{
 			TraverseBFS(Octree, SampleCallback, PhysicsParams.Alpha, Index,
-				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities);
+				const_cast<TArray<FVector>&>(NodePositions), NodeVelocities,
+				PhysicsParams.NodeStrength, PhysicsParams.DistanceMin, PhysicsParams.DistanceMax, BarnesHutThetaSquared);
 		}
 	}
 

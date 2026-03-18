@@ -48,7 +48,7 @@ struct FPhysicsParameters
 	float DistanceMin = 1.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
-	float DistanceMax = 10000000.0f;
+	float DistanceMax = 1000000000.0f;
 
 	// Initial positioning
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")

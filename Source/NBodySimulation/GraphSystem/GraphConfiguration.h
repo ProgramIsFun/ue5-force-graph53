@@ -155,7 +155,7 @@ struct FGraphConfiguration
 	float DistanceMin = 1.0f; // Minimum distance for force calculations to prevent singularities
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
-	float DistanceMax = 10000000.0f; // Maximum distance for force calculations
+	float DistanceMax = 1000000000.0f; // Maximum distance for force calculations
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
 	float VelocityDecay = 0.6f; // Velocity damping factor (0.6 = 40% velocity retained per tick) - from d3-force
@@ -166,6 +166,9 @@ struct FGraphConfiguration
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
 	float InitialRadius = 10.0f; // Initial radius for spiral node placement - from d3-force
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
+	float BarnesHutTheta = 0.9f; // Barnes-Hut opening angle - controls accuracy vs speed tradeoff (0.9 = default from d3-force)
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Physics")
 	float NodeActorSize = 0.3f; // Visual size multiplier for node actors
 };

@@ -193,12 +193,14 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 			GraphNodes,
 			nodePositions);
 
-		OctreeScope->AccumulateStrengthAndComputeCenterOfMass();
+		OctreeScope->AccumulateStrengthAndComputeCenterOfMass(Config.NodeStrength);
 
 		// LogAlways("tttttttttttttttttttttttt");
 		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeScope->CenterOfMass.ToString(), log);
 		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeScope->Strength), log);
 
+		// Pre-compute theta squared for Barnes-Hut opening angle criterion
+		float BarnesHutThetaSquared = Config.BarnesHutTheta * Config.BarnesHutTheta;
 
 		if (!Config.bUseParallelProcessing)
 		{
@@ -220,7 +222,11 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 				            Index
 				            ,
 				            nodePositions,
-				            nodeVelocities
+				            nodeVelocities,
+				            Config.NodeStrength,
+				            Config.DistanceMin,
+				            Config.DistanceMax,
+				            BarnesHutThetaSquared
 				);
 				LogMessage("Finished traversing the tree based on this Actor Kn. ", log);
 				Index++;
@@ -231,7 +237,8 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 			ParallelFor(GraphNodes.Num(), [&](int32 Index)
 			{
 				TraverseBFS(OctreeScope.Get(),
-				            SampleCallback, Config.Alpha, Index, nodePositions, nodeVelocities);
+				            SampleCallback, Config.Alpha, Index, nodePositions, nodeVelocities,
+				            Config.NodeStrength, Config.DistanceMin, Config.DistanceMax, BarnesHutThetaSquared);
 			});
 		}
 

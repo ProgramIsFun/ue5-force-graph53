@@ -114,8 +114,6 @@ public:
 
 	
 	// Important Variables.
-	TSharedPtr<FJsonObject> JsonObject1;
-
 	int32 selected_node_index = -1;
 	int32 selected_node_index_previous = -1;
 	FString selected_node_name = "";
@@ -176,16 +174,14 @@ public:
 	void UpdateAlpha();
 	void UpdateIterations();
 	void GenerateTextRenderComponentAndAttach(FString name,int32 index);
-	void GetNumberOfNodes();
-	void CreateOneToOneMapping();
+
 	void Miscellaneous();
 	void SetArrayLengths();
 	void SetArrayValues();
 	void InitializeArrays();
 	bool GenerateObjectsForNodeAndLink();
 	bool GenerateObjectsForNodeAndLinkNew(); // New version using DataManager
-	void DealWithPredefinedLocation();
-	void DefaultGenerateGraphMethod();
+
 	void AddEdge(int32 id, int32 source, int32 target);
 	void InitializeNodePosition();
 	void InitializeNodePositionIndividual(int index);
@@ -199,10 +195,7 @@ public:
 	void UpdateNodeWorldPositionAccordingToPositionArray();
 	void UpdatePositionArrayAccordingToVelocityArray();
 	void UpdateLinkPosition();
-	void RequestGraphHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void RequestGraphHttp();
-	void RequestAGraph();
-	void DebugErrorRequest(FHttpRequestPtr Request, FHttpResponsePtr Response);
+
 
 	// New callback for DataManager
 	UFUNCTION()

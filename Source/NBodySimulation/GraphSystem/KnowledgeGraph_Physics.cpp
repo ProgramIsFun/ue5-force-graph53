@@ -23,67 +23,8 @@ void AKnowledgeGraph::GenerateTextRenderComponentAndAttach(FString name,int32 in
 	}
 }
 
-void AKnowledgeGraph::GetNumberOfNodes()
-{
-	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
-	{
-		LogMessage("Generating graph automatically. Number of nodes: " + FString::FromInt(Config.AutoGenerateNodeCount), true, 0,
-		   TEXT("GetNumberOfNodes: "));
-		TotalNodeCount = Config.AutoGenerateNodeCount;
-	}
-	if (Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase)
-	{
-		if (!JsonObject1.IsValid())
-		{
-			LogMessage("ERROR: JsonObject1 is invalid!", true, 3);
-			TotalNodeCount = 0;
-			precheck_succeed = false;
-			return;
-		}
-		
-		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		TotalNodeCount = jnodes.Num();
-		
-		// Safety check for reasonable node count
-		if (TotalNodeCount < 0 || TotalNodeCount > 100000)
-		{
-			LogMessage("ERROR: Invalid node count: " + FString::FromInt(TotalNodeCount), true, 3);
-			TotalNodeCount = 0;
-			precheck_succeed = false;
-			return;
-		}
-		
-		LogMessage("Loaded node count from JSON: " + FString::FromInt(TotalNodeCount), true, 0);
-	}
-}
-
-void AKnowledgeGraph::CreateOneToOneMapping()
-{
-	// Create one-to-one mapping between string IDs and integer indices
-	
-	bool log = false;
-	
-	TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-	for (int32 i = 0; i < TotalNodeCount; i++)
-	{
-		auto jobj = jnodes[i]->AsObject();
-		FString jid;
-
-		if (Config.CreationMode == EGraphCreationMode::FromJson)
-		{
-			jid = jobj->GetStringField("id");
-		}
-		if (Config.CreationMode == EGraphCreationMode::FromDatabase)
-		{
-			jid = jobj->GetStringField("user_generate_id_7577777777");
-		}
-
-
-		LogMessage("jid: " + jid, log);
-		string_to_id.Emplace(jid, i);
-		id_to_string.Emplace(i, jid);
-	}
-}
+// Legacy functions GetNumberOfNodes() and CreateOneToOneMapping() removed.
+// ID mapping and node count are now handled by DataManager via OnGraphDataLoadedCallback().
 
 void AKnowledgeGraph::Miscellaneous()
 {
@@ -162,197 +103,23 @@ void AKnowledgeGraph::InitializeArrays()
 
 bool AKnowledgeGraph::GenerateObjectsForNodeAndLink()
 {
-	bool log = true;
-	if (Config.CreationMode == EGraphCreationMode::AutoGenerate)
+	// This function now only handles AutoGenerate mode.
+	// FromJson and FromDatabase modes are handled by GenerateObjectsForNodeAndLinkNew() via DataManager.
+	for (int32 i = 0; i < TotalNodeCount; i++)
 	{
-		for (int32 i = 0; i < TotalNodeCount; i++)
+		if (Config.bUseTextRenderComponents)
 		{
-			if (Config.bUseTextRenderComponents)
-			{
-				FString name;
-				name = "Sample Text : " + FString::FromInt(i);
-				GenerateTextRenderComponentAndAttach(name,i);
-			}
+			FString name = "Sample Text : " + FString::FromInt(i);
+			GenerateTextRenderComponentAndAttach(name,i);
 		}
-		Miscellaneous();
 	}
-	else
-	{
-		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		for (int32 i = 0; i < TotalNodeCount; i++)
-		{
-			auto jobj = jnodes[i]->AsObject();
-			if (Config.bUseTextRenderComponents)
-			{
-				FString name;
-				try
-				{
-					name = jobj->GetStringField("name");
-
-					FString Substring(TEXT("everythingallaccount"));
-					FString ReplacementSubstring(TEXT("e"));
-
-					if (name.StartsWith(Substring))
-					{
-						// Remove the substring by creating a new string that starts right after the substring
-						name = name.Mid(Substring.Len());
-
-						name = ReplacementSubstring + name;
-					}
-				}
-				catch (...)
-				{
-					LogToScreen("WARNING: Failed to get node name from JSON at index " + FString::FromInt(i) + ", using fallback", true, 2);
-					name = "Sample Text : " + FString::FromInt(i);
-				}
-				GenerateTextRenderComponentAndAttach(name,i);
-			}
-		}
-		LogMessage("Number of node generated: " + FString::FromInt(TotalNodeCount), log);
-
-
-
-
-
-
-
-		TArray<TSharedPtr<FJsonValue>> jedges = JsonObject1->GetArrayField("links");
-		LogMessage("jedges.Num(): " + FString::FromInt(jedges.Num()), log);
-		GraphLinks.SetNumUninitialized(jedges.Num());
-
-
-		for (int32 i = 0; i < jedges.Num(); i++)
-		{
-			auto jobj = jedges[i]->AsObject();
-			FString jid;
-			FString jsourceS = jobj->GetStringField("source");
-			FString jtargetS = jobj->GetStringField("target");
-			int jsource = string_to_id[jsourceS];
-			int jtarget = string_to_id[jtargetS];
-			// LogMessage("jsource: " + FString::FromInt(jsource) + ", jtarget: " + FString::FromInt(jtarget), log);
-			AddEdge(i, jsource, jtarget);
-		}
-
-		LogMessage("Number of link generated: " + FString::FromInt(jedges.Num()), log);
-	}
+	Miscellaneous();
 	return false;
 }
 
-void AKnowledgeGraph::DealWithPredefinedLocation()
-{
-	bool log=Config.bEnableLogging;
-	predefined_positions.SetNumUninitialized(TotalNodeCount);
-
-	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
-	{
-		// Retrieve the position of the nodes from the database
-		// and set the position of the nodes to the retrieved position.
-		// This is done by setting the nodePositions array to the retrieved position
-		TArray<TSharedPtr<FJsonValue>> jnodes = JsonObject1->GetArrayField("nodes");
-		for (int32 i = 0; i < TotalNodeCount; i++)
-		{
-			auto jobj = jnodes[i]->AsObject();
-			FVector jlocation;
-
-			FString jid = jobj->GetStringField("user_generate_id_7577777777");
-
-
-			if (jobj->HasField("ue_location_X") &&
-				jobj->HasField("ue_location_Y") &&
-				jobj->HasField("ue_location_Z")
-			)
-			{
-				jlocation = FVector(
-					jobj->GetNumberField("ue_location_X"),
-					jobj->GetNumberField("ue_location_Y"),
-					jobj->GetNumberField("ue_location_Z")
-				);
-				// You can use jlocation vector as needed
-			}
-			else
-			{
-				// Send a warning to the client. 
-				LogMessage("location does not exist", log);
-
-				// Handle cases where location coordinates do not exist
-				// For example, assigning a default value or logging an error
-				jlocation = FVector(0, 0, 0); // Default value if no location found
-			}
-
-
-			LogMessage("location111111111111111: " + jlocation.ToString(), log);
-
-			// int id111 = string_to_id[jid];
-			// predefined_positions[id111] = jlocation;
-			predefined_positions[i] = jlocation;
-		}
-
-
-		if (Config.bCenterPredefinedLocationToActor)
-		{
-			FVector center = GetActorLocation();
-			FVector aggregation = FVector(0, 0, 0);
-
-			for (int32 i = 0; i < TotalNodeCount; i++)
-			{
-				aggregation += predefined_positions[i];
-			}
-
-			aggregation /= TotalNodeCount;
-			for (int32 i = 0; i < TotalNodeCount; i++)
-			{
-				predefined_positions[i] -= (aggregation - center);
-			}
-		}
-	}
-	else
-	{
-		LogMessage("predefined_location location feature is only available for using database.  ", log);
-	}
-}
-
-void AKnowledgeGraph::DefaultGenerateGraphMethod()
-{
-
-	GetNumberOfNodes();
-
-	if (
-		Config.CreationMode == EGraphCreationMode::FromJson || Config.CreationMode == EGraphCreationMode::FromDatabase
-	)
-	{
-		LogMessage("creating one to one mapping", true, 0, TEXT("DefaultGenerateGraphMethod: "));
-		CreateOneToOneMapping();
-	}else
-	{
-		LogMessage("auto generate graph, no need to create one to one mapping", true, 0, TEXT("DefaultGenerateGraphMethod: "));
-	}
-	
-	InitializeArrays();
-	
-	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
-	{
-		// Node properties are now handled by DataManager
-	}else
-	{
-		
-	}
-	
-	if (GenerateObjectsForNodeAndLink())
-	{
-		return;
-	}
-
-	if (Config.bUsePredefinedLocation)
-	{	
-		DealWithPredefinedLocation();
-	}else
-	{
-		LogMessage("not using predefined location", true, 0, TEXT("DefaultGenerateGraphMethod: "));
-	}
-
-	LogMessage("post generate graph", true, 0, TEXT("DefaultGenerateGraphMethod: "));
-	PostGenerateGraph();
-}
+// Legacy functions DealWithPredefinedLocation() and DefaultGenerateGraphMethod() removed.
+// Predefined positions are now handled in OnGraphDataLoadedCallback().
+// The full generate flow is now: Prepare() -> DataManager->RequestGraphData() -> OnGraphDataLoadedCallback().
 
 
 void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()

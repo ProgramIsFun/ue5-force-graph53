@@ -43,7 +43,6 @@ OctreeNode::~OctreeNode()
 
 void OctreeNode::Subdivide()
 {
-	bool log = true;
 	if (
 		!IsLeaf() // 
 		||
@@ -158,46 +157,15 @@ void OctreeNode::accumulate_with_recursion(float NodeChargeStrength)
 
 void AddDataPoint(OctreeNode* node, FVector Location,int32 id)
 {
-	// FVector newPoint = kn->GetActorLocation();
 	FVector newPoint = Location;
 
 	if (!node->IsLeaf())
 	{
-		// found the leaf node to add the data point
+		// Determine which octant the point belongs to by comparing against the node center
+		int32 i = (newPoint.Z >= node->Center.Z ? 4 : 0) | (newPoint.Y >= node->Center.Y ? 2 : 0) | (
+			newPoint.X >= node->Center.X ? 1 : 0);
 
-
-		if (0)
-		{
-			for (auto* child : node->Children)
-			{
-				if (1)
-				{
-					// This method is slow. 
-					if (child->ContainsPoint(newPoint))
-					{
-						AddDataPoint(child, Location,id);
-						return;
-					}
-				}
-				else
-				{
-				}
-			}
-		}
-		else
-		{
-			// FVector NewCenter = Center + FVector(
-			// (i & 1) ? NewExtent.X : -NewExtent.X,
-			// (i & 2) ? NewExtent.Y : -NewExtent.Y,
-			// (i & 4) ? NewExtent.Z : -NewExtent.Z
-
-			// We determine which region by just comparing the center of the node with the new point.
-			// int i = (z >= zm ? 4 : 0) | (y >= ym ? 2 : 0) | (x >= xm ? 1 : 0);
-			int32 i = (newPoint.Z >= node->Center.Z ? 4 : 0) | (newPoint.Y >= node->Center.Y ? 2 : 0) | (
-				newPoint.X >= node->Center.X ? 1 : 0);
-
-			AddDataPoint(node->Children[i], Location,id);
-		}
+		AddDataPoint(node->Children[i], Location,id);
 	}
 	else
 	{
@@ -223,9 +191,8 @@ void AddDataPoint(OctreeNode* node, FVector Location,int32 id)
 
 void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 {
-
-	bool log=true;
-	// Instead of using recursion, we will traverse the tree using bfs and record the path, And then we will calculate center of mass based on the Reverse order.
+	// Instead of using recursion, we will traverse the tree using DFS and record the path,
+	// then calculate center of mass in reverse order.
 	std::stack<OctreeNode*> traversalOrder;
 	std::stack<OctreeNode*> stack;
 
@@ -241,7 +208,7 @@ void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 		stack.pop();
 
 		LogMessageInternal("currentNode Lower bound" + (currentNode->Center - currentNode->Extent).ToString() +
-		   " Upper bound" + " " + (currentNode->Center + currentNode->Extent).ToString(),log);
+		   " Upper bound" + " " + (currentNode->Center + currentNode->Extent).ToString());
 
 
 		if (!currentNode->IsLeaf())
@@ -253,7 +220,7 @@ void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 					currentNode->Children[i]->check_contain_data_or_not()
 				)
 				{
-					LogMessageInternal("i: " + FString::FromInt(i),log);
+					LogMessageInternal("i: " + FString::FromInt(i));
 					stack.push(currentNode->Children[i]);
 				}
 			}
@@ -269,7 +236,7 @@ void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 		OctreeNode* node = traversalOrder.top();
 		traversalOrder.pop();
 
-		LogMessageInternal("node->Center: " + node->Center.ToString(),log);
+		LogMessageInternal("node->Center: " + node->Center.ToString());
 		if (node->IsLeaf())
 		{
 			if (node->Data)
@@ -315,7 +282,6 @@ void OctreeNode::accumulate_without_recursion(float NodeChargeStrength)
 void OctreeNode::AccumulateStrengthAndComputeCenterOfMass(float NodeChargeStrength)
 {
 	bool using_recursion = false;
-	bool log = true;
 	if (using_recursion)
 	{
 		accumulate_with_recursion(NodeChargeStrength);
@@ -328,26 +294,14 @@ void OctreeNode::AccumulateStrengthAndComputeCenterOfMass(float NodeChargeStreng
 
 void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 id, TArray<FVector>& nodePositions, TArray<FVector>& nodeVelocities, float NodeChargeStrength, float ForceDistanceMin, float ForceDistanceMax, float BarnesHutThetaSquared)
 {
-	bool log = false;
+	if (!root) return;
 
-
-	// return;
-	if (!root) return; // If the root is null, return immediately
-
-	// std::queue<OctreeNode*> nodeQueue;
 	std::stack<OctreeNode*> Stack1;
 	Stack1.push(root);
 	while (!Stack1.empty())
 	{
 		OctreeNode* currentNode = Stack1.top();
 		Stack1.pop();
-
-
-		LogMessageInternal("--------------------Right now, dealing with:  Lower bound" +
-		   (currentNode->Center - currentNode->Extent).ToString() +
-		   " Upper bound" + " " + (currentNode->Center + currentNode->Extent).ToString(), log);
-		LogMessageInternal("Prepare to call the call back functions with this node. ", true);
-
 
 		// Execute the callback on the current node
 		bool skipChildren = callback(currentNode, alpha, id, nodePositions, nodeVelocities, NodeChargeStrength, ForceDistanceMin, ForceDistanceMax, BarnesHutThetaSquared);
@@ -358,40 +312,13 @@ void TraverseBFS(OctreeNode* root, OctreeCallback callback, float alpha, int32 i
 			continue;
 		}
 
-		if (0)
+		// Reverse enqueue all non-null children that contain data
+		for (int i = currentNode->Children.Num() - 1; i >= 0; --i)
 		{
-			// Otherwise, enqueue all non-null children
-			for (OctreeNode* child : currentNode->Children)
+			OctreeNode* child = currentNode->Children[i];
+			if (child && (child->Data || !child->IsLeaf()))
 			{
-				if (child)
-				{
-					Stack1.push(child);
-				}
-			}
-		}
-		else
-		{
-			// Reverse enqueue all non-null children using TArray
-			for (int i = currentNode->Children.Num() - 1; i >= 0; --i)
-			{
-				OctreeNode* child = currentNode->Children[i];
-				if (child)
-				{
-					if (child->Data || !child->IsLeaf())
-					{
-						LogMessageInternal("i" + FString::FromInt(i), log);
-						LogMessageInternal("Lower bound" + (child->Center - child->Extent).ToString() +
-						   " Upper bound" + (child->Center + child->Extent).ToString(), log);
-
-						if (0)
-						{
-							LogMessageInternal("printing the data of the child", log);
-							child->PrintData();
-							LogMessageInternal("finished printing the data of the child", log);
-						}
-						Stack1.push(child);
-					}
-				}
+				Stack1.push(child);
 			}
 		}
 	}
@@ -407,262 +334,64 @@ bool SampleCallback(OctreeNode* node,
 	float ForceDistanceMax,
 	float BarnesHutThetaSquared)
 {
-	bool log = false;
-	bool log2 = false;
-	bool log3 = true;
-	LogMessageInternal("-----------------", log);
-	// LogMessageInternal("SampleCallback", log);
+	FVector width = node->Extent * 2;
+	FVector dir = node->CenterOfMass - nodePositions[id];
 
-	if (0)
+	float l = dir.Size() * dir.Size();
+
+	// Barnes-Hut opening angle and distance bounds from configuration
+	float theta2 = BarnesHutThetaSquared;
+	float distancemax = ForceDistanceMax;
+	float distancemin = ForceDistanceMin;
+
+	// Barnes-Hut criterion: if cell is small enough relative to distance, treat as single body
+	if (width.X * width.X / theta2 < l)
 	{
-	}
-	else
-	{
-		// FVector center = CurrentBounds.Center;
-		FVector width = node->Extent * 2;
-
-
-		// FVector dir = node->CenterOfMass - kn->GetActorLocation();
-
-		FVector dir = node->CenterOfMass - nodePositions[id];
-
-		// Remember that direction is the sum of all the Actor locations of the elements in that note. 
-		float l = dir.Size() * dir.Size();
-
-		// Barnes-Hut opening angle and distance bounds from configuration
-		float theta2 = BarnesHutThetaSquared;
-		float distancemax = ForceDistanceMax;
-		float distancemin = ForceDistanceMin;
-		// LogMessageInternal("bounds: " + node->Center.ToString() + " " + node->Extent.ToString());
-
-		LogMessageInternal(FString::SanitizeFloat(node->Center.X - node->Extent.X) + " " +
-		   FString::SanitizeFloat(node->Center.Y - node->Extent.Y) + " " +
-		   FString::SanitizeFloat(node->Center.Z - node->Extent.Z) + " " +
-		   FString::SanitizeFloat(node->Center.X + node->Extent.X) + " " +
-		   FString::SanitizeFloat(node->Center.Y + node->Extent.Y) + " " +
-		   FString::SanitizeFloat(node->Center.Z + node->Extent.Z), log);
-
-
-		// LogMessageInternal("lower: " + (node->Center - node->Extent).ToString() +
-		// 	" upper: " + (node->Center + node->Extent).ToString(), log);
-
-		// LogMessageInternal("width: " + width.ToString(), log);
-		LogMessageInternal("dir: " + dir.ToString(), log2);
-		LogMessageInternal("l: " + FString::SanitizeFloat(l), log2);
-		LogMessageInternal("width.X * width.X / theta2: " + FString::SanitizeFloat(width.X * width.X / theta2), log2);
-
-
-		// if size of current box is less than distance between nodes
-		// This is used to stop recurring down the tree.
-		if (width.X * width.X / theta2 < l)
+		if (l < distancemax)
 		{
-			//        print("GOING IN HERE");
-			if (l < distancemax)
-			{
-				if (0)
-				{
-					if (dir.X == 0)
-					{
-						// Assign a random value   // return (random() - 0.5) * 1e-6;
-						dir.X = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-						// l += x * x;
-						l += dir.X * dir.X;
-					}
-					if (dir.Y == 0)
-					{
-						// Assign a random value   // return (random() - 0.5) * 1e-6;
-						dir.Y = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-						// l += x * x;
-						l += dir.Y * dir.Y;
-					}
-					if (dir.Z == 0)
-					{
-						// Assign a random value   // return (random() - 0.5) * 1e-6;
-						dir.Z = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-						// l += x * x;
-						l += dir.Z * dir.Z;
-					}
-				}
-				else
-				{
-				}
-
-
-				if (l < distancemin)
-					l = sqrt(distancemin * l);
-
-
-				//print(FString::SanitizeFloat(ns.strength));
-
-
-				FVector Vector = dir
-					*
-					node->Strength
-					*
-					alpha;
-
-				if (1)
-				{
-					LogMessageInternal("l: " + FString::SanitizeFloat(l), log2);
-					LogMessageInternal("dir: " + dir.ToString(), log2);
-					LogMessageInternal("node->Strength: " + FString::SanitizeFloat(node->Strength), log2);
-					LogMessageInternal("alpha: " + FString::SanitizeFloat(alpha), log2);
-					LogMessageInternal("original Velocity: " + nodeVelocities[id].ToString(), log3);
-					// LogMessageInternal("vector: " + Vector.ToString() + " velocity: " + kn->
-					//                                                     velocity.ToString(), log2);
-
-				}
-
-				// float mult = pow(ns.strength / nodeStrength, 1.0);
-
-				// kn->velocity += Vector / l;
-				nodeVelocities[id] += Vector / l;
-				LogMessageInternal("velocity Updated: " + nodeVelocities[id].ToString(), log3);
-				// LogMessageInternal("velocity Updated: " + kn->velocity.ToString(), log);
-				//
-				// if (1)
-				// {
-				// 	if (kn->velocity.Size() > 100000000000000)
-				// 	{
-				// 		LogMessageInternal("velocity is too large. eeeeeeeeeeeee ");
-				// 		eeeee();
-				// 	}
-				// }
-			}
-			LogMessageInternal("11111111111111 Early termination. ", log3);
-			return true;
-		}
-
-		// if not leaf, get all children
-
-		if (!node->IsLeaf()
-			||
-			l >= distancemax)
-		{
-			LogMessageInternal("22222222222222222 You need to return false here. ", log3);
-			// LogMessageInternal("l: " + FString::SanitizeFloat(l), log);
-			return false;
-		}
-
-
-		// For the function to reach here, it has to be a leaf node
-
-		if (node->Data == nullptr)
-
-		{
-			LogMessageInternal("Data is null", log, 2);
-			return true;
-		}
-		
-
-		// bool bCond = node->Data->Node != kn;
-		bool bCond = node->Data->nodeid != id;
-
-		if (
-			// The data is not same as the current node. 
-			bCond
-
-			// ||
-			// node->Data->Next != nullptr
-			//
-		)
-		{
-			// LogMessageInternal("Need to randomize something here.", log);
-
-			//print("IM LEAF");
-			if (0)
-			{
-				if (dir.X)
-				{
-					// (random() - 0.5) * 1e-6;
-					dir.X = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-					l += dir.X * dir.X;
-				}
-				if (dir.Y)
-				{
-					// (random() - 0.5) * 1e-6;
-					dir.Y = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-					l += dir.Y * dir.Y;
-				}
-				if (dir.Z)
-				{
-					// (random() - 0.5) * 1e-6;
-					dir.Z = (FMath::RandRange(0, 1) - 0.5f) * 1e-6;
-					l += dir.Z * dir.Z;
-				}
-			}
-			else
-			{
-			}
-			// if (l < distanceMin2) l = Math.sqrt(distanceMin2 * l);
 			if (l < distancemin)
 				l = sqrt(distancemin * l);
+
+			FVector Vector = dir * node->Strength * alpha;
+
+			LogMessageInternal("original Velocity: " + nodeVelocities[id].ToString());
+
+			nodeVelocities[id] += Vector / l;
+			LogMessageInternal("velocity Updated: " + nodeVelocities[id].ToString());
 		}
+		return true;
+	}
 
-
-		// do if (
-		// 			treeNode.data !== node
-		// 		) {
-		// 	w = strengths[treeNode.data.index] * alpha / l;
-		// 	node.vx += x * w;
-		// 	if (nDim > 1) {
-		// 		node.vy += y * w;
-		// 	}
-		// 	if (nDim > 2) {
-		// 		node.vz += z * w;
-		// 	}
-		// 		} while (treeNode = treeNode.next);
-		//
-
-		if (0)
-		{
-			PointData* currentNode = node->Data;
-			while (1)
-			{
-				if (
-					// currentNode->Node != kn
-					currentNode->nodeid != id
-				)
-				{
-					float w = NodeChargeStrength * alpha / l;
-
-
-					// kn->velocity += dir * w;
-					nodeVelocities[id] += dir * w;
-				}
-				else
-				{
-				}
-				if (currentNode->Next == nullptr)
-				{
-					break;
-				}
-				currentNode = currentNode->Next;
-			}
-		}
-		else
-		{
-			PointData* currentNode = node->Data;
-
-			if (
-				// currentNode->Node != kn
-				currentNode->nodeid != id
-			)
-			{
-				// float w = currentNode->Node->strength * alpha / l;
-				float w = NodeChargeStrength * alpha / l;
-
-
-				// kn->velocity += dir * w;
-				nodeVelocities[id] += dir * w;
-				LogMessageInternal("velocity Updated: " + nodeVelocities[id].ToString(), log3);
-				// LogMessageInternal("velocity Updated: " + kn->velocity.ToString(), log);
-			}
-		}
-		LogMessageInternal("3333333333333333 Returning false at the very end. ", log3);
+	// If not leaf or beyond max distance, continue traversal into children
+	if (!node->IsLeaf() || l >= distancemax)
+	{
 		return false;
 	}
+
+	// Leaf node with no data — skip
+	if (node->Data == nullptr)
+	{
+		return true;
+	}
+
+	// Leaf node: apply force if this is a different node
+	bool bCond = node->Data->nodeid != id;
+
+	if (bCond)
+	{
+		if (l < distancemin)
+			l = sqrt(distancemin * l);
+	}
+
+	PointData* currentNode = node->Data;
+	if (currentNode->nodeid != id)
+	{
+		float w = NodeChargeStrength * alpha / l;
+		nodeVelocities[id] += dir * w;
+		LogMessageInternal("velocity Updated: " + nodeVelocities[id].ToString());
+	}
+
+	return false;
 }
 
-// Assuming `root` is the root of your Octree and it's properly initialized
-// TraverseBFS(root, SampleCallback);
+

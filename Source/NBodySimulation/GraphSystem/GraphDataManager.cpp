@@ -42,8 +42,8 @@ void UGraphDataManager::RequestFromDatabase()
 	HttpRequest->SetHeader("Content-Type", "application/json");
 	HttpRequest->SetURL(DatabaseQueryUrl);
 	
-	// Set timeout (10 seconds - reduced for faster failure detection)
-	HttpRequest->SetTimeout(10.0f);
+	// Set timeout (5 seconds - reduced for faster failure detection)
+	HttpRequest->SetTimeout(5.0f);
 	
 	HttpRequest->OnProcessRequestComplete().BindUObject(
 		this,
@@ -119,8 +119,13 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 		if (HttpRetryCount < MaxHttpRetries - 1)
 		{
 			HttpRetryCount++;
-			LogMessage("Request failed, retrying in " + FString::SanitizeFloat(HttpRetryDelaySeconds) + " seconds... (attempt " + 
-				FString::FromInt(HttpRetryCount + 1) + "/" + FString::FromInt(MaxHttpRetries) + ")", 1);
+			const FString RetryMessage = "Database request failed, retrying in " + FString::SanitizeFloat(HttpRetryDelaySeconds) + "s (attempt " + 
+				FString::FromInt(HttpRetryCount + 1) + "/" + FString::FromInt(MaxHttpRetries) + ")";
+			LogMessage(RetryMessage, 1);
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 8.f, FColor::Yellow, RetryMessage);
+			}
 			
 			// Schedule retry using timer
 			if (GetWorld())
@@ -137,7 +142,12 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 		}
 		else
 		{
-			LogMessage("Request failed after " + FString::FromInt(MaxHttpRetries) + " attempts. Giving up.", 2);
+			const FString FailMessage = "Database connection failed after " + FString::FromInt(MaxHttpRetries) + " attempts. Server may be unreachable.";
+			LogMessage(FailMessage, 2);
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("ERROR: ") + FailMessage);
+			}
 			HandleRequestError(Request, Response);
 			OnGraphDataLoaded.Broadcast(false);
 			return;
@@ -148,7 +158,12 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 	const int32 ResponseCode = Response->GetResponseCode();
 	if (ResponseCode < 200 || ResponseCode >= 300)
 	{
-		LogMessage("HTTP request returned error code: " + FString::FromInt(ResponseCode) + " - " + GetHttpErrorDescription(ResponseCode), 2);
+		const FString HttpErrorMessage = "Database returned HTTP " + FString::FromInt(ResponseCode) + ": " + GetHttpErrorDescription(ResponseCode);
+		LogMessage(HttpErrorMessage, 2);
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("ERROR: ") + HttpErrorMessage);
+		}
 		HandleRequestError(Request, Response);
 		OnGraphDataLoaded.Broadcast(false);
 		return;
@@ -158,8 +173,13 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 	const FString ContentType = Response->GetContentType();
 	if (!ContentType.Contains("application/json"))
 	{
-		LogMessage("Response was not in JSON format. Received: " + ContentType, 2);
+		const FString ContentTypeError = "Database response was not JSON. Received content-type: " + ContentType;
+		LogMessage(ContentTypeError, 2);
 		LogMessage("Response preview: " + Response->GetContentAsString().Left(200), 2);
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("ERROR: ") + ContentTypeError);
+		}
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
@@ -168,7 +188,11 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 	const FString ResponseContent = Response->GetContentAsString();
 	if (ResponseContent.IsEmpty())
 	{
-		LogMessage("Received empty response from server", 2);
+		LogMessage("Received empty response from database server", 2);
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("ERROR: Empty response from database server"));
+		}
 		OnGraphDataLoaded.Broadcast(false);
 		return;
 	}
@@ -185,6 +209,10 @@ void UGraphDataManager::OnDatabaseRequestComplete(FHttpRequestPtr Request, FHttp
 	else
 	{
 		LogMessage("Failed to parse JSON from database. Check server response format.", 2);
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, TEXT("ERROR: Failed to parse graph data from database"));
+		}
 		OnGraphDataLoaded.Broadcast(false);
 	}
 }

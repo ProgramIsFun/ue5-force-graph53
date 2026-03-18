@@ -115,7 +115,10 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 	int32 Index = 0;
 	for (auto& link : GraphLinks)
 	{
-		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index));
+		if (Config.bEnableLogging)
+		{
+			LogMessage("link iteration: " + FString::FromInt(Index));
+		}
 
 		FVector source_pos = nodePositions[link.SourceNodeIndex];
 		FVector source_velocity = nodeVelocities[link.SourceNodeIndex];
@@ -124,16 +127,18 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 
 		FVector new_v = target_pos + target_velocity - source_pos - source_velocity;
 
+		if (Config.bEnableLogging)
+		{
+			LogMessage("new_v: " + new_v.ToString());
+			LogMessage("target_pos - source_pos: " + (target_pos - source_pos).ToString());
+		}
 
-		LogMessage("new_v: " + new_v.ToString());
-		LogMessage("target_pos- source_pos: " + (target_pos - source_pos).ToString());
 		if (Config.bEnableJiggle)
 		{
 			if (new_v.IsNearlyZero())
 			{
 				new_v = Jiggle(new_v, 1e-6f);
 			}
-			LogMessage("GIGGLE is enabled............");
 		}
 
 		float l = new_v.Size();
@@ -153,15 +158,22 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 			* link.LinkStrength;
 		new_v *= l;
 
-		LogMessage("before update nodeVelocities");
-		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
-		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
+		if (Config.bEnableLogging)
+		{
+			LogMessage("before update nodeVelocities");
+			LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
+			LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
+		}
+
 		nodeVelocities[link.TargetNodeIndex] -= new_v * (link.LinkBias);
 		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.LinkBias);
 
-		LogMessage("after update nodeVelocities");
-		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
-		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
+		if (Config.bEnableLogging)
+		{
+			LogMessage("after update nodeVelocities");
+			LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
+			LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
+		}
 
 		Index++;
 	}
@@ -183,9 +195,11 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 
 		OctreeScope->AccumulateStrengthAndComputeCenterOfMass(Config.NodeStrength);
 
-		// LogAlways("tttttttttttttttttttttttt");
-		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeScope->CenterOfMass.ToString());
-		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeScope->Strength));
+		if (Config.bEnableLogging)
+		{
+			LogMessage("OctreeScope->CenterOfMass: " + OctreeScope->CenterOfMass.ToString());
+			LogMessage("OctreeScope->Strength: " + FString::SanitizeFloat(OctreeScope->Strength));
+		}
 
 		// Pre-compute theta squared for Barnes-Hut opening angle criterion
 		float BarnesHutThetaSquared = Config.BarnesHutTheta * Config.BarnesHutTheta;
@@ -195,14 +209,10 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 			int32 Index = 0;
 			for (auto& node : GraphNodes)
 			{
-				LogMessage("--------------------------------------");
-				LogMessage(
-					"Traverse the tree And calculate velocity on this Actor Kn, nodekey: -"
-					+
-					FString::FromInt(
-						Index
-					));
-
+				if (Config.bEnableLogging)
+				{
+					LogMessage("Traversing octree for node: " + FString::FromInt(Index));
+				}
 
 				TraverseBFS(OctreeScope.Get(),
 				            SampleCallback,
@@ -216,7 +226,6 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 				            Config.DistanceMax,
 				            BarnesHutThetaSquared
 				);
-				LogMessage("Finished traversing the tree based on this Actor Kn. ");
 				Index++;
 			}
 		}

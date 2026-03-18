@@ -34,6 +34,15 @@ Targeted fixes for crash-causing bugs and inconsistencies found during code revi
 ### Dead Code Removal (KnowledgeGraph.h)
 - Removed unused `PreviousSelectedGraphNodeIndex` (declared but never read or written)
 
+### Hot-Reload Crash Fix (KnowledgeGraph_Utilities.cpp)
+- `AddReferencedObjects()` used `CastChecked` which crashes on REINST_ Blueprint CDOs during Live Coding
+- Changed to `Cast` with null-check early return
+
+### Hot-Loop Logging Removal (KnowledgeGraph_Physics.cpp)
+- Removed ~10 `LogMessage()` calls from inside `CalculateLinkForceAndUpdateVelocity()` per-link loop
+- Removed per-node logging from `CalculateChargeForceAndUpdateVelocity()` octree sequential loop
+- These caused thousands of string allocations per frame even when logging was disabled (eager argument evaluation)
+
 ## Testing Status
 - [ ] Compile test
 - [ ] Runtime test with AutoGenerate mode

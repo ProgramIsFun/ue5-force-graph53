@@ -51,8 +51,6 @@ public:
 class GraphNode
 {
 public:
-	/** Persistent identifier from the database (empty when not in FromDatabase mode). */
-	FString DatabaseNodeId;
 	UTextRenderComponent* textComponent = nullptr;
 };
 

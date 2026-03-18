@@ -531,7 +531,6 @@ int32 AKnowledgeGraph::AddGraphNodeLocal(const FString& NodeName, const FString&
 
 	// --- 1. Expand all parallel arrays ---
 	GraphNode NewNode;
-	NewNode.DatabaseNodeId = NodeStringId;
 	GraphNodes.Add(NewNode);
 	nodePositions.Add(NodeWorldPosition);
 	nodeVelocities.Add(FVector::ZeroVector);

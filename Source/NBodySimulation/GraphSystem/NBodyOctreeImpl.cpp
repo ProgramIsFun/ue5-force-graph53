@@ -129,8 +129,8 @@ bool OctreeNode::check_contain_data_or_not()
  * @param nodePositions - Current positions of all nodes
  */
 void OctreeNode::AddAll1(
-	TArray<GraphNode> all_nodes,
-	TArray<FVector> nodePositions
+	const TArray<GraphNode>& all_nodes,
+	const TArray<FVector>& nodePositions
 )
 {
 	// Note: This assumes node IDs are sequential from 0 to N-1
@@ -152,7 +152,7 @@ void OctreeNode::AddAll1(
 
 	// Step 1: Compute bounding box of all points
 	int i = 0;
-	for (auto& node : all_nodes)
+	for (const auto& node : all_nodes)
 	{
 		FVector D = nodePositions[i];
 		float X = D.X;
@@ -181,7 +181,7 @@ void OctreeNode::AddAll1(
 
 	// Add the new points
 	i = 0;
-	for (auto& node : all_nodes)
+	for (const auto& node : all_nodes)
 	{
 		AddDataPoint(this,  nodePositions[i],i);
 		i++;

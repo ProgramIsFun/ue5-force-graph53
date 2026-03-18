@@ -86,8 +86,8 @@ struct OctreeNode
 	void Cover(float X0, float Y0, float Z0);
 	bool check_contain_data_or_not();
 	void AddAll1(
-		TArray<GraphNode> all_nodes,
-		TArray<FVector> nodePositions
+		const TArray<GraphNode>& all_nodes,
+		const TArray<FVector>& nodePositions
 	);
 
 };

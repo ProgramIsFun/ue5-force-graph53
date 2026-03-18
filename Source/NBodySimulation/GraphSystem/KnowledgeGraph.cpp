@@ -22,8 +22,14 @@ AKnowledgeGraph::AKnowledgeGraph()
 
 void AKnowledgeGraph::BeginDestroy()
 {
-	LogMessage("AKnowledgeGraph::BeginDestroy", true, 2);
-	FNBodySimModule::Get().EndRendering();
+	// Clear the selection delegate to release any bound references
+	OnGraphNodeSelectionChanged.Clear();
+
+	// Guard against module already being torn down during editor shutdown
+	if (FNBodySimModule::IsAvailable())
+	{
+		FNBodySimModule::Get().EndRendering();
+	}
 
 	// Clear arrays containing non-trivial types (FString in GraphNode)
 	// before the C++ destructor runs, since GC may have already

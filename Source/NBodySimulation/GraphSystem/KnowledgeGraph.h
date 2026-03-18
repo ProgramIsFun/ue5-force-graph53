@@ -23,6 +23,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnGraphNodeSelectionChanged, int32 /* SelectedNodeIndex */);
+
 #include "KnowledgeGraph.generated.h"
 
 class GraphLink
@@ -145,6 +147,9 @@ public:
 	
 
 	
+	// Fires whenever the selected node changes (index is -1 when deselected).
+	FOnGraphNodeSelectionChanged OnGraphNodeSelectionChanged;
+
 	// Important Variables.
 	int32 SelectedGraphNodeIndex = -1;
 	FString SelectedGraphNodeName = "";

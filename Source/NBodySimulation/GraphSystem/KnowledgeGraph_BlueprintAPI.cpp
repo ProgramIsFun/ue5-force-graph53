@@ -48,6 +48,7 @@ void AKnowledgeGraph::SelectClosestGraphNodeToPlayer()
 		SelectedGraphNodeName = NodeIdToStringMap[closest_node_index];
 		LogToScreen("The closest node index is: " + FString::FromInt(closest_node_index) + 
 		   " with a distance of: " + FString::SanitizeFloat(min_distance), true, 2);
+		OnGraphNodeSelectionChanged.Broadcast(SelectedGraphNodeIndex);
 	}
 	else
 	{
@@ -125,6 +126,8 @@ void AKnowledgeGraph::SelectGraphNodeByLookAt()
 
 	LogToScreen("Selected: " + SelectedGraphNodeName + " (idx " + FString::FromInt(ClosestNodeToRayIndex) +
 		", ray dist: " + FString::SanitizeFloat(SmallestRayDistance) + ")");
+
+	OnGraphNodeSelectionChanged.Broadcast(SelectedGraphNodeIndex);
 }
 
 // ---------------------------------------------------------------------------
@@ -506,11 +509,13 @@ bool AKnowledgeGraph::RemoveGraphNodeByIndex(int32 NodeIndexToRemove)
 	{
 		SelectedGraphNodeIndex = -1;
 		SelectedGraphNodeName = TEXT("");
+		OnGraphNodeSelectionChanged.Broadcast(SelectedGraphNodeIndex);
 	}
 	else if (SelectedGraphNodeIndex == LastNodeIndex)
 	{
 		// Selection was the node that got moved
 		SelectedGraphNodeIndex = NodeIndexToRemove;
+		OnGraphNodeSelectionChanged.Broadcast(SelectedGraphNodeIndex);
 	}
 
 	// Reheat simulation so the graph can re-settle

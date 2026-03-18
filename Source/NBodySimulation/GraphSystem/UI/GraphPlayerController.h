@@ -8,6 +8,7 @@
 #include "GraphPlayerController.generated.h"
 
 class UGraphControlPanelWidget;
+class UNodePropertyPanelWidget;
 class AKnowledgeGraph;
 
 UCLASS()
@@ -28,9 +29,13 @@ private:
 	void OnLaserSelectPressed();
 	void OnLaserSelectReleased();
 	void EnsureGraphActorCached();
+	void OnSelectedGraphNodeChanged(int32 SelectedNodeIndex);
 
 	UPROPERTY()
 	UGraphControlPanelWidget* GraphControlPanel = nullptr;
+
+	UPROPERTY()
+	UNodePropertyPanelWidget* NodePropertyPanel = nullptr;
 
 	UPROPERTY()
 	AKnowledgeGraph* CachedGraphActor = nullptr;

@@ -2,9 +2,12 @@
 
 #include "GraphPlayerController.h"
 #include "GraphControlPanelWidget.h"
+#include "NodePropertyPanelWidget.h"
 #include "KnowledgeGraph.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
+#include "Components/CanvasPanelSlot.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 AGraphPlayerController::AGraphPlayerController()
 {
@@ -79,7 +82,7 @@ void AGraphPlayerController::FindAndBindGraphActor()
 	// Cache the graph actor for direct key bindings (e.g. PgUp select)
 	CachedGraphActor = GraphActor;
 
-	// Create the panel widget
+	// Create the control panel widget
 	GraphControlPanel = CreateWidget<UGraphControlPanelWidget>(this);
 	if (GraphControlPanel)
 	{
@@ -87,6 +90,20 @@ void AGraphPlayerController::FindAndBindGraphActor()
 		GraphControlPanel->SetVisibility(ESlateVisibility::Collapsed);
 		GraphControlPanel->InitializePanel(GraphActor);
 	}
+
+	// Create the node property panel (upper-right corner, always on top)
+	NodePropertyPanel = CreateWidget<UNodePropertyPanelWidget>(this);
+	if (NodePropertyPanel)
+	{
+		NodePropertyPanel->AddToViewport(11);
+		NodePropertyPanel->SetAnchorsInViewport(FAnchors(1.0f, 0.0f, 1.0f, 0.0f));
+		NodePropertyPanel->SetAlignmentInViewport(FVector2D(1.0f, 0.0f));
+		NodePropertyPanel->SetPositionInViewport(FVector2D(-20.0f, 20.0f));
+		NodePropertyPanel->InitializePropertyPanel(GraphActor);
+	}
+
+	// Subscribe to selection changes so the property panel refreshes automatically
+	GraphActor->OnGraphNodeSelectionChanged.AddUObject(this, &AGraphPlayerController::OnSelectedGraphNodeChanged);
 }
 
 void AGraphPlayerController::OnLaserSelectPressed()
@@ -115,5 +132,13 @@ void AGraphPlayerController::EnsureGraphActorCached()
 	if (FoundActors.Num() > 0)
 	{
 		CachedGraphActor = Cast<AKnowledgeGraph>(FoundActors[0]);
+	}
+}
+
+void AGraphPlayerController::OnSelectedGraphNodeChanged(int32 SelectedNodeIndex)
+{
+	if (NodePropertyPanel)
+	{
+		NodePropertyPanel->RefreshSelectedNodeProperties();
 	}
 }

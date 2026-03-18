@@ -49,17 +49,9 @@ public:
 class GraphNode
 {
 public:
-	int id;
+	/** Persistent identifier from the database (empty when not in FromDatabase mode). */
+	FString DatabaseNodeId;
 	UTextRenderComponent* textComponent = nullptr;
-	GraphNode(int InId, UTextRenderComponent* InTextComponent)
-	{
-		id = InId;
-		textComponent = InTextComponent;
-	}
-	GraphNode()
-		: id(-1)
-	{
-	}
 };
 
 UCLASS()

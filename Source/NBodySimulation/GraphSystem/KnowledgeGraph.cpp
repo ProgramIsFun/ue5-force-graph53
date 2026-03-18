@@ -3,7 +3,8 @@
 #include "NBodyUtils.h"
 AKnowledgeGraph::~AKnowledgeGraph()
 {
-	LogMessage("AKnowledgeGraph::~AKnowledgeGraph", true, 2);
+	// Do NOT call UObject methods here — the object may already be partially GC'd.
+	// Use BeginDestroy() or EndPlay() for cleanup logging.
 }
 AKnowledgeGraph::AKnowledgeGraph()
 	: Super()
@@ -23,6 +24,12 @@ void AKnowledgeGraph::BeginDestroy()
 {
 	LogMessage("AKnowledgeGraph::BeginDestroy", true, 2);
 	FNBodySimModule::Get().EndRendering();
+
+	// Clear arrays containing non-trivial types (FString in GraphNode)
+	// before the C++ destructor runs, since GC may have already
+	// invalidated the backing memory by that point.
+	GraphNodes.Empty();
+
 	Super::BeginDestroy();
 }
 

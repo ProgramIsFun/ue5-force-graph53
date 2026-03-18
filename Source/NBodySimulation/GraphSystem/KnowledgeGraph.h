@@ -307,8 +307,7 @@ public:
 
 
 
-	// Other variables. 
-	OctreeNode* OctreeData2;
+	// Other variables.
 
 
 

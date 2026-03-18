@@ -114,7 +114,7 @@ void AKnowledgeGraph::Prepare()
 		InitializeArrays();
 		Miscellaneous(); // Creates the links
 		
-		if (GenerateObjectsForNodeAndLink())
+		if (GenerateObjectsForNodeAndLinkNew())
 		{
 			return;
 		}

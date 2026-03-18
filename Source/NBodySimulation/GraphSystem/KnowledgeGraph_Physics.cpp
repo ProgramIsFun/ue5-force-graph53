@@ -101,21 +101,7 @@ void AKnowledgeGraph::InitializeArrays()
 	SetArrayValues();
 }
 
-bool AKnowledgeGraph::GenerateObjectsForNodeAndLink()
-{
-	// This function now only handles AutoGenerate mode.
-	// FromJson and FromDatabase modes are handled by GenerateObjectsForNodeAndLinkNew() via DataManager.
-	for (int32 i = 0; i < TotalNodeCount; i++)
-	{
-		if (Config.bUseTextRenderComponents)
-		{
-			FString name = "Sample Text : " + FString::FromInt(i);
-			GenerateTextRenderComponentAndAttach(name,i);
-		}
-	}
-	Miscellaneous();
-	return false;
-}
+// Legacy GenerateObjectsForNodeAndLink() removed — replaced by GenerateObjectsForNodeAndLinkNew() in DataIntegration.
 
 // Legacy functions DealWithPredefinedLocation() and DefaultGenerateGraphMethod() removed.
 // Predefined positions are now handled in OnGraphDataLoadedCallback().

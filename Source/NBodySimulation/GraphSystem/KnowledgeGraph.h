@@ -169,7 +169,6 @@ public:
 	void Prepare();
 	void UpdateParameterInShader(float DeltaTime);
 	bool IsGraphStabilized(bool log);
-	void CpuCalculate();
 	void UpdatePositionArray(bool log);
 	void UpdateAlpha();
 	void UpdateIterations();
@@ -179,8 +178,7 @@ public:
 	void SetArrayLengths();
 	void SetArrayValues();
 	void InitializeArrays();
-	bool GenerateObjectsForNodeAndLink();
-	bool GenerateObjectsForNodeAndLinkNew(); // New version using DataManager
+	bool GenerateObjectsForNodeAndLinkNew(); // Handles all creation modes via DataManager
 
 	void AddEdge(int32 id, int32 source, int32 target);
 	void InitializeNodePosition();
@@ -203,7 +201,7 @@ public:
 
 	// Physics simulator integration
 	void InitializePhysicsSimulator();
-	void CpuCalculateNew(); // New version using PhysicsSimulator
+	void CpuCalculateNew(); // CPU physics via PhysicsSimulator (with legacy fallback)
 
 	// Renderer integration
 	void UpdateNodeWorldPositionAccordingToPositionArrayNew();

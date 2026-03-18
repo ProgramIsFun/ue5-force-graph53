@@ -7,7 +7,7 @@
 // Key Functions:
 // - MainFunction(): Main simulation loop called every tick
 // - PostGenerateGraph(): Initialization after graph generation
-// - CpuCalculate(): Legacy CPU physics calculation (fallback)
+// - CpuCalculateNew(): CPU physics via PhysicsSimulator (with legacy fallback)
 // - UpdatePositionArray(): Dispatches to GPU or CPU physics
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph3.cpp
@@ -45,30 +45,12 @@ void AKnowledgeGraph::UpdatePositionArray(bool log)
 	}
 	else
 	{
-		// Use new physics simulator if available, otherwise fall back to old method
-		if (PhysicsSimulator)
-		{
-			CpuCalculateNew();
-		}
-		else
-		{
-			CpuCalculate();
-		}
+		CpuCalculateNew();
 	}
 }
 
-void AKnowledgeGraph::CpuCalculate()
-{
-	// Safety check: Ensure arrays are initialized before simulation
-	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
-	{
-		LogMessage("Arrays not initialized yet, skipping CpuCalculate", true, 1);
-		return;
-	}
-
-	ApplyForce();
-	UpdatePositionArrayAccordingToVelocityArray();
-}
+// Legacy CpuCalculate() removed — CpuCalculateNew() in PhysicsIntegration handles
+// both the PhysicsSimulator path and the fallback to ApplyForce() internally.
 
 bool AKnowledgeGraph::MainFunction(float DeltaTime)
 {

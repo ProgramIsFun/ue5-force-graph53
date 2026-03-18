@@ -37,8 +37,9 @@ void AKnowledgeGraph::CpuCalculateNew()
 {
 	if (!PhysicsSimulator)
 	{
-		LogMessage("PhysicsSimulator is null, falling back to old method", true, 1);
-		CpuCalculate();
+		LogMessage("PhysicsSimulator is null, falling back to legacy physics", true, 1);
+		ApplyForce();
+		UpdatePositionArrayAccordingToVelocityArray();
 		return;
 	}
 

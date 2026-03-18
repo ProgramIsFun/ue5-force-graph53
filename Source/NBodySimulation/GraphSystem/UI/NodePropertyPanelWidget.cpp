@@ -6,6 +6,7 @@
 #include "Widgets/Layout/SBorder.h"
 #include "Widgets/Layout/SScrollBox.h"
 #include "Widgets/Text/STextBlock.h"
+#include "Widgets/SOverlay.h"
 
 void UNodePropertyPanelWidget::InitializePropertyPanel(AKnowledgeGraph* InGraphActor)
 {
@@ -84,31 +85,37 @@ TSharedRef<SWidget> UNodePropertyPanelWidget::RebuildWidget()
 {
 	TSharedPtr<SVerticalBox> PropertyColumnBox;
 
-	TSharedRef<SWidget> RootWidget =
-		SAssignNew(PanelRootBorder, SBorder)
+	// The inner panel with the dark background and content
+	SAssignNew(PanelRootBorder, SBorder)
 		.BorderBackgroundColor(FLinearColor(0.02f, 0.02f, 0.02f, 0.85f))
 		.Padding(FMargin(14.0f))
 		.Visibility(EVisibility::Collapsed)
 		[
-			SNew(SVerticalBox)
-
-			+ SVerticalBox::Slot()
-			.AutoHeight()
-			.Padding(0, 0, 0, 8)
+			SNew(SBox)
+			.MinDesiredWidth(220.0f)
+			.MaxDesiredWidth(400.0f)
 			[
-				SAssignNew(NodeTitleTextBlock, STextBlock)
-				.Text(FText::FromString(TEXT("No Selection")))
-				.ColorAndOpacity(FSlateColor(FLinearColor(1.0f, 0.9f, 0.3f)))
-				.Font(FCoreStyle::GetDefaultFontStyle("Bold", 13))
-			]
+				SNew(SVerticalBox)
 
-			+ SVerticalBox::Slot()
-			.MaxHeight(300.0f)
-			[
-				SNew(SScrollBox)
-				+ SScrollBox::Slot()
+				+ SVerticalBox::Slot()
+				.AutoHeight()
+				.Padding(0, 0, 0, 8)
 				[
-					SAssignNew(PropertyColumnBox, SVerticalBox)
+					SAssignNew(NodeTitleTextBlock, STextBlock)
+					.Text(FText::FromString(TEXT("No Selection")))
+					.ColorAndOpacity(FSlateColor(FLinearColor(1.0f, 0.9f, 0.3f)))
+					.Font(FCoreStyle::GetDefaultFontStyle("Bold", 13))
+				]
+
+				+ SVerticalBox::Slot()
+				.AutoHeight()
+				.MaxHeight(300.0f)
+				[
+					SNew(SScrollBox)
+					+ SScrollBox::Slot()
+					[
+						SAssignNew(PropertyColumnBox, SVerticalBox)
+					]
 				]
 			]
 		];
@@ -147,5 +154,13 @@ TSharedRef<SWidget> UNodePropertyPanelWidget::RebuildWidget()
 			];
 	}
 
-	return RootWidget;
+	// Wrap in a full-screen overlay that pins the panel to the upper-right corner
+	return SNew(SOverlay)
+		+ SOverlay::Slot()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Top)
+		.Padding(FMargin(0.0f, 20.0f, 20.0f, 0.0f))
+		[
+			PanelRootBorder.ToSharedRef()
+		];
 }

@@ -31,11 +31,6 @@ void AKnowledgeGraph::BeginDestroy()
 		FNBodySimModule::Get().EndRendering();
 	}
 
-	// Clear arrays containing non-trivial types (FString in GraphNode)
-	// before the C++ destructor runs, since GC may have already
-	// invalidated the backing memory by that point.
-	GraphNodes.Empty();
-
 	Super::BeginDestroy();
 }
 

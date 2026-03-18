@@ -6,8 +6,6 @@
 #include "KnowledgeGraph.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
-#include "Components/CanvasPanelSlot.h"
-#include "Blueprint/WidgetLayoutLibrary.h"
 
 AGraphPlayerController::AGraphPlayerController()
 {
@@ -96,9 +94,6 @@ void AGraphPlayerController::FindAndBindGraphActor()
 	if (NodePropertyPanel)
 	{
 		NodePropertyPanel->AddToViewport(11);
-		NodePropertyPanel->SetAnchorsInViewport(FAnchors(1.0f, 0.0f, 1.0f, 0.0f));
-		NodePropertyPanel->SetAlignmentInViewport(FVector2D(1.0f, 0.0f));
-		NodePropertyPanel->SetPositionInViewport(FVector2D(-20.0f, 20.0f));
 		NodePropertyPanel->InitializePropertyPanel(GraphActor);
 	}
 

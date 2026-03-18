@@ -276,14 +276,11 @@ public:
 	{
 		FNBodySimModule::Get().EndRendering();
 	}
-	void LogMessage(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
+	void LogMessage(const FString& StringToLog, bool LOG=true, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))
 	{
 		if(Config.bEnableLogging)
 		{
 			LogMessageInternal(StringToLog, LOG, SeverityLevel, Prefix);
-		}else
-		{
-			// Do nothing possibly for performance
 		}
 	}
 	void LogToScreen(const FString& StringToLog, bool LOG=false, int SeverityLevel = 0, const FString& Prefix = TEXT("[Info]"))

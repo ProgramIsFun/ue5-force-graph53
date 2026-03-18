@@ -124,15 +124,12 @@ bool AKnowledgeGraph::GenerateObjectsForNodeAndLink()
 
 void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 {
-	bool log = Config.bEnableLogging;
-
-
 	// link forces
 	// After loop, the velocity of all notes have been altered a little bit because of the link force already. 
 	int32 Index = 0;
 	for (auto& link : GraphLinks)
 	{
-		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index), log);
+		LogMessage("link iteration: !!!!!!!!!!!!!!!!!!" + FString::FromInt(Index));
 
 		FVector source_pos = nodePositions[link.SourceNodeIndex];
 		FVector source_velocity = nodeVelocities[link.SourceNodeIndex];
@@ -142,15 +139,15 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 		FVector new_v = target_pos + target_velocity - source_pos - source_velocity;
 
 
-		LogMessage("new_v: " + new_v.ToString(), log);
-		LogMessage("target_pos- source_pos: " + (target_pos - source_pos).ToString(), log);
+		LogMessage("new_v: " + new_v.ToString());
+		LogMessage("target_pos- source_pos: " + (target_pos - source_pos).ToString());
 		if (Config.bEnableJiggle)
 		{
 			if (new_v.IsNearlyZero())
 			{
 				new_v = Jiggle(new_v, 1e-6f);
 			}
-			LogMessage("GIGGLE is enabled............", log);
+			LogMessage("GIGGLE is enabled............");
 		}
 
 		float l = new_v.Size();
@@ -163,15 +160,15 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 			* link.LinkStrength;
 		new_v *= l;
 
-		LogMessage("before update nodeVelocities", log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
+		LogMessage("before update nodeVelocities");
+		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
+		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
 		nodeVelocities[link.TargetNodeIndex] -= new_v * (link.LinkBias);
 		nodeVelocities[link.SourceNodeIndex] += new_v * (1 - link.LinkBias);
 
-		LogMessage("after update nodeVelocities", log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString(), log);
-		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString(), log);
+		LogMessage("after update nodeVelocities");
+		LogMessage("nodeVelocities[" + FString::FromInt(link.TargetNodeIndex) + "]: " + nodeVelocities[link.TargetNodeIndex].ToString());
+		LogMessage("nodeVelocities[" + FString::FromInt(link.SourceNodeIndex) + "]: " + nodeVelocities[link.SourceNodeIndex].ToString());
 
 		Index++;
 	}
@@ -179,8 +176,6 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 
 void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 {
-	bool log = Config.bEnableLogging;
-	bool log2 = false;
 
 
 	if (!Config.bUseBruteForceForManyBody)
@@ -196,8 +191,8 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 		OctreeScope->AccumulateStrengthAndComputeCenterOfMass(Config.NodeStrength);
 
 		// LogAlways("tttttttttttttttttttttttt");
-		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeScope->CenterOfMass.ToString(), log);
-		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeScope->Strength), log);
+		LogMessage("!!!OctreeData2->CenterOfMass: " + OctreeScope->CenterOfMass.ToString());
+		LogMessage("!!!OctreeData2->strength: " + FString::SanitizeFloat(OctreeScope->Strength));
 
 		// Pre-compute theta squared for Barnes-Hut opening angle criterion
 		float BarnesHutThetaSquared = Config.BarnesHutTheta * Config.BarnesHutTheta;
@@ -207,13 +202,13 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 			int32 Index = 0;
 			for (auto& node : GraphNodes)
 			{
-				LogMessage("--------------------------------------", log);
+				LogMessage("--------------------------------------");
 				LogMessage(
 					"Traverse the tree And calculate velocity on this Actor Kn, nodekey: -"
 					+
 					FString::FromInt(
 						Index
-					), log);
+					));
 
 
 				TraverseBFS(OctreeScope.Get(),
@@ -228,7 +223,7 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 				            Config.DistanceMax,
 				            BarnesHutThetaSquared
 				);
-				LogMessage("Finished traversing the tree based on this Actor Kn. ", log);
+				LogMessage("Finished traversing the tree based on this Actor Kn. ");
 				Index++;
 			}
 		}
@@ -243,7 +238,7 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 		}
 
 
-		LogMessage("Finished traversing, now the tree will be cleaned up automatically. ", log);
+		LogMessage("Finished traversing, now the tree will be cleaned up automatically. ");
 	}
 	else
 	{
@@ -438,7 +433,6 @@ void AKnowledgeGraph::UpdateLinkPosition()
 
 void AKnowledgeGraph::ApplyForce()
 {
-	bool log = Config.bEnableLogging;
 
 	// In here velocity of all notes are zeroed
 	// In the following for loop, In the first few loop, the velocity is 0. 
@@ -446,32 +440,32 @@ void AKnowledgeGraph::ApplyForce()
 
 	if (Config.bCalculateLinkForce)
 	{
-		LogMessage("Ready to calculate link.--------------------------------------", log);
+		LogMessage("Ready to calculate link.--------------------------------------");
 		CalculateLinkForceAndUpdateVelocity();
-		LogMessage("Finish calculating link.--------------------------------------", log);
+		LogMessage("Finish calculating link.--------------------------------------");
 	}
 	else
 	{
-		LogMessage("Config.bCalculateLinkForce is disabled. ", log);
+		LogMessage("Config.bCalculateLinkForce is disabled. ");
 	}
 
 
 	if (Config.bCalculateManyBodyForce)
 	{
-		LogMessage("Ready to calculate charge.--------------------------------------", log);
+		LogMessage("Ready to calculate charge.--------------------------------------");
 
 		CalculateChargeForceAndUpdateVelocity();
-		LogMessage("Finish calculating charge.--------------------------------------", log);
+		LogMessage("Finish calculating charge.--------------------------------------");
 	}
 	else
 	{
-		LogMessage("Config.bCalculateManyBodyForce is disabled. ", log);
+		LogMessage("Config.bCalculateManyBodyForce is disabled. ");
 	}
 
 
 	if (!Config.bCalculateCenterForce)
 	{
-		LogMessage("centre force is disabled. ", log);
+		LogMessage("centre force is disabled. ");
 	}
 	else
 	{

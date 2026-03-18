@@ -59,12 +59,10 @@ void AKnowledgeGraph::UpdatePositionArray(bool log)
 
 void AKnowledgeGraph::CpuCalculate()
 {
-	bool log = Config.bEnableLogging;
-
 	// Safety check: Ensure arrays are initialized before simulation
 	if (nodePositions.Num() == 0 || nodeVelocities.Num() == 0 || GraphNodes.Num() == 0)
 	{
-		LogMessage("Arrays not initialized yet, skipping CpuCalculate", log, 1);
+		LogMessage("Arrays not initialized yet, skipping CpuCalculate", true, 1);
 		return;
 	}
 
@@ -74,13 +72,11 @@ void AKnowledgeGraph::CpuCalculate()
 
 bool AKnowledgeGraph::MainFunction(float DeltaTime)
 {
-	bool log = Config.bEnableLogging;
-
-	LogMessage("MainFunction called", log, 0, TEXT("MainFunction: "));
+	LogMessage("MainFunction called", true, 0, TEXT("MainFunction: "));
 
 	UpdateIterations();
 
-	if (IsGraphStabilized(log))
+	if (IsGraphStabilized(true))
 	{
 		if (Config.bUsePredefinedLocation)
 		{
@@ -101,13 +97,13 @@ bool AKnowledgeGraph::MainFunction(float DeltaTime)
 	else
 	{
 		UpdateAlpha();
-		UpdatePositionArray(log);
+		UpdatePositionArray(true);
 
 		UpdateNodeWorldPositionAccordingToPositionArrayNew();
 
 		if (Config.bUpdateLinkBeforeStabilize)
 		{
-			LogMessage("update link position", log);
+			LogMessage("update link position");
 			UpdateLinkPositionNew();
 		}
 	

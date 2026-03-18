@@ -65,7 +65,7 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	LogMessage("tick is called. ", Config.bEnableLogging, 2);
+	LogMessage("tick is called. ", true, 2);
 
 	// Handle server connection failure shutdown with countdown
 	if (bServerConnectionFailed)
@@ -103,11 +103,11 @@ void AKnowledgeGraph::Tick(float DeltaTime)
 			
 		}else
 		{
-			LogMessage("Graph is initialized. We have enough data to move on.  ", Config.bEnableLogging, 2);
+			LogMessage("Graph is initialized. We have enough data to move on.  ", true, 2);
 			if(FrameSkipCounter<10)
 			{
 				LogMessage("The reason of this section is because the first few frames seems "
-			 "to be of sink between the gpu and the cpu. ", Config.bEnableLogging, 2); 
+			 "to be of sink between the gpu and the cpu. ", true, 2); 
 				FrameSkipCounter+=1;
 				return;
 			}

@@ -110,12 +110,12 @@ void AKnowledgeGraph::GpuGetPositions()
 	}
 
 	TArray<float> alphas = FNBodySimModule::Get().GetComputedAlphas();
-	LogMessage("alpha: " + FString::SanitizeFloat(alphas[0]), Config.bEnableLogging, 2);
-	LogMessage("alpha1: " + FString::SanitizeFloat(alphas[1]), Config.bEnableLogging, 2);
+	LogMessage("alpha: " + FString::SanitizeFloat(alphas[0]), true, 2);
+	LogMessage("alpha1: " + FString::SanitizeFloat(alphas[1]), true, 2);
 
 	if (SimulationIterationCount == 1)
 	{
-		LogMessage("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", Config.bEnableLogging, 2);
+		LogMessage("First iteration gpu is useless!!!!!!!!!!!!!!!!!!!!!!!!! ", true, 2);
 		bGPUResultValid = false;
 		return;
 	}

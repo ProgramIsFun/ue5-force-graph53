@@ -86,9 +86,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void AddGraphNodeToDatabase(FString NodeName);
 	void OnAddGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
-	void CleanUpObjects();
-	void ReloadTheWholeGraph();
-	void LateAddNode(FString NodeName, FString id, FVector location);
 
 	UFUNCTION(BlueprintCallable, Category = "Graph Selection")
 	void SelectClosestGraphNodeToPlayer();
@@ -98,7 +95,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Graph Database")
 	void DeleteGraphLinkFromDatabase();
 
-	// --- Incremental graph mutation (swap-remove) ---
+	// --- High-level graph editing (mode-aware) ---
+	// These route to local-only or database-then-local depending on Config.CreationMode.
+
+	// Add a node: immediate in AutoGenerate/FromJson, HTTP-first in FromDatabase.
+	UFUNCTION(BlueprintCallable, Category = "Graph Editing")
+	void RequestAddGraphNode(FString NodeName, int32 LinkTargetNodeIndex = -1);
+
+	// Remove the currently selected node: immediate in AutoGenerate/FromJson, HTTP-first in FromDatabase.
+	UFUNCTION(BlueprintCallable, Category = "Graph Editing")
+	void RequestRemoveSelectedGraphNode();
+
+	// --- Database HTTP callbacks ---
+	void OnDeleteGraphNodeHttpCompleted(TSharedPtr<IHttpRequest> HttpRequest, TSharedPtr<IHttpResponse> HttpResponse, bool bArg);
+
+	// --- Incremental graph mutation (swap-remove, local only) ---
 	// Removes a node by array index using swap-remove: moves the last node into the deleted slot,
 	// fixes up all link indices, and removes any links that referenced the deleted node.
 	// Returns true on success.
@@ -108,15 +119,13 @@ public:
 	// Pass LinkTargetNodeIndex >= 0 to also create a link to an existing node.
 	int32 AddGraphNodeLocal(const FString& NodeName, const FString& NodeStringId, FVector NodeWorldPosition, int32 LinkTargetNodeIndex = -1);
 
-	// Removes the selected node (SelectedGraphNodeIndex) locally. Blueprint-friendly wrapper.
-	UFUNCTION(BlueprintCallable, Category = "Graph Editing")
-	void RemoveSelectedGraphNode();
+	// --- Cleanup / reload ---
+	void CleanUpObjects();
+	void ReloadTheWholeGraph();
 	
 	// Temporary variables.
 	bool bGraphRequesting = false;
 	bool bGraphInitialized = false;
-
-	bool bRefreshGraphAfterEditing = true;
 	
 	bool bPredefinedPositionNeedsUpdate = true;
 	bool bPrecheckSucceeded = true;

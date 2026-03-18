@@ -44,7 +44,7 @@ void UGraphControlPanelWidget::InitializePanel(AKnowledgeGraph* InGraphActor)
 	{
 		if (GraphActorRef)
 		{
-			GraphActorRef->RemoveSelectedGraphNode();
+			GraphActorRef->RequestRemoveSelectedGraphNode();
 		}
 	});
 

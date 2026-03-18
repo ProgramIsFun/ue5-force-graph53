@@ -1,16 +1,16 @@
 // KnowledgeGraph_BlueprintAPI.cpp
 //
-// Blueprint-callable functions for user interaction and database operations.
-// Provides the interface between Blueprints and the graph system for:
-// - Node selection and manipulation
-// - Database CRUD operations (Create, Read, Update, Delete)
-// - Graph reloading and cleanup
+// Blueprint-callable functions for user interaction and graph editing.
+// Provides mode-aware routing:
+//   - AutoGenerate / FromJson: edits apply locally and immediately
+//   - FromDatabase: HTTP request first, local edit only on server success
 //
 // Key Functions:
+// - RequestAddGraphNode(): Mode-aware node addition
+// - RequestRemoveSelectedGraphNode(): Mode-aware node removal
+// - AddGraphNodeLocal() / RemoveGraphNodeByIndex(): Low-level swap-remove operations
 // - SelectClosestGraphNodeToPlayer(): Find nearest node to player
-// - AddGraphNodeToDatabase(): Create new node via HTTP
-// - SyncGraphNodePositionsToDatabase(): Sync positions to database
-// - ReloadTheWholeGraph(): Full graph refresh
+// - SyncGraphNodePositionsToDatabase(): Bulk position sync
 //
 // Part of the KnowledgeGraph refactoring - extracted from KnowledgeGraph5.cpp
 
@@ -55,6 +55,53 @@ void AKnowledgeGraph::SelectClosestGraphNodeToPlayer()
 	}
 }
 
+// ---------------------------------------------------------------------------
+// High-level mode-aware graph editing
+// ---------------------------------------------------------------------------
+// AutoGenerate / FromJson  → edit locally and immediately
+// FromDatabase             → HTTP request first, local edit only on success
+// ---------------------------------------------------------------------------
+
+void AKnowledgeGraph::RequestAddGraphNode(FString NodeName, int32 LinkTargetNodeIndex)
+{
+	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
+	{
+		// Database mode: send to server first, apply locally in callback
+		AddGraphNodeToDatabase(NodeName);
+	}
+	else
+	{
+		// AutoGenerate / FromJson: apply immediately
+		FVector SpawnPosition = GetPlayerLocation();
+		FString GeneratedId = FString::Printf(TEXT("local_%d_%lld"), GraphNodes.Num(), FDateTime::Now().GetTicks());
+		AddGraphNodeLocal(NodeName, GeneratedId, SpawnPosition, LinkTargetNodeIndex);
+	}
+}
+
+void AKnowledgeGraph::RequestRemoveSelectedGraphNode()
+{
+	if (SelectedGraphNodeIndex < 0 || !GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
+	{
+		LogToScreen("No valid node selected for removal.");
+		return;
+	}
+
+	if (Config.CreationMode == EGraphCreationMode::FromDatabase)
+	{
+		// Database mode: send delete to server first, apply locally in callback
+		DeleteGraphNodeFromDatabase();
+	}
+	else
+	{
+		// AutoGenerate / FromJson: apply immediately
+		RemoveGraphNodeByIndex(SelectedGraphNodeIndex);
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Database HTTP operations (FromDatabase mode only)
+// ---------------------------------------------------------------------------
+
 void AKnowledgeGraph::AddGraphNodeToDatabase(FString NodeName)
 {
 	FVector player_location = GetPlayerLocation();
@@ -84,41 +131,91 @@ void AKnowledgeGraph::AddGraphNodeToDatabase(FString NodeName)
 void AKnowledgeGraph::OnAddGraphNodeHttpCompleted(
 	FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
 {
-	if(bWasSuccessful && Response->GetResponseCode() == 200)
+	if (bWasSuccessful && Response->GetResponseCode() == 200)
 	{
-		LogToScreen("print_out_everything: " + Response->GetContentAsString(), true, 2);
-
 		TSharedPtr<FJsonObject> JsonObject;
 		TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Response->GetContentAsString());
 
 		if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
 		{
-			FString id = JsonObject->GetStringField("id");
-			LogToScreen("id7: " + id, true, 2);
-			FString name = JsonObject->GetStringField("name");
-			FVector player_location = GetPlayerLocation();
-			LateAddNode(name, id, player_location);
+			FString NodeDatabaseId = JsonObject->GetStringField("id");
+			FString NodeDatabaseName = JsonObject->GetStringField("name");
+			FVector SpawnPosition = GetPlayerLocation();
+
+			// Server accepted — now apply locally
+			AddGraphNodeLocal(NodeDatabaseName, NodeDatabaseId, SpawnPosition, /*LinkTargetNodeIndex=*/ -1);
 		}
 		else
 		{
-			LogToScreen("Failed to parse JSON response", true, 2);
+			LogToScreen("Failed to parse add-node JSON response");
 		}
 	}
 	else
 	{
-		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("Unable to get any response");
-		UE_LOG(LogTemp, Error, TEXT("Error adding node: %s"), *ErrorInfo);
+		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("No response from server");
+		LogToScreen("Failed to add node to database: " + ErrorInfo);
 	}
 }
 
 void AKnowledgeGraph::DeleteGraphNodeFromDatabase()
 {
-	// TODO: Send HTTP DELETE to server, then call RemoveGraphNodeByIndex on success
+	if (SelectedGraphNodeIndex < 0 || !GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
+	{
+		LogToScreen("DeleteGraphNodeFromDatabase: no valid node selected.");
+		return;
+	}
+
+	// Look up the string ID for the selected node
+	FString NodeDatabaseId;
+	if (NodeIdToStringMap.Contains(SelectedGraphNodeIndex))
+	{
+		NodeDatabaseId = NodeIdToStringMap[SelectedGraphNodeIndex];
+	}
+	else
+	{
+		LogToScreen("DeleteGraphNodeFromDatabase: selected node has no database ID.");
+		return;
+	}
+
+	// TODO: Replace with your actual delete endpoint URL from Config
+	FString DeleteUrl = Config.GraphDatabaseQueryUrl + "/" + NodeDatabaseId;
+
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
+	HttpRequest->SetURL(DeleteUrl);
+	HttpRequest->SetVerb("DELETE");
+	HttpRequest->SetHeader("Content-Type", "application/json");
+	HttpRequest->OnProcessRequestComplete().BindUObject(this, &AKnowledgeGraph::OnDeleteGraphNodeHttpCompleted);
+	HttpRequest->ProcessRequest();
+
+	LogToScreen("Requesting server to delete node: " + NodeDatabaseId);
+}
+
+void AKnowledgeGraph::OnDeleteGraphNodeHttpCompleted(
+	FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful)
+{
+	if (bWasSuccessful && Response.IsValid() && Response->GetResponseCode() == 200)
+	{
+		// Server accepted the delete — now apply locally
+		if (GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
+		{
+			RemoveGraphNodeByIndex(SelectedGraphNodeIndex);
+		}
+	}
+	else
+	{
+		FString ErrorInfo = Response.IsValid() ? Response->GetContentAsString() : TEXT("No response from server");
+		LogToScreen("Failed to delete node from database: " + ErrorInfo);
+	}
 }
 
 void AKnowledgeGraph::DeleteGraphLinkFromDatabase()
 {
-	// TODO: Send HTTP DELETE to server for link removal
+	// TODO: Implement HTTP DELETE for link removal, then call local link removal on success
+}
+
+void AKnowledgeGraph::AddGraphLinkToDatabase()
+{
+	// TODO: Implement HTTP POST for link creation, then call local link addition on success
 }
 
 // ---------------------------------------------------------------------------
@@ -325,21 +422,6 @@ int32 AKnowledgeGraph::AddGraphNodeLocal(const FString& NodeName, const FString&
 	return NewNodeIndex;
 }
 
-void AKnowledgeGraph::RemoveSelectedGraphNode()
-{
-	if (SelectedGraphNodeIndex < 0 || !GraphNodes.IsValidIndex(SelectedGraphNodeIndex))
-	{
-		LogToScreen("No valid node selected for removal.");
-		return;
-	}
-	RemoveGraphNodeByIndex(SelectedGraphNodeIndex);
-}
-
-void AKnowledgeGraph::AddGraphLinkToDatabase()
-{
-	// TODO: Implement link addition
-}
-
 void AKnowledgeGraph::SyncGraphNodePositionsToDatabase()
 {
 	bool log = true;
@@ -437,17 +519,4 @@ void AKnowledgeGraph::ReloadTheWholeGraph()
 	bGraphInitialized = false;
 	bPredefinedPositionNeedsUpdate = true;
 	Prepare();
-}
-
-void AKnowledgeGraph::LateAddNode(FString NodeName, FString id, FVector location)
-{
-	if (bRefreshGraphAfterEditing)
-	{
-		ReloadTheWholeGraph();
-	}
-	else
-	{
-		// Incremental add — no full reload needed
-		AddGraphNodeLocal(NodeName, id, location, /*LinkTargetNodeIndex=*/ -1);
-	}
 }

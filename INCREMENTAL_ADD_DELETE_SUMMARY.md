@@ -2,8 +2,20 @@
 
 ## Overview
 
-Implemented incremental add and delete for graph nodes using the swap-remove pattern.
-This avoids a full graph reload (`ReloadTheWholeGraph()`) when adding or removing individual nodes.
+Implemented incremental add and delete for graph nodes using the swap-remove pattern,
+with mode-aware routing based on `Config.CreationMode`.
+
+## Mode-Aware Routing
+
+| Mode | Add Node | Delete Node |
+|------|----------|-------------|
+| AutoGenerate | Immediate local edit | Immediate local edit |
+| FromJson | Immediate local edit | Immediate local edit |
+| FromDatabase | HTTP POST first → local on success | HTTP DELETE first → local on success |
+
+High-level entry points:
+- `RequestAddGraphNode(NodeName, LinkTargetNodeIndex)` — routes based on mode
+- `RequestRemoveSelectedGraphNode()` — routes based on mode
 
 ## Approach: Swap-Remove
 
@@ -25,23 +37,24 @@ All parallel arrays (`GraphNodes`, `nodePositions`, `nodeVelocities`, `BodyTrans
 
 ## Files Changed
 
-- `KnowledgeGraph.h` — Added `RemoveGraphNodeByIndex()`, `AddGraphNodeLocal()`, `RemoveSelectedGraphNode()` declarations. Fixed `GraphLink` default constructor to initialize all members.
-- `KnowledgeGraph_BlueprintAPI.cpp` — Implemented swap-remove delete, incremental add, and updated `LateAddNode` to use incremental path.
-- `UI/GraphControlPanelWidget.cpp` — Added "Remove Selected Node" button.
+- `KnowledgeGraph.h` — Added `RequestAddGraphNode()`, `RequestRemoveSelectedGraphNode()`, `OnDeleteGraphNodeHttpCompleted()`, `RemoveGraphNodeByIndex()`, `AddGraphNodeLocal()`. Fixed `GraphLink` default constructor. Removed `LateAddNode`, `bRefreshGraphAfterEditing`.
+- `KnowledgeGraph_BlueprintAPI.cpp` — Mode-aware routing, swap-remove delete, incremental add, database HTTP placeholders with callbacks.
+- `UI/GraphControlPanelWidget.cpp` — "Remove Selected Node" button calls `RequestRemoveSelectedGraphNode()`.
 
 ## Testing Status
 
 - [ ] Compile test
-- [ ] Add node via `AddGraphNodeToDatabase` with `bRefreshGraphAfterEditing = false`
-- [ ] Remove selected node via UI panel button
+- [ ] AutoGenerate mode: add node via `RequestAddGraphNode`
+- [ ] AutoGenerate mode: select + remove node via UI panel
+- [ ] FromJson mode: add and remove
+- [ ] FromDatabase mode: verify HTTP fires before local edit
 - [ ] Verify physics re-settles after add/delete
 - [ ] Verify instanced mesh stays in sync
 - [ ] Verify text labels stay in sync
 - [ ] Verify link meshes are properly cleaned up on delete
-- [ ] Stress test: rapid add/delete cycles
 
 ## Known Considerations
 
-- `AddEdge` names link meshes as `CylinderMesh%d` using array index. After swap-removes, UE appends suffix to avoid name collisions — cosmetic only, no functional impact.
-- GPU shader path (`bUseGPUShaders`) is not yet updated for incremental mutations — would need `SimParameters` rebuild.
+- `DeleteGraphNodeFromDatabase()` uses a placeholder URL (`Config.GraphDatabaseQueryUrl + "/" + id`). Replace with actual delete endpoint.
+- GPU shader path (`bUseGPUShaders`) not yet updated for incremental mutations.
 - After add/delete, simulation is reheated (`Alpha = max(Alpha, 0.3)`) so the graph re-settles.

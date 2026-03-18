@@ -138,7 +138,14 @@ void AKnowledgeGraph::CalculateLinkForceAndUpdateVelocity()
 
 		float l = new_v.Size();
 
-		// TODO: Add division-by-zero guard for l == 0
+		// [DIFFERS FROM D3] Always jiggle when l == 0 to prevent division by zero,
+		// regardless of Config.bEnableJiggle. d3-force applies jiggle() unconditionally.
+		if (l == 0.0f)
+		{
+			new_v = Jiggle(new_v, 1e-6f);
+			l = new_v.Size();
+		}
+
 		// By looking at the javascript code, we can see strength Will only be computed when there is a change Of the graph structure to the graph.
 		l = (l - link.LinkDistance * Config.UniversalGraphScale) /
 			l
@@ -239,6 +246,10 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 					{
 						FVector dir = nodePositions[OtherNodeIdx] - nodePositions[NodeIdx];
 
+						// [DIFFERS FROM D3] Jiggle overlapping nodes to prevent division by zero.
+						// d3-force applies jiggle() per-component; we apply it to the whole vector.
+						if (dir.IsNearlyZero()) { dir = Jiggle(dir, 1e-6f); }
+
 						float l = dir.Size() * dir.Size();
 						if (l < Config.DistanceMin)
 						{
@@ -258,6 +269,10 @@ void AKnowledgeGraph::CalculateChargeForceAndUpdateVelocity()
 					if (NodeIdx != OtherNodeIdx)
 					{
 						FVector dir = nodePositions[OtherNodeIdx] - nodePositions[NodeIdx];
+
+						// [DIFFERS FROM D3] Jiggle overlapping nodes to prevent division by zero.
+						// d3-force applies jiggle() per-component; we apply it to the whole vector.
+						if (dir.IsNearlyZero()) { dir = Jiggle(dir, 1e-6f); }
 
 						float l = dir.Size() * dir.Size();
 						if (l < Config.DistanceMin)
@@ -315,8 +330,11 @@ void AKnowledgeGraph::CalculateCentreForceAndUpdatePosition()
 		Index++;
 	}
 
+	// [DIFFERS FROM D3] Guard against division by zero when graph has no nodes.
+	// The original d3-force JS does NOT guard this — it assumes nodes.length > 0.
+	if (GraphNodes.Num() == 0) { return; }
+
 	Index = 0;
-	// TODO: Add division-by-zero guard for GraphNodes.Num() == 0
 	for (auto& node : GraphNodes)
 	{
 		nodePositions[
@@ -692,7 +710,11 @@ void AKnowledgeGraph::CalculateBiasAndStrengthOfLinks()
 
 			float TotalDegree = s1 + s2;
 			
-			// TODO: Add division-by-zero guard for TotalDegree == 0 and fmin(s1, s2) == 0
+			// [DIFFERS FROM D3] Guard against division by zero when a link references nodes with no connections.
+			// The original d3-force JS does NOT guard this — it assumes every linked node has degree >= 1.
+			// In edge cases (e.g. corrupted data) TotalDegree or min(s1,s2) could be 0 here.
+			if (TotalDegree == 0.0f) { i++; continue; }
+
 			// Bias: ratio of source degree to total degree (source + target)
 			// This determines how the link force is distributed between nodes
 			// DO NOT MODIFY - from d3-force
@@ -703,8 +725,9 @@ void AKnowledgeGraph::CalculateBiasAndStrengthOfLinks()
 			// Strength: 1 / min(source_degree, target_degree)
 			// This prevents highly connected nodes from dominating the layout
 			// DO NOT MODIFY - from d3-force
-			link.LinkStrength = 1.0 / fmin(s1,
-			                           s2);
+			float LinkMinDegree = fmin(s1, s2);
+			// [DIFFERS FROM D3] Guard: if min degree is 0, default strength to 1.0 (same as d3 initial value).
+			link.LinkStrength = (LinkMinDegree > 0.0f) ? (1.0 / LinkMinDegree) : 1.0;
 			LogMessage("i: " + FString::FromInt(i), log);
 			LogMessage("link.LinkBias: " + FString::SanitizeFloat(link.LinkBias), log);
 			LogMessage("link.LinkStrength: " + FString::SanitizeFloat(link.LinkStrength), log);
@@ -757,10 +780,11 @@ void AKnowledgeGraph::CalculateBiasAndStrengthOfLinks()
 				int s2 = Nodeconnection.Contains(connectout[i][j]) ? Nodeconnection[connectout[i][j]] : 0;
 
 				float TotalDegree = s1 + s2;
-				float bias = s1 / TotalDegree;
+				// [DIFFERS FROM D3] Guard against division by zero (see non-GPU path comment above).
+				float bias = (TotalDegree > 0.0f) ? (s1 / TotalDegree) : 0.5f;
 				LinkBiases[indexnow] = bias;
-				LinkStrengths[indexnow] = 1.0 / fmin(s1,
-				                                     s2);
+				float OutLinkMinDegree = fmin(s1, s2);
+				LinkStrengths[indexnow] = (OutLinkMinDegree > 0.0f) ? (1.0 / OutLinkMinDegree) : 1.0;
 			}
 			for (int j = 0; j < incount; j++)
 			{
@@ -775,10 +799,11 @@ void AKnowledgeGraph::CalculateBiasAndStrengthOfLinks()
 				int s1 = Nodeconnection.Contains(counterpart) ? Nodeconnection[counterpart] : 0;
 
 				float TotalDegree = s1 + s2;
-				float bias = s1 / TotalDegree;
+				// [DIFFERS FROM D3] Guard against division by zero (see non-GPU path comment above).
+				float bias = (TotalDegree > 0.0f) ? (s1 / TotalDegree) : 0.5f;
 				LinkBiases[indexnow] = bias;
-				LinkStrengths[indexnow] = 1.0 / fmin(s1,
-				                                     s2);
+				float InLinkMinDegree = fmin(s1, s2);
+				LinkStrengths[indexnow] = (InLinkMinDegree > 0.0f) ? (1.0 / InLinkMinDegree) : 1.0;
 			}
 			Index += Nodeconnection.Contains(i) ? Nodeconnection[i] : 0;
 		}

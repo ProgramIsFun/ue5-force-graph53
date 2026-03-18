@@ -30,22 +30,15 @@ OctreeNode::~OctreeNode()
 	}
 	Children.Empty(); // Clear the TArray, not strictly necessary since the node is being destroyed
 
-	// Now clean up the linked list in `Data`
-	PointData* current = Data;
-	if (0)
+	// Clean up the linked list in `Data`
+	PointData* CurrentPoint = Data;
+	while (CurrentPoint != nullptr)
 	{
-		while (current != nullptr)
-		{
-			delete current;
-			PointData* next = current->Next;
-			current = next;
-		}
+		PointData* NextPoint = CurrentPoint->Next;
+		delete CurrentPoint;
+		CurrentPoint = NextPoint;
 	}
-	else
-	{
-		delete current;
-	}
-	Data = nullptr; // Reset pointer to nullptr after deletion
+	Data = nullptr;
 }
 
 void OctreeNode::Subdivide()

@@ -87,31 +87,15 @@ bool AKnowledgeGraph::MainFunction(float DeltaTime)
 			if (bPredefinedPositionNeedsUpdate)
 			{
 				bPredefinedPositionNeedsUpdate = false;
-				// Use new renderer if available
-				if (Renderer)
-				{
-					UpdateNodeWorldPositionAccordingToPositionArrayNew();
-					UpdateLinkPositionNew();
-				}
-				else
-				{
-					UpdateNodeWorldPositionAccordingToPositionArray();
-					UpdateLinkPosition();
-				}
+				UpdateNodeWorldPositionAccordingToPositionArrayNew();
+				UpdateLinkPositionNew();
 			}
 		}
 		
 		// We need to constantly run this function to draw the debug line, because it only exists for 1 frame. 
 		if (Config.bUseLinkDebugLine)
 		{
-			if (Renderer)
-			{
-				UpdateLinkPositionNew();
-			}
-			else
-			{
-				UpdateLinkPosition();
-			}
+			UpdateLinkPositionNew();
 		}
 	}
 	else
@@ -119,27 +103,12 @@ bool AKnowledgeGraph::MainFunction(float DeltaTime)
 		UpdateAlpha();
 		UpdatePositionArray(log);
 
-		// Use new renderer if available
-		if (Renderer)
-		{
-			UpdateNodeWorldPositionAccordingToPositionArrayNew();
-		}
-		else
-		{
-			UpdateNodeWorldPositionAccordingToPositionArray();
-		}
+		UpdateNodeWorldPositionAccordingToPositionArrayNew();
 
 		if (Config.bUpdateLinkBeforeStabilize)
 		{
 			LogMessage("update link position", log);
-			if (Renderer)
-			{
-				UpdateLinkPositionNew();
-			}
-			else
-			{
-				UpdateLinkPosition();
-			}
+			UpdateLinkPositionNew();
 		}
 	
 		if (Config.bUseGPUShaders)
@@ -150,14 +119,7 @@ bool AKnowledgeGraph::MainFunction(float DeltaTime)
 	
 	if (Config.bRotateTextToFacePlayer)
 	{
-		if (Renderer)
-		{
-			RotateToFacePlayerNew();
-		}
-		else
-		{
-			RotateToFacePlayer();
-		}
+		RotateToFacePlayerNew();
 	}
 	
 	return false;
